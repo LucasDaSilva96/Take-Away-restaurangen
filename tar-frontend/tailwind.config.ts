@@ -8,9 +8,19 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        heart: "var(--font-heart)",
+        motter: "var(--font-motter)",
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        main: {
+          primary: "#EBA13D",
+          primaryBright: "#FFC823",
+          secondary: "B42638",
+          light: "#EFE1D9",
+          navy: "#191D46",
+          moss: "#003B2D",
+        },
       },
     },
   },
