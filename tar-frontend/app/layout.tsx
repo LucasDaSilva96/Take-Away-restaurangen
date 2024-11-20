@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Nav from "@/components/shared/Nav";
+import Noise from "@/components/shared/Noise";
 
 const Heart = localFont({
   src: "./fonts/Heart.ttf",
@@ -10,6 +12,12 @@ const Heart = localFont({
 const Motter = localFont({
   src: "./fonts/Motter.otf",
   variable: "--font-motter",
+  weight: "100 900",
+});
+
+const Alumni = localFont({
+  src: "./fonts/Alumni.ttf",
+  variable: "--font-alumni",
   weight: "100 900",
 });
 
@@ -25,8 +33,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${Motter.variable} ${Heart.variable} antialiased`}>
+      <body
+        className={`${Motter.variable} ${Heart.variable} ${Alumni.variable} antialiased`}
+      >
+        <Nav />
         {children}
+        <Noise />
       </body>
     </html>
   );
