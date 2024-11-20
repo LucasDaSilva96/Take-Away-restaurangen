@@ -192,6 +192,7 @@ const Nav = () => {
                         delay: index * 0.1,
                         ease: "backInOut",
                       }}
+                      onClick={toggleOpen}
                       className="text-main-primary hover:text-white cursor-pointer"
                     >
                       <Link
