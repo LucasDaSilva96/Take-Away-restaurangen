@@ -55,7 +55,7 @@ const Nav = () => {
       {/* Navbar responsive */}
       <nav className="w-screen fixed top-0 left-0 flex justify-between items-center p-6 md:p-4 z-30">
         <div className=" hidden w-1/3 md:block">
-          <p className="text-white">EAT</p>
+          <p className="text-main-light">EAT</p>
         </div>
         <div className="w-20 md:w-1/3 flex justify-center items-center z-50">
           <div className="w-20">
@@ -109,7 +109,7 @@ const Nav = () => {
         <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
           <ButtonBase
             text="Order now"
-            classname=" text-white bg-main-secondary z-30"
+            classname=" text-main-light bg-main-secondary z-30"
           />
 
           {/* Animated menu button */}
@@ -121,26 +121,24 @@ const Nav = () => {
               animate={{
                 rotate: open ? 45 : 0,
                 y: open ? 0 : 8,
-                backgroundColor: open ? "white" : "white",
               }}
               transition={{ duration: 0.3 }}
-              className="absolute w-6 h-1 bg-white rounded"
+              className="absolute w-6 h-1 bg-main-light rounded"
             />
             <motion.span
               animate={{
                 opacity: open ? 0 : 1,
               }}
               transition={{ duration: 0.3 }}
-              className="w-6 h-1 bg-white rounded"
+              className="w-6 h-1 bg-main-light rounded"
             />
             <motion.span
               animate={{
                 rotate: open ? -45 : 0,
                 y: open ? 0 : -8,
-                backgroundColor: open ? "white" : "white",
               }}
               transition={{ duration: 0.3 }}
-              className="absolute w-6 h-1 bg-white rounded"
+              className="absolute w-6 h-1 bg-main-light rounded"
             />
           </button>
         </section>
@@ -180,7 +178,7 @@ const Nav = () => {
                       initial={{ opacity: 0, x: "-200%" }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-                      className="text-lg md:text-xl"
+                      className="text-lg md:text-xl text-main-light"
                     >
                       {romans[index]}
                     </motion.p>
@@ -193,7 +191,7 @@ const Nav = () => {
                         ease: "backInOut",
                       }}
                       onClick={toggleOpen}
-                      className="text-main-primary hover:text-white cursor-pointer"
+                      className="text-main-primary hover:text-main-light cursor-pointer"
                     >
                       <Link
                         key={index}
