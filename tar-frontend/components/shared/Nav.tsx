@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ButtonBase from "./ButtonBase";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 const Nav = () => {
   //Handle open menu
@@ -11,9 +12,16 @@ const Nav = () => {
   //Toggle open menu
   const toggleOpen = () => {
     setOpen(!open);
+
+    if (!open) {
+      //Add svg shootout animation here
+
+      console.log("Pang!");
+    }
   };
 
   useEffect(() => {
+    //Check if screen is small to animate menu correctly
     const isSmall = () => {
       if (window.innerWidth <= 1024) {
         setSmall(true);
@@ -31,14 +39,27 @@ const Nav = () => {
     };
   }, []);
 
+  //Menu Links
+  const links = [
+    { name: "Home", href: "/" },
+    { name: "Menu", href: "/menu" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  //Roman Numerals for looping menu
+  const romans = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+
   return (
     <>
+      {/* Navbar responsive */}
       <nav className="w-screen fixed top-0 left-0 flex justify-between items-center p-6 md:p-4 z-30">
         <div className=" hidden w-1/3 md:block">
-          <p>EAT</p>
+          <p className="text-white">EAT</p>
         </div>
         <div className="w-20 md:w-1/3 flex justify-center items-center z-50">
           <div className="w-20">
+            {/* Logo */}
             <svg className="w-full fill-main-primary" viewBox="0 0 390 194.32">
               <g className="Logo__lucky">
                 <path d="M264.55,75.74c-1.45-6.47-2.56-21-2.78-35.25l.78-.67,12.83,35.92h40.38c-3.68-5.35-16.51-37.48-22.2-52.76l-.11-.33c6.84-5.75,12-10.1,16.66-14.24l20,44.47c-.45,7.92-1.34,15.73-3.57,23h42.28a101.91,101.91,0,0,1-3.13-22.65c1.9-4.57,16.51-39.15,24.32-50H366.46c-1,11.49-5.57,27.66-9,35.58-2.9-7.81-6.92-24.32-7-35.58H275c2.46,10.6-2.56,23.53-12.05,30.45l-1.22.89C262,22,263.22,9,264.89,3.24H224.51c1.22,7.25,2.12,21.75,2.12,34.24,0,15-1.12,31.13-2.68,38.27Z"></path>
@@ -84,9 +105,11 @@ const Nav = () => {
           </div>
         </div>
 
+        {/* Navbar Buttons */}
         <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
           <ButtonBase text="Order now" classname="bg-main-secondary z-30" />
 
+          {/* Animated menu button */}
           <button
             onClick={toggleOpen}
             className="p-2 w-11 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1"
@@ -119,9 +142,11 @@ const Nav = () => {
           </button>
         </section>
       </nav>
+      {/* Menu popout */}
       <AnimatePresence>
         {open && (
           <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent">
+            {/* Background darkner also closes menu on click */}
             <motion.section
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -131,14 +156,63 @@ const Nav = () => {
               className="inset-0  w-full h-full bg-black bg-opacity-45"
               id="bg"
             ></motion.section>
+
+            {/* Menu */}
             <motion.section
               initial={{ x: small ? "100%" : "200%" }}
               animate={{ x: small ? "0%" : "100%" }}
               exit={{ x: small ? "100%" : "200%" }}
               transition={{ duration: 0.3, ease: "circInOut" }}
-              className="z-30 w-screen lg:w-6/12 h-screen bg-main-moss absolute top-0 "
+              className="z-30 w-screen lg:w-6/12 h-screen flex flex-col gap-20 justify-center items-center bg-main-moss absolute top-0 "
               id="menu"
-            ></motion.section>
+            >
+              <section className="flex flex-col justify-center items-center gap-4">
+                {/* Menu Links with romans */}
+                {links.map((link, index) => (
+                  <section
+                    className="text-center"
+                    key={link + index.toString()}
+                  >
+                    <motion.p
+                      initial={{ opacity: 0, x: "-200%" }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
+                      className="text-lg md:text-xl"
+                    >
+                      {romans[index]}
+                    </motion.p>
+                    <motion.p
+                      initial={{ opacity: 0, x: "100%" }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: index * 0.1,
+                        ease: "backInOut",
+                      }}
+                      className="text-main-primary hover:text-white cursor-pointer"
+                    >
+                      <Link
+                        key={index}
+                        href={link.href}
+                        className="text-4xl md:text-6xl font-motter"
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.p>
+                  </section>
+                ))}
+              </section>
+              <motion.section
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1 }}
+              >
+                <ButtonBase
+                  text="Order now"
+                  classname="bg-main-secondary text-main-light"
+                />
+              </motion.section>
+            </motion.section>
           </motion.section>
         )}
       </AnimatePresence>
