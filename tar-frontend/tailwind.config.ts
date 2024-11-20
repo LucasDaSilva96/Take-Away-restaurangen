@@ -11,6 +11,7 @@ export default {
       fontFamily: {
         heart: "var(--font-heart)",
         motter: "var(--font-motter)",
+        alumni: "var(--font-alumni)",
       },
       colors: {
         main: {

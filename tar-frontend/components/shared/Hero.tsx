@@ -9,7 +9,9 @@ const Hero = () => {
           <span>EAT.</span>
           <span>RELAX.</span>
         </h1>
-        <p className="text-base uppercase">Pizza like you never had it</p>
+        <p className="text-xl uppercase font-alumni text-center">
+          Pizza like you never had it
+        </p>
       </div>
     </article>
   );
