@@ -1,14 +1,22 @@
 import React from "react";
 
 interface HeroProps {
-  title?: string;
+  title: string[];
   description: string;
   homePage?: boolean;
+  className?: string;
 }
 
-const Hero: React.FC<HeroProps> = ({ title, description, homePage }) => {
+const Hero: React.FC<HeroProps> = ({
+  title,
+  description,
+  homePage,
+  className,
+}) => {
   return (
-    <article className="w-screen h-auto flex justify-center items-center">
+    <section
+      className={`w-screen h-full flex  justify-center items-center ${className}`}
+    >
       <div className="text-main-primary font-motter">
         {!homePage && (
           <p className="text-xl uppercase font-alumni text-center">
@@ -16,9 +24,9 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage }) => {
           </p>
         )}
         <h1 className="flex flex-col text-center font-s text-6xl">
-          <span>DRINK.</span>
-          <span>EAT.</span>
-          <span>RELAX.</span>
+          {title.map((str, index) => (
+            <span key={index + str}>{str}</span>
+          ))}
         </h1>
         {homePage && (
           <p className="text-xl uppercase font-alumni text-center">
@@ -26,7 +34,7 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage }) => {
           </p>
         )}
       </div>
-    </article>
+    </section>
   );
 };
 
