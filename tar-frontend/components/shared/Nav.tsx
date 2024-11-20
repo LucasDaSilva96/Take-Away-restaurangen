@@ -85,7 +85,10 @@ const Nav = () => {
         </div>
 
         <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
-          <ButtonBase text="Order now" classname="bg-main-secondary z-30" />
+          <ButtonBase
+            text="Order now"
+            classname=" text-white bg-main-secondary z-30"
+          />
 
           <button
             onClick={toggleOpen}
