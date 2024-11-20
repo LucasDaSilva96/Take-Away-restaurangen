@@ -43,6 +43,7 @@ const Nav = () => {
   const links = [
     { name: "Home", href: "/" },
     { name: "Menu", href: "/menu" },
+    { name: "Hours", href: "/hours" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
@@ -109,13 +110,13 @@ const Nav = () => {
         <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
           <ButtonBase
             text="Order now"
-            classname=" text-main-light bg-main-secondary z-30"
+            classname=" text-main-light bg-main-secondary z-30 hover:scale-105 transition-all ease-in-out duration-300"
           />
 
           {/* Animated menu button */}
           <button
             onClick={toggleOpen}
-            className="p-2 w-11 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1"
+            className="p-2 w-11 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1 hover:scale-105 transition-all ease-in-out duration-300"
           >
             <motion.span
               animate={{
@@ -171,36 +172,39 @@ const Nav = () => {
                 {/* Menu Links with romans */}
                 {links.map((link, index) => (
                   <section
-                    className="text-center"
+                    className="text-center flex flex-col"
                     key={link + index.toString()}
                   >
                     <motion.p
                       initial={{ opacity: 0, x: "-200%" }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-                      className="text-lg md:text-xl text-main-light"
+                      className="text-lg md:text-xl text-main-light font-heart"
                     >
                       {romans[index]}
                     </motion.p>
-                    <motion.p
-                      initial={{ opacity: 0, x: "100%" }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.7,
-                        delay: index * 0.1,
-                        ease: "backInOut",
-                      }}
-                      onClick={toggleOpen}
-                      className="text-main-primary hover:text-main-light cursor-pointer"
-                    >
-                      <Link
-                        key={index}
-                        href={link.href}
-                        className="text-4xl md:text-6xl font-motter"
+                    <section className="group">
+                      <motion.p
+                        initial={{ opacity: 0, x: "100%" }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                          duration: 0.7,
+                          delay: index * 0.1,
+                          ease: "backInOut",
+                        }}
+                        onClick={toggleOpen}
+                        className="text-main-primary hover:text-main-light cursor-pointer"
                       >
-                        {link.name}
-                      </Link>
-                    </motion.p>
+                        <Link
+                          key={index}
+                          href={link.href}
+                          className="text-4xl md:text-6xl font-motter transition-all ease-in-out duration-300"
+                        >
+                          {link.name}
+                        </Link>
+                      </motion.p>
+                      <div className="w-0 group-hover:w-full h-1 bg-main-light transition-all rounded-md ease-in-out duration-300"></div>
+                    </section>
                   </section>
                 ))}
               </section>
@@ -211,7 +215,7 @@ const Nav = () => {
               >
                 <ButtonBase
                   text="Order now"
-                  classname="bg-main-secondary text-main-light"
+                  classname="bg-main-secondary text-main-light hover:scale-105 transition-all ease-in-out duration-300"
                 />
               </motion.section>
             </motion.section>
