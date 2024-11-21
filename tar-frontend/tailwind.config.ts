@@ -24,10 +24,12 @@ export default {
         },
       },
       backgroundImage: {
-        "noise-pattern": "url('/noise.png')",
+        "noise-pattern": "url('/images/noise.png')",
+        "before-noise": "url('/images/noise2.png')",
       },
       backgroundPosition: {
         "50": "50%",
+        "100auto": "100% auto",
       },
       animation: {
         noise: "noise 2s steps(2) infinite",
