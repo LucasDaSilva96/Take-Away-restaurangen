@@ -13,7 +13,7 @@ mongoose
   .then(() => {
     console.log('Connected to database');
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
