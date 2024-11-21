@@ -1,11 +1,14 @@
 import React from "react";
 
 interface HeroProps {
-  title: string[];
-  description: string;
-  homePage?: boolean;
-  className?: string;
+  title: string[]; // Put every word in the title in a array string so that you can render it in the span element
+  description: string; // Put the smal description that is above or under the title.
+  homePage?: boolean; // boolean that tells the code if you are in the homepage. Purpose is that the description text is above the title in every page except homepage
+  className?: string; // props to change the background img
 }
+
+// A dynamic hero component wich we can later use as a props and change
+// the text contain depending on wich page you are on.
 
 const Hero: React.FC<HeroProps> = ({
   title,
@@ -15,7 +18,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   return (
     <section
-      className={`w-screen h-full flex  justify-center items-center ${className}`}
+      className={`w-screen h-full flex justify-center items-center ${className}`}
     >
       <div className="text-main-primary font-motter">
         {!homePage && (
