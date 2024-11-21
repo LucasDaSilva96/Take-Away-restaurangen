@@ -15,7 +15,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   return (
     <section
-      className={`w-screen h-full flex  justify-center items-center ${className}`}
+      className={`w-screen h-screen flex justify-center items-center ${className}`}
     >
       <div className="text-main-primary font-motter">
         {!homePage && (
@@ -23,7 +23,7 @@ const Hero: React.FC<HeroProps> = ({
             {description}
           </p>
         )}
-        <h1 className="flex flex-col text-center font-s text-6xl">
+        <h1 className="flex flex-col text-center font-s text-4xl md:text-6xl">
           {title.map((str, index) => (
             <span key={index + str}>{str}</span>
           ))}
