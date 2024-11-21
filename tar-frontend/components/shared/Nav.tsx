@@ -54,7 +54,7 @@ const Nav = () => {
   return (
     <>
       {/* Navbar responsive */}
-      <nav className="w-screen fixed top-0 left-0 flex justify-between items-center p-6 md:p-4 z-30">
+      <nav className="w-screen fixed top-0 left-0 flex justify-between items-center p-6 md:p-4 z-40">
         <div className=" hidden w-1/3 md:block">
           <p className="text-main-light">EAT</p>
         </div>
@@ -108,15 +108,21 @@ const Nav = () => {
 
         {/* Navbar Buttons */}
         <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
-          <ButtonBase
-            text="Order now"
-            classname=" text-main-light bg-main-secondary z-30 hover:scale-105 transition-all ease-in-out duration-300"
-          />
+          <motion.section
+            initial={{ opacity: 1 }}
+            animate={{ opacity: open ? 0 : 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ButtonBase
+              text="Order now"
+              classname=" text-main-light bg-main-secondary z-0 hover:scale-105 transition-all ease-in-out duration-300"
+            />
+          </motion.section>
 
           {/* Animated menu button */}
           <button
             onClick={toggleOpen}
-            className="p-2 w-11 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1 hover:scale-105 transition-all ease-in-out duration-300"
+            className="p-2 w-11 z-50 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1 hover:scale-105 transition-all ease-in-out duration-300"
           >
             <motion.span
               animate={{
@@ -147,7 +153,7 @@ const Nav = () => {
       {/* Menu popout */}
       <AnimatePresence>
         {open && (
-          <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent">
+          <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent z-[30]">
             {/* Background darkner also closes menu on click */}
             <motion.section
               initial={{ opacity: 0 }}
@@ -155,7 +161,7 @@ const Nav = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={toggleOpen}
-              className="inset-0  w-full h-full bg-black bg-opacity-45"
+              className="inset-0 w-full h-full bg-black bg-opacity-45"
               id="bg"
             ></motion.section>
 
@@ -165,7 +171,7 @@ const Nav = () => {
               animate={{ x: small ? "0%" : "100%" }}
               exit={{ x: small ? "100%" : "200%" }}
               transition={{ duration: 0.3, ease: "circInOut" }}
-              className="z-30 w-screen lg:w-6/12 h-screen flex flex-col gap-20 justify-center items-center bg-main-moss absolute top-0 "
+              className=" w-screen lg:w-6/12 h-screen flex flex-col gap-20 justify-center items-center bg-main-moss absolute top-0 "
               id="menu"
             >
               <section className="flex flex-col justify-center items-center gap-4">
