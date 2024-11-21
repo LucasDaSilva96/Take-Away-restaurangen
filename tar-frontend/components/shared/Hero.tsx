@@ -18,7 +18,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   return (
     <section
-      className={`w-screen h-full flex justify-center items-center ${className}`}
+      className={`w-screen h-full flex z-10 relative justify-center items-center ${className}`}
     >
       <div className="text-main-primary font-motter">
         {!homePage && (
