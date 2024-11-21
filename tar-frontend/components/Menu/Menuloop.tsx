@@ -1,7 +1,8 @@
-import MenuItem, { MenuItemProps } from "./MenuItem";
+import { menuItemResponse } from "@/app/menu/page";
+import MenuItem from "./MenuItem";
 
 interface MenuloopProps {
-  menu: MenuItemProps[];
+  menu: menuItemResponse[];
 }
 
 const Menuloop: React.FC<MenuloopProps> = ({ menu }) => {
@@ -10,12 +11,16 @@ const Menuloop: React.FC<MenuloopProps> = ({ menu }) => {
       {menu.map((item, index) => (
         <MenuItem
           key={index}
-          name={item.name}
+          quantity={item.quantity}
+          title={item.title}
           description={item.description}
           price={item.price}
           image={item.image}
           category={item.category}
-          contains={item.contains}
+          ingredients={item.ingredients}
+          id={item.id}
+          numberOfSales={item.numberOfSales}
+          onSale={item.onSale}
         />
       ))}
     </section>

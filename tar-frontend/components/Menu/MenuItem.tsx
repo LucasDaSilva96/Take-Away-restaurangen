@@ -1,46 +1,99 @@
-import ButtonBase from "../shared/ButtonBase";
+"use client";
 
-export interface MenuItemProps {
-  name: string;
-  description: string;
+import useCart from "@/store/zustandstore";
+import ButtonBase from "../shared/ButtonBase";
+import { useEffect, useState } from "react";
+
+interface menuItemResponse {
+  id: string;
+  title: string;
   price: number;
   image: string;
+  description: string;
   category: string;
-  contains: string[];
+  ingredients: string[];
+  numberOfSales: number;
+  onSale: boolean;
+  quantity: number;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({
-  name,
+const MenuItem: React.FC<menuItemResponse> = ({
+  title,
   description,
   image,
-  contains,
   price,
+  id,
+  quantity,
+  ingredients,
+  numberOfSales,
+  onSale,
   category,
 }) => {
+  const product = {
+    id: id,
+    title: title,
+    price: price,
+    image: image,
+    description: description,
+    category: category,
+    ingredients: ingredients,
+    numberOfSales: numberOfSales,
+    onSale: onSale,
+    quantity: quantity,
+  };
+
+  const { addToCart, cart, removeFromCart, getQuantity } = useCart();
+
+  const [isAdded, setIsAdded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const itemExists = cart.find((item) => item.id === id);
+    if (itemExists) {
+      setIsAdded(true);
+    } else {
+      setIsAdded(false);
+    }
+  }, [cart]);
+
   return (
     <article className="border-2 border-main-primary flex flex-col gap-4 p-3 md:p-6 rounded-md">
       <section className="w-full aspect-video relative rounded-md overflow-hidden border-2 border-main-primary">
-        <img src={image} alt={name} className="object-cover w-full " />
+        <img src={image} alt={title} className="object-cover w-full " />
       </section>
       <section className="w-full flex flex-col">
         <h2 className="text-2xl font-motter text-main-primary font-semibold">
-          {name} - {price}€
+          {title} - {price}€
         </h2>
         <p className="font-alumni text-xl text-main-primary">{description}</p>
       </section>
       <section className="w-full flex justify-between items-center">
-        <ButtonBase
-          text="Add to order"
-          classname="text-main-light bg-main-primary"
-        />
+        {isAdded ? (
+          <ButtonBase
+            text="Remove from order"
+            onClick={() => removeFromCart(product)}
+            classname="text-main-light bg-main-secondary"
+          />
+        ) : (
+          <ButtonBase
+            text="Add to order"
+            onClick={() => addToCart(product)}
+            classname="text-main-light bg-main-primary"
+          />
+        )}
         <section className="flex justify-center items-center gap-2 font-motter text-2xl">
-          <button className="border-none bg-transparent text-main-primary">
+          <button
+            onClick={() => removeFromCart(product)}
+            className="border-none bg-transparent text-main-primary"
+          >
             -
           </button>
           <button className="border-none bg-transparent text-main-primary">
-            0
+            {getQuantity(id)}
           </button>
-          <button className="border-none bg-transparent text-main-primary">
+          <button
+            onClick={() => addToCart(product)}
+            className="border-none bg-transparent text-main-primary"
+          >
             +
           </button>
         </section>
