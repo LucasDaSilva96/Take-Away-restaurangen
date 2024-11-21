@@ -171,10 +171,34 @@ const Nav = () => {
               animate={{ x: small ? "0%" : "100%" }}
               exit={{ x: small ? "100%" : "200%" }}
               transition={{ duration: 0.3, ease: "circInOut" }}
-              className=" w-screen lg:w-6/12 h-screen flex flex-col gap-20 justify-center items-center bg-main-moss absolute top-0 "
+              className=" w-screen lg:w-6/12 h-screen flex flex-col gap-20 justify-center items-center bg-main-moss absolute top-0 before:bg-top before:bg-no-repeat before:bg-[url('/images/noise2.png')] before:bg-[length:100%_auto] before:content-[''] before:block before:h-full before:left-0 before:pointer-events-none before:absolute before:top-0 before:w-full before:z-0"
               id="menu"
             >
-              <section className="flex flex-col justify-center items-center gap-4">
+              <button className="absolute bottom-5 right-5 w-12 h-12 border-2 border-main-primary rounded-full hover:scale-105 transition-all duration-300">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    {" "}
+                    <path
+                      d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                      stroke="#EBA13D"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>{" "}
+                  </g>
+                </svg>
+              </button>
+              <section className="flex flex-col justify-center items-center gap-4  ">
                 {/* Menu Links with romans */}
                 {links.map((link, index) => (
                   <section
@@ -185,7 +209,7 @@ const Nav = () => {
                       initial={{ opacity: 0, x: "-200%" }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-                      className="text-lg md:text-xl text-main-light font-heart"
+                      className="text-lg md:text-xl text-main-light font-serif"
                     >
                       {romans[index]}
                     </motion.p>
