@@ -6,6 +6,7 @@ interface MenuloopProps {
 }
 
 const Menuloop: React.FC<MenuloopProps> = ({ menu }) => {
+  //Loops all items from the menu and places them in a grid
   return (
     <section className="w-full grid grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-4">
       {menu.map((item, index) => (

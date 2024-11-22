@@ -20,6 +20,7 @@ export interface menuItemResponse {
 const page = () => {
   const title = ["Explore.", "Discover.", "Experience."];
 
+  //Static menu items. To be replaced with db fetch
   const menuItems: menuItemResponse[] = [
     {
       id: "1",

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import useCart from "@/store/zustandstore";
@@ -19,11 +20,15 @@ interface menuItemResponse {
   };
 }
 
+//Component for the displayed menu items
+
 const MenuItem: React.FC<menuItemResponse> = ({ product }) => {
+  //Grab state and handlers from zustand
   const { addToCart, cart, removeFromCart, getQuantity } = useCart();
 
   const [isAdded, setIsAdded] = useState<boolean>(false);
 
+  //Check if item is in cart and toggle buttons accordingly
   useEffect(() => {
     const itemExists = cart.find((item) => item.id === product.id);
     if (itemExists) {
@@ -31,7 +36,7 @@ const MenuItem: React.FC<menuItemResponse> = ({ product }) => {
     } else {
       setIsAdded(false);
     }
-  }, [cart]);
+  }, [cart, product.id]);
 
   return (
     <article className="border-2 border-main-primary flex flex-col gap-4 p-3 md:p-6 rounded-md">
