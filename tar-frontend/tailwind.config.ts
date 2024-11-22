@@ -18,6 +18,7 @@ export default {
           primary: "#EBA13D",
           primaryBright: "#FFC823",
           secondary: "#B42638",
+          secondaryLight: "#c23c48",
           light: "#EFE1D9",
           navy: "#191D46",
           moss: "#003B2D",

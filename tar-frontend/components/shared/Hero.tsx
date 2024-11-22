@@ -9,6 +9,7 @@ interface HeroProps {
   video?: string; // props to change the background img
 }
 
+
 const spinTransition = {
   repeat: Infinity,
   ease: "linear",
@@ -118,6 +119,7 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
         {homePage && spinningImg}
       </section>
     </>
+
   );
 };
 
