@@ -44,11 +44,13 @@ const useCart = create<CartState & Actions>()((set) => ({
       if (itemExists) {
         console.log("Item exists", itemExists);
         itemExists.quantity += 1;
-        state.total += itemExists.price;
+        state.amount += itemExists.price;
+        state.total += 1;
       } else {
         const newEntry = { ...product, quantity: 1 };
         state.cart = [...prevCart, newEntry];
-        state.total += product.price;
+        state.amount += product.price;
+        state.total += 1;
       }
 
       console.log("Added item", prevCart);
@@ -63,12 +65,16 @@ const useCart = create<CartState & Actions>()((set) => ({
       const prevCart = [...state.cart];
       const itemExists = [...state.cart].find((item) => item.id === product.id);
 
-      if (itemExists && itemExists.quantity > 1) {
-        itemExists.quantity -= 1;
-        state.amount -= itemExists.price;
-        state.total -= 1;
-      } else {
-        state.cart = state.cart.filter((item) => item.id !== product.id);
+      if (itemExists) {
+        if (itemExists.quantity > 1) {
+          itemExists.quantity -= 1;
+          state.amount -= itemExists.price;
+          state.total -= 1;
+        } else {
+          state.cart = state.cart.filter((item) => item.id !== product.id);
+          state.total -= 1;
+          state.amount -= itemExists.price;
+        }
       }
 
       return {

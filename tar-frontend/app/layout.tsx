@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Nav from "@/components/shared/Nav";
 import Noise from "@/components/shared/Noise";
+import Cartoverlay from "@/components/shared/Cartoverlay";
 
 const Heart = localFont({
   src: "./fonts/Heart.ttf",
@@ -37,6 +38,7 @@ export default function RootLayout({
         className={`${Motter.variable} ${Heart.variable} ${Alumni.variable} antialiased`}
       >
         <Nav />
+        <Cartoverlay />
         {children}
         <Noise />
       </body>
