@@ -9,7 +9,6 @@ interface HeroProps {
   video?: string; // props to change the background img
 }
 
-
 const spinTransition = {
   repeat: Infinity,
   ease: "linear",
@@ -85,7 +84,7 @@ const spinningImg = (
 const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
   const videoBg = (
     <video
-      className="w-full absolute h-full  object-cover z-0"
+      className="w-full absolute h-full object-cover z-0"
       src={video}
       autoPlay
       muted
@@ -95,16 +94,16 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
   return (
     <>
       <section
-        className={`w-screen h-full flex z-10 relative justify-center items-center `}
+        className={`w-screen h-full flex relative justify-center items-center `}
       >
-        {videoBg}
-        <div className="text-main-primary font-motter z-10">
+        <div className="absolute inset-0 z-0">{videoBg}</div>
+        <div className="text-main-primary font-motter relative z-10">
           {!homePage && (
             <p className="text-xl uppercase font-alumni text-center">
               {description}
             </p>
           )}
-          <h1 className="flex flex-col z-10 text-center font-s text-6xl">
+          <h1 className="flex flex-col text-center font-s text-6xl">
             {title.map((str, index) => (
               <span key={index + str}>{str}</span>
             ))}
@@ -119,7 +118,6 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
         {homePage && spinningImg}
       </section>
     </>
-
   );
 };
 
