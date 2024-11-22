@@ -4,82 +4,61 @@ import Menuloop from "@/components/Menu/Menuloop";
 import Hero from "@/components/shared/Hero";
 import React from "react";
 
+export interface menuItemResponse {
+  id: string;
+  title: string;
+  price: number;
+  image: string;
+  description: string;
+  category: string;
+  ingredients: string[];
+  numberOfSales: number;
+  onSale: boolean;
+  quantity: number;
+}
+
 const page = () => {
   const title = ["Explore.", "Discover.", "Experience."];
 
-  const menu = [
+  //Static menu items. To be replaced with db fetch
+  const menuItems: menuItemResponse[] = [
     {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
+      id: "1",
+      title: "Pasta",
+      price: 10,
+      image: "https://images.unsplash.com/photo-1606782042680-0b5f2b6f4c3c",
+      description: "A delicious pasta dish",
+      category: "main",
+      ingredients: ["pasta", "tomato", "cheese"],
+      numberOfSales: 10,
+      onSale: false,
+      quantity: 0,
     },
     {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
+      id: "2",
+      title: "Pizza",
+      price: 15,
+      image: "https://images.unsplash.com/photo-1606782042680-0b5f2b6f4c3c",
+      description: "A delicious pizza",
+      category: "main",
+      ingredients: ["dough", "tomato", "cheese"],
+      numberOfSales: 10,
+      onSale: false,
+      quantity: 0,
     },
     {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
-    },
-    {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
-    },
-    {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
-    },
-    {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
-    },
-    {
-      name: "Pizza Klaus",
-      description:
-        "A delicious pizza with tomato sauce, mozzarella, and pepperoni.",
-      price: 12.99,
-      image:
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      category: "Pizza",
-      contains: ["Gluten", "Dairy", "Eggs"],
+      id: "3",
+      title: "Salad",
+      price: 5,
+      image: "https://images.unsplash.com/photo-1606782042680-0b5f2b6f4c3c",
+      description: "A delicious salad",
+      category: "main",
+      ingredients: ["lettuce", "tomato", "cheese"],
+      numberOfSales: 10,
+      onSale: false,
+      quantity: 0,
     },
   ];
-
   return (
     <>
       <Hero title={title} description="Try something new" />
@@ -92,7 +71,7 @@ const page = () => {
 
         <section className="w-full flex justify-center items-center">
           {/* Filter */}
-          <Menuloop menu={menu} />
+          <Menuloop menu={menuItems} />
         </section>
       </section>
     </>
