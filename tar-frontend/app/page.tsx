@@ -8,6 +8,7 @@ export default function Home() {
     "Feeling snacky? Experience the joy of a great pizza like never before. Let us guide you through a sensation of flavours. Come get lucky!";
 
   return (
+
     <main className="bg-slate-950">
       {/* Hero Section */}
       <section className="flex justify-center items-center h-screen w-screen">
@@ -22,5 +23,6 @@ export default function Home() {
       {/* Section A */}
       <SectionA description={sectionADescription} className="bg-main-dark" />
     </main>
+
   );
 }

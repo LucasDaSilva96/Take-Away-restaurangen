@@ -2,7 +2,7 @@
 
 import Menuloop from "@/components/Menu/Menuloop";
 import Hero from "@/components/shared/Hero";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export interface menuItemResponse {
   id: string;
@@ -17,48 +17,28 @@ export interface menuItemResponse {
   quantity: number;
 }
 
-const page = () => {
+const Page = () => {
   const title = ["Explore.", "Discover.", "Experience."];
 
-  //Static menu items. To be replaced with db fetch
-  const menuItems: menuItemResponse[] = [
-    {
-      id: "1",
-      title: "Pasta",
-      price: 10,
-      image: "https://images.unsplash.com/photo-1606782042680-0b5f2b6f4c3c",
-      description: "A delicious pasta dish",
-      category: "main",
-      ingredients: ["pasta", "tomato", "cheese"],
-      numberOfSales: 10,
-      onSale: false,
-      quantity: 0,
-    },
-    {
-      id: "2",
-      title: "Pizza",
-      price: 15,
-      image: "https://images.unsplash.com/photo-1606782042680-0b5f2b6f4c3c",
-      description: "A delicious pizza",
-      category: "main",
-      ingredients: ["dough", "tomato", "cheese"],
-      numberOfSales: 10,
-      onSale: false,
-      quantity: 0,
-    },
-    {
-      id: "3",
-      title: "Salad",
-      price: 5,
-      image: "https://images.unsplash.com/photo-1606782042680-0b5f2b6f4c3c",
-      description: "A delicious salad",
-      category: "main",
-      ingredients: ["lettuce", "tomato", "cheese"],
-      numberOfSales: 10,
-      onSale: false,
-      quantity: 0,
-    },
-  ];
+  const [menuItems, setMenuItems] = useState<menuItemResponse[]>([]);
+
+  const url = process.env.API_URL;
+  useEffect(() => {
+    const getMenu = async () => {
+      if (url) {
+        const response = await fetch(`${url}/menu`, {
+          method: "GET",
+        });
+        const data = await response.json();
+        setMenuItems(data);
+        console.log(data);
+      } else {
+        console.error("API_URL is not defined");
+      }
+    };
+    getMenu();
+  }, []);
+
   return (
     <>
       <Hero title={title} description="Try something new" />
@@ -71,11 +51,11 @@ const page = () => {
 
         <section className="w-full flex justify-center items-center">
           {/* Filter */}
-          <Menuloop menu={menuItems} />
+          {menuItems && <Menuloop menu={menuItems} />}
         </section>
       </section>
     </>
   );
 };
 
-export default page;
+export default Page;
