@@ -6,11 +6,6 @@ export default function Home() {
   const heroTitle = ["DRINK.", "EAT.", "RELAX."];
   const sectionADescription =
     "Feeling snacky? Experience the joy of a great pizza like never before. Let us guide you through a sensation of flavours. Come get lucky!";
-  const sectionATitle = [
-    "FEELING SNACKY?",
-    "EAT GREAT PIZZA!",
-    "COME GET LUCKY!",
-  ];
 
   return (
     <main className="bg-slate-950">
