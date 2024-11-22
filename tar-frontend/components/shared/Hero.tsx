@@ -87,6 +87,8 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
       className="w-full absolute h-full object-cover z-0"
       src={video}
       autoPlay
+      playsInline
+      preload="auto"
       muted
       loop
     ></video>
@@ -94,7 +96,7 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
   return (
     <>
       <section
-        className={`w-screen h-full flex relative justify-center items-center `}
+        className={`w-screen h-screen flex relative justify-center items-center `}
       >
         <div className="absolute inset-0 z-0">{videoBg}</div>
         <div className="text-main-primary font-motter relative z-10">
@@ -103,7 +105,7 @@ const Hero: React.FC<HeroProps> = ({ title, description, homePage, video }) => {
               {description}
             </p>
           )}
-          <h1 className="flex flex-col text-center font-s text-6xl">
+          <h1 className="flex flex-col text-center font-s text-4xl md:text-6xl">
             {title.map((str, index) => (
               <span key={index + str}>{str}</span>
             ))}
