@@ -1,5 +1,6 @@
 "use client";
 
+import { getMenuItems } from "@/components/Menu/Getter";
 import Menuloop from "@/components/Menu/Menuloop";
 import Hero from "@/components/shared/Hero";
 import React, { useEffect, useState } from "react";
@@ -22,22 +23,13 @@ const Page = () => {
 
   const [menuItems, setMenuItems] = useState<menuItemResponse[]>([]);
 
-  const urlstring = process.env.API_URL;
   useEffect(() => {
-    const getMenu = async () => {
-      if (urlstring) {
-        console.log(urlstring);
-        const response = await fetch(`${urlstring}/menu`, {
-          method: "GET",
-        });
-        const data = await response.json();
-        setMenuItems(data);
-        console.log(data);
-      } else {
-        console.error("API_URL is not defined");
-      }
+    const fetchMenuItems = async () => {
+      const items = await getMenuItems();
+      setMenuItems(items);
     };
-    getMenu();
+
+    fetchMenuItems();
   }, []);
 
   return (
