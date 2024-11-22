@@ -1,10 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
 //Importing the routes
-const menuRouter = require('./routes/menu');
+import menuRouter from './routes/menu.js';
+import orderRouter from './routes/order.js';
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ dotenv.config({ path: './.env' });
 
 // Routes
 app.use('/menu', menuRouter);
+app.use('/order', orderRouter);
 
 app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -27,4 +29,4 @@ app.use((_req, res, next) => {
   next();
 });
 
-module.exports = app;
+export { app };
