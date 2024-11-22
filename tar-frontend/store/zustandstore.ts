@@ -20,13 +20,18 @@ export type CartState = {
   cart: CartProduct[];
   total: number;
   amount: number;
+  menuOpen: boolean;
+  navOpen: boolean;
 };
 
 interface Actions {
   addToCart: (product: CartProduct) => void;
   removeFromCart: (product: CartProduct) => void;
+  clearItemFromCart: (productId: string) => void;
   clearCart: () => void;
   getQuantity: (productId: string) => number;
+  toggleMenu: () => void;
+  toggleNav: () => void;
 }
 
 //const cartKey = process.env.CART_KEY!;
@@ -35,6 +40,27 @@ const useCart = create<CartState & Actions>()((set) => ({
   cart: [],
   total: 0,
   amount: 0,
+  menuOpen: false,
+  navOpen: false,
+
+  toggleMenu: () => {
+    set((state) => {
+      return {
+        ...state,
+        menuOpen: !state.menuOpen,
+        navOpen: false,
+      };
+    });
+  },
+  toggleNav: () => {
+    set((state) => {
+      return {
+        ...state,
+        navOpen: !state.navOpen,
+        menuOpen: false,
+      };
+    });
+  },
 
   addToCart: (product) =>
     set((state) => {
@@ -80,6 +106,18 @@ const useCart = create<CartState & Actions>()((set) => ({
       return {
         ...state,
         prevCart,
+      };
+    });
+  },
+
+  clearItemFromCart: (productId) => {
+    set((state) => {
+      const target = state.cart.find((item) => item.id == productId);
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== productId),
+        total: (state.total -= target!.quantity),
+        amount: (state.amount -= target!.price * target!.quantity),
       };
     });
   },

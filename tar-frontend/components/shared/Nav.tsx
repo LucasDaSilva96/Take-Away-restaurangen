@@ -3,22 +3,18 @@ import { useEffect, useState } from "react";
 import ButtonBase from "./ButtonBase";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import useCart from "@/store/zustandstore";
 
 const Nav = () => {
   //Handle open menu
-  const [open, setOpen] = useState(false);
 
   const [small, setSmall] = useState(false);
   //Toggle open menu
   const toggleOpen = () => {
-    setOpen(!open);
-
-    if (!open) {
-      //Add svg shootout animation here
-
-      console.log("Pang!");
-    }
+    toggleNav();
   };
+
+  const { navOpen, toggleNav } = useCart();
 
   useEffect(() => {
     //Check if screen is small to animate menu correctly
@@ -120,23 +116,23 @@ const Nav = () => {
           >
             <motion.span
               animate={{
-                rotate: open ? 45 : 0,
-                y: open ? 0 : 8,
+                rotate: navOpen ? 45 : 0,
+                y: navOpen ? 0 : 8,
               }}
               transition={{ duration: 0.3 }}
               className="absolute w-6 h-1 bg-main-light rounded"
             />
             <motion.span
               animate={{
-                opacity: open ? 0 : 1,
+                opacity: navOpen ? 0 : 1,
               }}
               transition={{ duration: 0.3 }}
               className="w-6 h-1 bg-main-light rounded"
             />
             <motion.span
               animate={{
-                rotate: open ? -45 : 0,
-                y: open ? 0 : -8,
+                rotate: navOpen ? -45 : 0,
+                y: navOpen ? 0 : -8,
               }}
               transition={{ duration: 0.3 }}
               className="absolute w-6 h-1 bg-main-light rounded"
@@ -146,7 +142,7 @@ const Nav = () => {
       </nav>
       {/* Menu popout */}
       <AnimatePresence>
-        {open && (
+        {navOpen && (
           <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent">
             {/* Background darkner also closes menu on click */}
             <motion.section

@@ -2,19 +2,55 @@
 
 import useCart from "@/store/zustandstore";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ButtonBase from "./ButtonBase";
+import Link from "next/link";
+import Image from "next/image";
 
 const Cartoverlay = () => {
   // States from zustand
-  const { cart, addToCart, clearCart, removeFromCart, total, amount } =
-    useCart();
+  const {
+    cart,
+    addToCart,
+    clearCart,
+    removeFromCart,
+    total,
+    amount,
+    menuOpen,
+    toggleMenu,
+    getQuantity,
+    clearItemFromCart,
+  } = useCart();
+  const [small, setSmall] = useState(false);
 
-  const [cartOpen, setCartOpen] = useState<boolean>(false);
+  //Toggle open menu
+  const toggleOpen = () => {
+    toggleMenu();
+  };
+
+  useEffect(() => {
+    //Check if screen is small to animate menu correctly
+    const isSmall = () => {
+      if (window.innerWidth <= 1024) {
+        setSmall(true);
+      } else {
+        setSmall(false);
+      }
+    };
+
+    isSmall();
+
+    window.addEventListener("resize", isSmall);
+
+    return () => {
+      window.removeEventListener("resize", isSmall);
+    };
+  }, []);
 
   return (
     <>
       <button
-        onClick={() => setCartOpen(!cartOpen)}
+        onClick={toggleOpen}
         className="fixed bottom-5 right-5 w-20 h-20 bg-main-secondary p-4 rounded-full shadow-lg hover:scale-105 transition-all duration-300 z-10"
       >
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,9 +98,91 @@ const Cartoverlay = () => {
       </button>
 
       {/** Cart overlay with current contents */}
-      {cartOpen && (
-        <section className="fixed h-screen w-screen z-10 bg-main-light"></section>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent">
+            {/* Background darkner also closes menu on click */}
+            <motion.section
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={toggleOpen}
+              className="inset-0  w-full h-full bg-black bg-opacity-45"
+              id="bg"
+            ></motion.section>
+
+            {/* Menu */}
+            <motion.section
+              initial={{ x: small ? "100%" : "200%" }}
+              animate={{ x: small ? "0%" : "100%" }}
+              exit={{ x: small ? "100%" : "200%" }}
+              transition={{ duration: 0.3, ease: "circInOut" }}
+              className="z-30 w-screen lg:w-6/12 min-h-screen flex flex-col gap-20 justify-center items-center bg-main-light absolute top-0 "
+              id="menu"
+            >
+              <section className="w-full flex flex-col p-4">
+                {cart && cart.length > 0 && (
+                  <section>
+                    {cart.map((item, index) => (
+                      <article
+                        key={item.id}
+                        className="w-full flex justify-between rounded-md items-center p-4 border-2 border-main-primary"
+                      >
+                        <div className="flex justify-center items-center">
+                          <p>{item.title}</p>
+                          <Image
+                            src={item.image}
+                            alt={item.title + "Product Image"}
+                            width={100}
+                            height={100}
+                          />
+                        </div>
+
+                        <section className="flex justify-center items-center gap-2 font-motter text-2xl">
+                          <button
+                            onClick={() => removeFromCart(item)}
+                            className="border-none bg-transparent text-main-primary"
+                          >
+                            -
+                          </button>
+                          <button className="border-none bg-transparent text-main-primary">
+                            {getQuantity(item.id)}
+                          </button>
+                          <button
+                            onClick={() => addToCart(item)}
+                            className="border-none bg-transparent text-main-primary"
+                          >
+                            +
+                          </button>
+                        </section>
+                        <section>
+                          <p>
+                            {item.price}€ x {getQuantity(item.id)}
+                          </p>
+                        </section>
+                      </article>
+                    ))}
+                  </section>
+                )}
+
+                {cart && cart.length == 0 && (
+                  <p className="text-main-primary font-motter text-xl md:text-3xl text-center">
+                    Cart empty. <br /> Check out the{" "}
+                    <Link
+                      onClick={toggleOpen}
+                      className="underline hover:text-main-secondary transition-all duration-300"
+                      href={"/menu"}
+                    >
+                      Menu
+                    </Link>
+                  </p>
+                )}
+              </section>
+            </motion.section>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </>
   );
 };

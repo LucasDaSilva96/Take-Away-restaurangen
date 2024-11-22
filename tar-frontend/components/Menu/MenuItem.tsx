@@ -24,7 +24,8 @@ interface menuItemResponse {
 
 const MenuItem: React.FC<menuItemResponse> = ({ product }) => {
   //Grab state and handlers from zustand
-  const { addToCart, cart, removeFromCart, getQuantity } = useCart();
+  const { addToCart, cart, removeFromCart, getQuantity, clearItemFromCart } =
+    useCart();
 
   const [isAdded, setIsAdded] = useState<boolean>(false);
 
@@ -59,7 +60,7 @@ const MenuItem: React.FC<menuItemResponse> = ({ product }) => {
         {isAdded ? (
           <ButtonBase
             text="Remove from order"
-            onClick={() => removeFromCart(product)}
+            onClick={() => clearItemFromCart(product.id)}
             classname="text-main-light bg-main-secondary"
           />
         ) : (
