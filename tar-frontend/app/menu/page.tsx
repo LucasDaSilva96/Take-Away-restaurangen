@@ -1,5 +1,6 @@
 "use client";
 
+import { getMenuItems } from "@/components/Menu/Getter";
 import Menuloop from "@/components/Menu/Menuloop";
 import Hero from "@/components/shared/Hero";
 import React, { useEffect, useState } from "react";
@@ -22,26 +23,22 @@ const Page = () => {
 
   const [menuItems, setMenuItems] = useState<menuItemResponse[]>([]);
 
-  const url = process.env.API_URL;
   useEffect(() => {
-    const getMenu = async () => {
-      if (url) {
-        const response = await fetch(`${url}/menu`, {
-          method: "GET",
-        });
-        const data = await response.json();
-        setMenuItems(data);
-        console.log(data);
-      } else {
-        console.error("API_URL is not defined");
-      }
+    const fetchMenuItems = async () => {
+      const items = await getMenuItems();
+      setMenuItems(items);
     };
-    getMenu();
+
+    fetchMenuItems();
   }, []);
 
   return (
     <>
-      <Hero title={title} description="Try something new" />
+      <Hero
+        title={title}
+        description="Try something new"
+        video="https://www.luckyfolks.fr/wp-content/uploads/2022/03/lucky-folks-pub-2021-v2-1.mp4"
+      />
       <section className="w-screen min-h-screen flex flex-col p-6 pt-20 bg-main-secondaryLight">
         <section className="w-full flex justify-center items-center text-center">
           <h3 className="font-motter text-4xl md:text-5xl lg:text-6xl text-main-primary">
