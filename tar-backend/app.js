@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 
 //Importing the routes
 const menuRouter = require('./routes/menu');
+const authRouter = require('./routes/auth')
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ dotenv.config({ path: './.env' });
 
 // Routes
 app.use('/menu', menuRouter);
+app.use("/auth", authRouter )
 
 app.use((_req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
