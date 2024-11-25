@@ -9,7 +9,7 @@ export const getMenu = async (_req, res) => {
     // Return the menu items
     res.status(200).json({
       message: 'All menu items successfully retrieved',
-      menu,
+      data: menu,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -49,7 +49,7 @@ export const createMenu = async (req, res) => {
     // Return a success message
     res.status(201).json({
       message: 'Menu item created successfully',
-      menu,
+      data: menu,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -67,7 +67,7 @@ export const getSingleMenu = async (req, res) => {
     // Return the menu item
     res.status(200).json({
       message: 'Menu item successfully retrieved',
-      menu,
+      data: menu,
     });
   } catch (error) {
     res.status(404).json({ message: 'Menu item not found' });
@@ -125,7 +125,7 @@ export const updateMenu = async (req, res) => {
     // Return a success message
     res.status(200).json({
       message: 'Menu item updated successfully',
-      menu,
+      data: menu,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
