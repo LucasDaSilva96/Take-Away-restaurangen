@@ -1,5 +1,9 @@
 import { Order } from '../models/order.js';
 import User from '../models/Users.js';
+import {
+  sendCancellation,
+  sendConfirmation,
+} from '../utils/sendConfirmation.js';
 
 // Get all orders
 export const getOrders = async (_req, res) => {
@@ -34,7 +38,7 @@ export const getSingleOrder = async (req, res) => {
 
 // Create a new order
 export const createOrder = async (req, res) => {
-  const { items, message, userId } = req.body;
+  const { items, message, userId, email } = req.body;
   try {
     // Count the total price of the items
     const total = items.reduce(
@@ -77,6 +81,10 @@ export const createOrder = async (req, res) => {
     };
 
     const order = await Order.create(newOrder);
+
+    if (email) {
+      await sendConfirmation(email, order.id);
+    }
 
     res.status(201).json({
       message: 'Successfully created order',
@@ -155,7 +163,7 @@ export const deleteOrder = async (req, res) => {
     const { id } = req.params;
     if (!id) throw new Error('No id provided');
 
-    const order = await Order.findOne({ id });
+    const order = await Order.findOne({ id }).populate('user');
 
     if (!order) throw new Error('No order found with the provided id.');
 
@@ -167,6 +175,10 @@ export const deleteOrder = async (req, res) => {
       await user.save();
     }
     await Order.findByIdAndDelete(order._id);
+
+    if (order.user) {
+      await sendCancellation(order.user.email, order.id);
+    }
 
     res.status(200).json({
       message: 'Order successfully deleted',
