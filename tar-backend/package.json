@@ -1,4 +1,8 @@
 {
+  "name": "tar-backend",
+  "version": "1.0.0",
+  "description": "Backend for Take away restaurant",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
@@ -19,6 +23,3 @@
     "uuid": "^11.0.3"
   }
 }
-
-
-
