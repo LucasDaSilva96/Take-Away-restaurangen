@@ -1,4 +1,5 @@
 import { Menu } from '../models/menu.js';
+import { uploadImage } from '../utils/uploadImage.js';
 
 // Get all menu items
 export const getMenu = async (_req, res) => {
@@ -18,12 +19,22 @@ export const getMenu = async (_req, res) => {
 // Create a new menu item
 export const createMenu = async (req, res) => {
   try {
+    let imageUrl = null;
     // Get the title, price, description, category and ingredients from the request body
     const { title, price, description, category, ingredients } = req.body;
     // Check if any of the fields are empty
     if (!title || !price || !description || !category || !ingredients) {
       return res.status(400).json({ message: 'All fields are required' });
     }
+
+    if (req.file) {
+      const url = await uploadImage(req.file);
+      if (!url) {
+        return res.status(400).json({ message: 'Image upload failed' });
+      }
+      imageUrl = url;
+    }
+
     // Create a new menu item
     const menu = new Menu({
       title,
@@ -31,6 +42,7 @@ export const createMenu = async (req, res) => {
       description,
       category,
       ingredients,
+      image: imageUrl ? imageUrl : null,
     });
     // Save the menu item to the database
     await menu.save();
@@ -74,6 +86,8 @@ export const updateMenu = async (req, res) => {
     'id',
     'image',
   ];
+
+  let imageUrl = null;
   try {
     // Check if the fields to be updated are allowed
     for (const key in req.body) {
@@ -86,10 +100,19 @@ export const updateMenu = async (req, res) => {
       return res.status(404).json({ message: 'Menu item not found' });
     }
 
+    if (req.file) {
+      const url = await uploadImage(req.file);
+      if (!url) {
+        return res.status(400).json({ message: 'Image upload failed' });
+      }
+      imageUrl = url;
+    }
+
     // Merge the existing menu item with the new data
     const newUpdatedMenu = {
       ...menuItem._doc,
       ...req.body,
+      image: imageUrl ? imageUrl : menuItem.image,
     };
     // Find the menu item by id and update it
     const menu = await Menu.findOneAndUpdate(
