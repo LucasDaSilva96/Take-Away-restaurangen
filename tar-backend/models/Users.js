@@ -1,28 +1,29 @@
-import mongoose from "mongoose";
-import uuid from "uuid"
+import mongoose from 'mongoose';
+import uuid from 'uuid';
 
-
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     id: {
-        type: String,
-        default: uuid.v4()
+      type: String,
+      default: uuid.v4(),
     },
     email: {
-        type: String,
-        required: [true, "Valid email is required"]
+      type: String,
+      required: [true, 'Valid email is required'],
     },
     password: {
-        type: String,
-        required: [true, "Valid password is required"]
+      type: String,
+      required: [true, 'Valid password is required'],
     },
     role: {
-        type: String,
-        default: "Customer"
+      type: String,
+      default: 'Customer',
     },
-    orders: []
-},{collection: "Users"})
+    orders: [],
+  },
+  { collection: 'Users' }
+);
 
+const User = mongoose.model('User', userSchema);
 
-const User = mongoose.model("User", userSchema)
-
-module.exports = User
+export default User;
