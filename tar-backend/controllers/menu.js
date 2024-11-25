@@ -92,7 +92,7 @@ export const updateMenu = async (req, res) => {
     // Check if the fields to be updated are allowed
     for (const key in req.body) {
       if (!allowedUpdates.includes(key)) {
-        return res.status(400).json({ message: 'Invalid field' });
+        return res.status(400).json({ message: `Invalid field: ${key}` });
       }
     }
     const menuItem = await Menu.findOne({ id: req.params.id });
