@@ -106,7 +106,7 @@ const Nav = () => {
         <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
           <motion.section
             initial={{ opacity: 1 }}
-            animate={{ opacity: open ? 0 : 1 }}
+            animate={{ opacity: navOpen ? 0 : 1 }}
             transition={{ duration: 0.3 }}
           >
             <ButtonBase
@@ -148,10 +148,8 @@ const Nav = () => {
       </nav>
       {/* Menu popout */}
       <AnimatePresence>
-
         {navOpen && (
           <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent">
-
             {/* Background darkner also closes menu on click */}
             <motion.section
               initial={{ opacity: 0 }}
