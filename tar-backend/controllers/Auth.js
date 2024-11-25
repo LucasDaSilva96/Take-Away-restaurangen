@@ -1,6 +1,6 @@
-const bcrypt = require("bcrypt");
-const User = require("../models/Users")
-const {sign} = require("jsonwebtoken");
+import bcrypt from "bcrypt"
+import User from "../models/Users"
+import {sign} from "jsonwebtoken"
 
 
 //Create new account

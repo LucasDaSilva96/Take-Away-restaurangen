@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const uuid = require('uuid');
+import mongoose from "mongoose";
+import uuid from "uuid"
 
 
 const userSchema = new mongoose.Schema({
