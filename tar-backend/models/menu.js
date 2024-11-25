@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const uuid = require('uuid');
+import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 // Define the schema for the menu
 const menuSchema = new mongoose.Schema({
   id: {
     type: String,
-    default: uuid.v4(),
+    default: uuidv4(),
   },
   title: {
     type: String,
@@ -44,4 +44,4 @@ const menuSchema = new mongoose.Schema({
 // Create a model for the menu
 const Menu = mongoose.model('Menu', menuSchema);
 // Export the model
-module.exports = Menu;
+export { Menu, menuSchema };

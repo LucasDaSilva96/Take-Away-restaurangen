@@ -1,5 +1,5 @@
-const { default: mongoose } = require('mongoose');
-const app = require('./app');
+import mongoose from 'mongoose';
+import { app } from './app.js';
 
 // This is the entry point of the application
 const PORT = process.env.PORT || 8000;
