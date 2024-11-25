@@ -4,7 +4,7 @@ import { Menu } from '../models/menu.js';
 export const getMenu = async (_req, res) => {
   try {
     // Get all menu items from the database
-    const menu = await MenuModel.find();
+    const menu = await Menu.find();
     // Return the menu items
     res.status(200).json({
       message: 'All menu items successfully retrieved',
@@ -25,7 +25,7 @@ export const createMenu = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
     // Create a new menu item
-    const menu = new MenuModel({
+    const menu = new Menu({
       title,
       price,
       description,
