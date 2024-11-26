@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { menuSchema } from './menu.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,6 +31,10 @@ const orderSchema = new mongoose.Schema({
   message: {
     type: String,
     default: '',
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
 });
 

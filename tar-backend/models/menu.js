@@ -39,6 +39,10 @@ const menuSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  quantity: {
+    type: Number,
+    default: 1,
+  },
 });
 
 // Create a model for the menu
