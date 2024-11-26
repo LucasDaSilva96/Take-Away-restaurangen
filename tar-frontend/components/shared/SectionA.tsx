@@ -16,12 +16,8 @@ const SectionA: React.FC<SectionAProps> = ({ className, description }) => {
   return (
     // Main section wrapper
     <section
-<<<<<<< HEAD
       className={`w-screen min-h-screen flex flex-col items-center px-8 py-12 bg-main-secondaryLight ${className}`}
       // Inline background color
-=======
-      className={`w-screen min-h-screen flex flex-col bg-main-secondary items-center px-8 py-12 ${className}`}
->>>>>>> jensDev
     >
       {/* Text Content */}
       <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 text-main-primary mb-12">
