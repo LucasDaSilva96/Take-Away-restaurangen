@@ -1,4 +1,4 @@
-import { menuItemResponse } from "@/app/menu/page";
+import { menuItemResponse } from "@/app/(Pages)/menu/page";
 import MenuItem from "./MenuItem";
 
 interface MenuloopProps {
