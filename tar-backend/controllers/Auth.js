@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../models/Users.js';
-import { sign } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 //Create new account
 export const signupUser = async (req, res) => {
@@ -54,7 +54,7 @@ export const signInUser = async (req, res) => {
         return res.status(400).json({ message: 'Invalid password' });
       }
 
-      const token = sign(
+      const token = jwt.sign(
         { email: email, userId: userFound._id },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
