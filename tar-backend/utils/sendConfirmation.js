@@ -72,3 +72,24 @@ export const sendReadyForPickup = async (email, orderId) => {
     throw new Error(error.message);
   }
 };
+
+// Function to inform user that order is locked
+export const sendOrderLocked = async (email, orderId) => {
+  try {
+    await transporter.sendMail({
+      from: '"🍕Take Away Restaurant🍕"<<smtp@mailtrap.io>',
+      to: email,
+      subject: 'Order Locked❗',
+      text: `Your order with id #${orderId} is locked and cannot be cancelled.`,
+      html: `
+      <div style="background-color: #f8f9fa; padding: 20px;">
+      <p>Your order with id <strong>#${orderId}</strong> is locked and cannot be cancelled.</p>
+      <p>We are currently processing your order and will notify you once it is ready for pickup.</p>
+      <p>If you have any questions, please contact us at 123-456-7890.</p>
+      </div>
+      `,
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

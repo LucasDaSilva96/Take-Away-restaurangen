@@ -168,6 +168,15 @@ export const updateOrder = async (req, res) => {
     if (req.body.status === 'cancelled' && order.status === 'cancelled')
       throw new Error('This order is already cancelled.');
 
+    // If the order is locked, send an email to the user
+    if (req.body.locked === true) {
+      if (order.user) {
+        const user = await User.findById(order.user);
+        if (!user) throw new Error('No user found with the provided id');
+        await sendOrderLocked(user.email, order.id);
+      }
+    }
+
     let updatedOrder = null;
 
     if (req.body.items) {
