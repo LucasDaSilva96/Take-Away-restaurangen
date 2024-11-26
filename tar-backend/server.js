@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 8000;
 // This is the connection-url to the database
 const { ATLAS_URI } = process.env;
 
+
+
 // This is the connection to the database
 mongoose
   .connect(ATLAS_URI)
