@@ -154,7 +154,6 @@ const Nav = () => {
       {/* Menu popout */}
       <AnimatePresence>
         {navOpen && (
-          <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent">
           <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent z-30">
             {/* Background darkner also closes menu on click */}
             <motion.section

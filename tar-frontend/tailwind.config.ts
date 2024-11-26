@@ -22,6 +22,7 @@ export default {
           light: "#EFE1D9",
           navy: "#191D46",
           moss: "#003B2D",
+          transparentBlack: "rgba(38, 33, 33, 0.6)",
         },
       },
       backgroundImage: {
