@@ -1,5 +1,7 @@
 import Hero from "@/components/shared/Hero";
 import SectionA from "@/components/shared/SectionA";
+import SectionC from "@/components/shared/SectionC";
+import SectionE from "@/components/shared/Footer";
 
 export default function Home() {
   const heroDescription = "pizza like you never had it";
@@ -21,6 +23,8 @@ export default function Home() {
 
       {/* Section A */}
       <SectionA description={sectionADescription} className="bg-main-dark" />
+      <SectionC />
+      <SectionE />
     </main>
   );
 }

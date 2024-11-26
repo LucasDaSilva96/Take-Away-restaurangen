@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image"; // Import Next.js Image component for optimized images
+import Image from "next/image";
 
 // Define the props interface for the component
 interface SectionAProps {
@@ -16,23 +16,22 @@ const SectionA: React.FC<SectionAProps> = ({ className, description }) => {
   return (
     // Main section wrapper
     <section
-      className={`w-screen min-h-screen flex flex-col items-center px-8 py-12 ${className}`}
-      style={{ backgroundColor: "#B42638" }} // Inline background color
+      className={`w-screen min-h-screen flex flex-col bg-main-secondary items-center px-8 py-12 ${className}`}
     >
       {/* Text Content */}
-      <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 text-[#EBA13D] mb-12">
+      <div className="max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-12 text-main-primary mb-12">
         {/* Left Column */}
         <div className="font-motter">
           <p
             className="text-[30.62px] leading-[36.74px]"
             style={{
-              fontWeight: 400, // Set font weight for left column
+              fontWeight: 400, // Set font weight for left coluumn
             }}
           >
             {description} {/* Left column text from props */}
           </p>
         </div>
-        {/* Right Column */}
+        {/* ´Right Column */}
         <div className="font-alumni">
           <p className="text-base md:text-lg leading-relaxed break-words">
             {rightText} {/* Hardcoded text for right column */}
