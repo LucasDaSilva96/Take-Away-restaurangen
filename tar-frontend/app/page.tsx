@@ -1,5 +1,7 @@
 import Hero from "@/components/shared/Hero";
 import SectionA from "@/components/shared/SectionA";
+import SectionC from "@/components/shared/SectionC";
+import SectionE from "@/components/shared/Footer";
 
 import { hero_video } from "@/constants/constants";
 
@@ -20,6 +22,8 @@ const sectionADescription =
     </section>
       {/* Section A */}
       <SectionA description={sectionADescription} className="bg-main-dark" />
+      <SectionC />
+      <SectionE />
     </main>
 
   );
