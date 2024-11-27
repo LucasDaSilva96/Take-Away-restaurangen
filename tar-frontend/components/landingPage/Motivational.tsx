@@ -7,7 +7,7 @@ const links = [
   { href: "/about", label: "vision" },
 ];
 
-export const SectionB = () => {
+const Motivational = () => {
   return (
     <div className="bg-main-light py-24 ">
       <div className="flex justify-center mb-32">
@@ -37,3 +37,5 @@ export const SectionB = () => {
     </div>
   );
 };
+
+export default Motivational

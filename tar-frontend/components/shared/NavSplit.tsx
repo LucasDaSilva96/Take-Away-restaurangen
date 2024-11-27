@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-const SectionC: React.FC = () => {
+const NavSplit: React.FC = () => {
   return (
     <section className="w-full">
       {/* Grid Layout for Menu and Hours */}
@@ -31,4 +31,4 @@ const SectionC: React.FC = () => {
   );
 };
 
-export default SectionC;
+export default NavSplit;

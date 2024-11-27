@@ -7,8 +7,8 @@ interface SectionAProps {
   description: string; // Description text for the left column
 }
 
-// Functional component for SectionA
-const SectionA: React.FC<SectionAProps> = ({ className, description }) => {
+// Functional component for Intro
+const Intro: React.FC<SectionAProps> = ({ className, description }) => {
   // Right column hardcoded text
   const rightText =
     "Feeling snacky and looking for something truly satisfying? Let us take you on a journey of delicious flavors with our expertly crafted pizzas. Made with the freshest ingredients, every slice is packed with bold, irresistible tastes that will leave your taste buds dancing. Whether you love the comfort of a classic or the excitement of something new, our menu has something to satisfy every craving. From the first bite to the last, experience the joy and magic of great pizza like never before. Don’t wait—your perfect slice is calling!";
@@ -54,4 +54,4 @@ const SectionA: React.FC<SectionAProps> = ({ className, description }) => {
   );
 };
 
-export default SectionA; // Export the component
+export default Intro; // Export the component

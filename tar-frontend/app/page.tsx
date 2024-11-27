@@ -1,15 +1,16 @@
-import { SectionB } from "@/components/landingPage/SectionB";
 import Hero from "@/components/shared/Hero";
-import SectionA from "@/components/shared/SectionA";
-import SectionC from "@/components/shared/SectionC";
-import SectionE from "@/components/shared/Footer";
+import Intro from "@/components/shared/Intro";
 
 import { hero_video } from "@/constants/constants";
+import Footer from "@/components/shared/Footer";
+
+import NavSplit from "@/components/shared/NavSplit";
+import Motivational from "@/components/Landingpage/Motivational";
 
 export default function Home() {
   const description = "pizza like you never had it";
   const title = ["DRINK.", "EAT.", "RELAX."];
-  const sectionADescription =
+  const Introdesc =
     "Feeling snacky? Experience the joy of a great pizza like never before. Let us guide you through a sensation of flavours. Come get lucky!";
   return (
     <main className="bg-slate-950">
@@ -21,13 +22,14 @@ export default function Home() {
           video={hero_video}
         />
       </section>
-      {/* Section A */}
-      <SectionA description={sectionADescription} className="bg-main-dark" />
 
-      <SectionC />
-      <SectionE />
+      <Intro description={Introdesc} className="bg-main-dark" />
+        <Motivational />
 
-      <SectionB />
+
+      <NavSplit />
+      <Footer />
+
     </main>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import ButtonBase from "./ButtonBase";
 
-const SectionE: React.FC = () => {
+const Footer: React.FC = () => {
   return (
     <section className="w-full bg-main-secondary text-center py-12 px-8">
       {/* Ready to order */}
@@ -95,4 +95,4 @@ const SectionE: React.FC = () => {
   );
 };
 
-export default SectionE;
+export default Footer;
