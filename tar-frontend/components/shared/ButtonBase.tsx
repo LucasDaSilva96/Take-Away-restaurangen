@@ -9,7 +9,10 @@ const ButtonBase: React.FC<ButtonBaseProps> = ({
   classname,
   text,
   type = "button",
+
 }) => {
+
+  //Cool cookies
   return (
     <button
       type={type} //
