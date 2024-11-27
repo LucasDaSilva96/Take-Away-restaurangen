@@ -4,8 +4,11 @@ import ButtonBase from "./ButtonBase";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import useCart from "@/store/zustandstore";
+import { useRouter } from "next/navigation";
 
 const Nav = () => {
+  const router = useRouter();
+
   //Handle open menu
 
   const [small, setSmall] = useState(false);
@@ -175,7 +178,11 @@ const Nav = () => {
               className=" w-screen lg:w-6/12 h-screen flex flex-col gap-20 z-20 justify-center items-center bg-main-moss absolute top-0 before:bg-top before:bg-no-repeat before:bg-[url('/images/noise2.png')] before:bg-[length:100%_auto] before:content-[''] before:block before:h-full before:left-0 before:pointer-events-none before:absolute before:top-0 before:w-full before:z-0"
               id="menu"
             >
-              <button className="absolute bottom-5 right-5 w-12 h-12 border-2 border-main-primary rounded-full hover:scale-105 transition-all duration-300">
+              {/* Admin login button */}
+              <button
+                onClick={() => router.push("/signin-admin")}
+                className="absolute bottom-5 right-5 w-12 h-12 border-2 border-main-primary rounded-full hover:scale-105 transition-all duration-300"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
