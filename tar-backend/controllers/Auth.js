@@ -67,3 +67,24 @@ export const signInUser = async (req, res) => {
       });
     });
 };
+
+export const getUserDetails = async (req, res) => {
+
+
+  const {JWT} = req.body;
+
+ try{
+
+   const data = jwt.decode(JWT).email
+
+   const user = await User.findOne({email: data})
+
+
+   if(user){
+     return res.status(200).json({message: "User found", data : user})
+   }
+
+ }catch (err){
+   return res.status(404).json({message: "No user found"})
+ }
+}
