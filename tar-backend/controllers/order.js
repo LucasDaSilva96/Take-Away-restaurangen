@@ -1,10 +1,15 @@
 import { Order } from '../models/order.js';
+import { Menu } from '../models/menu.js';
 import User from '../models/Users.js';
 import {
   sendCancellation,
   sendConfirmation,
   sendReadyForPickup,
 } from '../utils/sendConfirmation.js';
+import {
+  updateMenuInventory,
+  updateNumberOfSalesOfMenu,
+} from '../utils/updateMenuStats.js';
 
 // Get all orders, or filter by today, this week, this month, this year
 export const getOrders = async (req, res) => {
@@ -93,6 +98,8 @@ export const createOrder = async (req, res) => {
     );
     if (total === 0) throw new Error('Total cannot be 0');
 
+    if (items.length === 0) throw new Error('Items cannot be empty');
+
     // If userId is provided, find the user and create an order for them
     if (userId) {
       const user = await User.findOne({ id: userId });
@@ -100,15 +107,19 @@ export const createOrder = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      items.forEach((obj) => (obj.numberOfSales += 1));
-
       const newOrder = {
         items,
         total,
         message,
         user: user._id,
       };
+
       const order = await Order.create(newOrder);
+      // Check if the inventory is enough for the items, and update the inventory
+      await updateMenuInventory(order.items);
+
+      // Update the number of sales for the items
+      await updateNumberOfSalesOfMenu(order.items);
 
       user.orders.push(order);
       await user.save();
@@ -118,23 +129,29 @@ export const createOrder = async (req, res) => {
       return res.status(201).json({
         message: 'Successfully created order',
         id: order.id,
-        data: newOrder,
+        data: order,
       });
     }
+
+    if (!email) throw new Error('Email is required for guest orders');
 
     // If userId is not provided, create an order without a user
     const newOrder = {
       items,
       total,
       message,
+      guestEmail: email,
     };
 
     const order = await Order.create(newOrder);
 
-    // If email is provided, send confirmation email to the guest - user
-    if (email) {
-      await sendConfirmation(email, order.id);
-    }
+    // Check if the inventory is enough for the items, and update the inventory
+    await updateMenuInventory(order.items);
+
+    // Update the number of sales for the items
+    await updateNumberOfSalesOfMenu(order.items);
+
+    await sendConfirmation(email, order.id);
 
     res.status(201).json({
       message: 'Successfully created order',

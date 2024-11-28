@@ -36,6 +36,10 @@ const orderSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  guestEmail: {
+    type: String,
+    default: '',
+  },
 });
 
 // Create a model for the order

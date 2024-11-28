@@ -28,7 +28,6 @@ export const sendConfirmation = async (email, orderId, total) => {
       <div style="background-color: #f8f9fa; padding: 20px;">
       <p>Your order with id <strong>#${orderId}</strong> has been confirmed and is being processed. We will notify you once your order is ready for pickup.</p>
       <p>Est. time: 20 mins</p>
-      <button style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Pay now ${total}$</button>
       <p>Thank you for choosing Take Away Restaurant.</p>
       </div>
       `,
