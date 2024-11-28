@@ -29,6 +29,9 @@ const Page = () => {
       setMenuItems(items);
     };
 
+
+    console.log("Running")
+
     fetchMenuItems();
   }, []);
 

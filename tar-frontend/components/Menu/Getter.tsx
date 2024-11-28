@@ -9,15 +9,16 @@ export async function getMenuItems() {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store", // or 'force-cache' depending on your needs
+      cache: "no-store",
     });
 
     if (!response.ok) {
       throw new Error("Failed to fetch menu items");
     }
-
     const data = await response.json();
-    return data.menu;
+    return data.data;
+
+
   } catch (error) {
     console.error("Error fetching menu items:", error);
     return [];

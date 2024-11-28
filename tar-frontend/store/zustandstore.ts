@@ -12,7 +12,7 @@ interface menuItemResponse {
   onSale: boolean;
 }
 
-interface CartProduct extends menuItemResponse {
+export interface CartProduct extends menuItemResponse {
   quantity: number;
 }
 
