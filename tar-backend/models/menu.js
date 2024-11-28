@@ -43,6 +43,11 @@ const menuSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
+  inventory: {
+    type: Number,
+    required: [true, 'Inventory is required'],
+    min: 0,
+  },
 });
 
 // Create a model for the menu

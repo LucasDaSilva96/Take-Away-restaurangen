@@ -18,13 +18,24 @@ export const getMenu = async (_req, res) => {
 
 // Create a new menu item
 export const createMenu = async (req, res) => {
+  const requiredFields = [
+    'title',
+    'price',
+    'description',
+    'category',
+    'ingredients',
+    'inventory',
+  ];
   try {
     let imageUrl = null;
     // Get the title, price, description, category and ingredients from the request body
-    const { title, price, description, category, ingredients } = req.body;
+    const { title, price, description, category, ingredients, inventory } =
+      req.body;
     // Check if any of the fields are empty
-    if (!title || !price || !description || !category || !ingredients) {
-      return res.status(400).json({ message: 'All fields are required' });
+    for (const field of requiredFields) {
+      if (!req.body[field]) {
+        return res.status(400).json({ message: `${field} is required` });
+      }
     }
 
     if (req.file) {
@@ -42,7 +53,8 @@ export const createMenu = async (req, res) => {
       description,
       category,
       ingredients,
-      image: imageUrl ? imageUrl : null,
+      inventory: parseInt(inventory),
+      image: imageUrl ? imageUrl : 'https://placehold.co/600x400',
     });
     // Save the menu item to the database
     await menu.save();
@@ -85,6 +97,7 @@ export const updateMenu = async (req, res) => {
     'ingredients',
     'id',
     'image',
+    'inventory',
   ];
 
   let imageUrl = null;
