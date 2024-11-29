@@ -17,4 +17,6 @@ export interface Menu_Get extends Menu_Post {
   id: string;
   onSale: boolean;
   timestamp: string;
+  numberOfSales: number;
+  image: string;
 }

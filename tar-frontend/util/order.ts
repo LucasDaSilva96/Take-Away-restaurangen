@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { catchError } from './catchError';
 import { Order_Post } from '@/types/order';
+import { BASE_API_URL } from '@/constants/localStorageKeys';
 
 // The BASE_API_URL is defined in the .env file and is used to make requests to the backend API.
-const BASE_API_URL = process.env.API_URL!;
 
 type Order_Get = {
   sort: 'today' | 'week' | 'month' | 'year' | 'all';

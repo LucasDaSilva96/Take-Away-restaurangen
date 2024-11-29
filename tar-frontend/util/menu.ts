@@ -1,8 +1,8 @@
 import { Menu_Get, Menu_Post } from '@/types/menu';
 import axios from 'axios';
 import { catchError } from './catchError';
+import { BASE_API_URL } from '@/constants/localStorageKeys';
 // The BASE_API_URL is defined in the .env file and is used to make requests to the backend API.
-const BASE_API_URL = process.env.API_URL!;
 
 // getMenu is an async function that makes a GET request to the /menu endpoint of the backend API. It returns an array of Menu_Get objects.
 export async function getMenu() {
