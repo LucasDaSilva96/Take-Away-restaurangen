@@ -1,5 +1,4 @@
 import { Order } from '../models/order.js';
-import { Menu } from '../models/menu.js';
 import User from '../models/Users.js';
 import {
   sendCancellation,
