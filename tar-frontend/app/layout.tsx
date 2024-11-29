@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${Motter.variable} ${Heart.variable} ${Alumni.variable} bg-main-light antialiased`}
+        className={`${Motter.variable} ${Heart.variable} ${Alumni.variable} bg-main-light antialiased overflow-x-hidden no-scrollbar`}
       >
         <Nav />
         <Cartoverlay />
