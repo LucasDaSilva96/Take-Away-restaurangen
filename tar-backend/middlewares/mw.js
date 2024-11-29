@@ -1,4 +1,4 @@
-import User from '../models/Users';
+import User from '../models/Users.js';
 import jwt from 'jsonwebtoken';
 export const checkAuth = (req, res, next) => {
   try {
