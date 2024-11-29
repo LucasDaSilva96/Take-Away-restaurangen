@@ -38,8 +38,8 @@ export const createMenu = async (req, res) => {
       }
     }
 
-    if (req.file) {
-      const url = await uploadImage(req.file);
+    if (req.image) {
+      const url = await uploadImage(req.image);
       if (!url) {
         return res.status(400).json({ message: 'Image upload failed' });
       }
@@ -113,8 +113,8 @@ export const updateMenu = async (req, res) => {
       return res.status(404).json({ message: 'Menu item not found' });
     }
 
-    if (req.file) {
-      const url = await uploadImage(req.file);
+    if (req.image) {
+      const url = await uploadImage(req.image);
       if (!url) {
         return res.status(400).json({ message: 'Image upload failed' });
       }
