@@ -1,5 +1,4 @@
 import { Order } from '../models/order.js';
-import { Menu } from '../models/menu.js';
 import User from '../models/Users.js';
 import {
   sendCancellation,
@@ -25,7 +24,7 @@ export const getOrders = async (req, res) => {
       orders = await Order.find({
         timestamp: { $gte: today, $lt: tomorrow },
       }).populate('user');
-    } else if (query.sort === 'thisWeek') {
+    } else if (query.sort === 'week') {
       const startOfWeek = new Date(today);
       startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
       startOfWeek.setHours(0, 0, 0, 0);
@@ -34,7 +33,7 @@ export const getOrders = async (req, res) => {
       orders = await Order.find({
         timestamp: { $gte: startOfWeek, $lt: endOfWeek },
       }).populate('user');
-    } else if (query.sort === 'thisMonth') {
+    } else if (query.sort === 'month') {
       const startOfMonth = new Date(today);
       startOfMonth.setDate(1);
       startOfMonth.setHours(0, 0, 0, 0);
@@ -43,7 +42,7 @@ export const getOrders = async (req, res) => {
       orders = await Order.find({
         timestamp: { $gte: startOfMonth, $lt: endOfMonth },
       }).populate('user');
-    } else if (query.sort === 'thisYear') {
+    } else if (query.sort === 'year') {
       const startOfYear = new Date(today);
       startOfYear.setMonth(0, 1);
       startOfYear.setHours(0, 0, 0, 0);

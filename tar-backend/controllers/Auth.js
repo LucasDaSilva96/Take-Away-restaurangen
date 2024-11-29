@@ -55,10 +55,13 @@ export const signInUser = async (req, res) => {
       }
 
       const token = jwt.sign(
-        { email: email, userId: userFound._id },
+        {
+          data: { email: email, userId: userFound?._id },
+        },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
       );
+
       return res.status(200).json({
         token: token,
         userId: userFound._id,
@@ -69,22 +72,19 @@ export const signInUser = async (req, res) => {
 };
 
 export const getUserDetails = async (req, res) => {
+  const { JWT } = req.body;
 
+  try {
+    jwt.verify(JWT, process.env.JWT_SECRET);
 
-  const {JWT} = req.body;
+    const data = jwt.decode(JWT);
 
- try{
+    const user = await User.findOne({ email: data });
 
-   const data = jwt.decode(JWT).email
-
-   const user = await User.findOne({email: data})
-
-
-   if(user){
-     return res.status(200).json({message: "User found", data : user})
-   }
-
- }catch (err){
-   return res.status(404).json({message: "No user found"})
- }
-}
+    if (user) {
+      return res.status(200).json({ message: 'User found', data: user });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: 'No user found' });
+  }
+};

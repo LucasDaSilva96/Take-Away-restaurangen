@@ -1,14 +1,14 @@
-import { menuItemResponse } from "@/app/(Pages)/menu/page";
-import MenuItem from "./MenuItem";
+import { Menu_Get } from '@/types/menu';
+import MenuItem from './MenuItem';
 
 interface MenuloopProps {
-  menu: menuItemResponse[];
+  menu: Menu_Get[];
 }
 
 const Menuloop: React.FC<MenuloopProps> = ({ menu }) => {
   //Loops all items from the menu and places them in a grid
   return (
-    <section className="w-full grid grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-4">
+    <section className='w-full grid grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-4'>
       {menu.map((item, index) => (
         <MenuItem key={item.id + index} product={item} />
       ))}
