@@ -77,20 +77,28 @@ export const getUserDetails = async (req, res) => {
   try {
     let decoded = null;
 
+    if (!JWT) {
+      return res.status(401).json({ message: 'No JTW provided' });
+    }
+
     jwt.verify(JWT, process.env.JWT_SECRET, function (err, decodedToken) {
-      if (err) throw new Error(err);
-      decoded = decodedToken;
+      if (err) {
+        return res.status(401).json({ message: err.message });
+      } else {
+        decoded = decodedToken.data;
+      }
     });
 
-    // const data = jwt.decode(JWT);
     if (!decoded) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const user = await User.findOne({ email: decoded.data.email });
+    const user = await User.findOne({ email: decoded.email });
 
     if (user) {
       return res.status(200).json({ message: 'User found', data: user });
+    } else {
+      return res.status(404).json({ message: 'No user found' });
     }
   } catch (err) {
     return res.status(404).json({ message: 'No user found' });
