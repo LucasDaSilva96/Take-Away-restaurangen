@@ -5,7 +5,7 @@ export interface Menu_Post {
   description: string;
   category: string;
   ingredients: string[];
-  image: string;
+  image: File | undefined;
   inventory: number;
   onSale?: boolean;
   quantity: number;
