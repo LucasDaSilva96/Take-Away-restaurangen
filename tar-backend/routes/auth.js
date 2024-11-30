@@ -6,8 +6,6 @@ const router = express.Router();
 router.post('/sign-up', signupUser);
 router.post('/sign-in', signInUser);
 // TODO: Fix this route - middleware is not working
-// router.post("/userfind", checkAuth, getUserDetails)
-
-router.post('/userfind', getUserDetails);
+router.post('/userfind', checkAuth, getUserDetails);
 
 export default router;
