@@ -1,15 +1,24 @@
 import User from '../models/Users.js';
 import jwt from 'jsonwebtoken';
+
+// TODO: This middleware is not working at the moment
+// !! ERROR: express Cannot set headers after they are sent to the client
 export const checkAuth = (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
-    jwt.verify(token, process.env.JWT_SECRET);
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+      if (err) {
+        return res.status(401).json({
+          message: err.message,
+        });
+      }
+    });
 
-    next();
+    return next();
   } catch (err) {
     return res.status(401).json({
-      message: 'Auth failed, Token expired. Please log back in!',
+      message: err.message,
     });
   }
 };

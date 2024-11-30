@@ -2,22 +2,27 @@
 
 import Menuloop from '@/components/Menu/Menuloop';
 import Hero from '@/components/shared/Hero';
-import { Menu_Post } from '@/types/menu';
+import { Menu_Get } from '@/types/menu';
 import { getMenu } from '@/util/menu';
 import React, { useEffect, useState } from 'react';
 
 const Page = () => {
   const title = ['Explore.', 'Discover.', 'Experience.'];
 
-  const [menuItems, setMenuItems] = useState<Menu_Post[]>([]);
+  const [menuItems, setMenuItems] = useState<Menu_Get[]>([]);
 
   useEffect(() => {
-    const fetchMenuItems = async () => {
-      const items = await getMenu();
-      setMenuItems(items);
+    const fetchMenu = async () => {
+      try {
+        const menu = await getMenu();
+
+        setMenuItems(menu);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    fetchMenuItems();
+    fetchMenu();
   }, []);
 
   return (
