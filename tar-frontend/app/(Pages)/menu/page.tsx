@@ -12,12 +12,17 @@ const Page = () => {
   const [menuItems, setMenuItems] = useState<Menu_Get[]>([]);
 
   useEffect(() => {
-    const fetchMenuItems = async () => {
-      const items = await getMenu();
-      setMenuItems(items);
+    const fetchMenu = async () => {
+      try {
+        const menu = await getMenu();
+
+        setMenuItems(menu);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    fetchMenuItems();
+    fetchMenu();
   }, []);
 
   return (
