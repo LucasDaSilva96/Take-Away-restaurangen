@@ -1,5 +1,8 @@
 import Navigation from '@/components/Dashboard/Navigation';
 
+// This is for the revalidation of the page, it will revalidate the page after 1 second
+export const revalidate = 1;
+
 export default function DashLayout({
   children,
 }: Readonly<{
@@ -41,7 +44,7 @@ export default function DashLayout({
         <aside className='min-w-[250px] bg-main-moss py-4'>
           <Navigation />
         </aside>
-        <div className='p-2'>{children}</div>
+        <div className='p-2 h-full w-full'>{children}</div>
       </div>
     </section>
   );
