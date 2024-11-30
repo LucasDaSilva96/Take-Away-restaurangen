@@ -1,45 +1,26 @@
+"use client";
+
 import OrderItem from "@/components/Dashboard/OrderItem";
-import React from "react";
+import { Order_Get } from "@/types/order";
+import { getOrders } from "@/util/order";
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
-  const orders = [
-    {
-      id: "1",
-      status: "Pending",
-      timeStamp: "24.05",
-      locked: false,
-    },
-    {
-      id: "2",
-      status: "Pending",
-      timeStamp: "24.05",
-      locked: false,
-    },
-    {
-      id: "3",
-      status: "Pending",
-      timeStamp: "24.05",
-      locked: false,
-    },
-    {
-      id: "4",
-      status: "Pending",
-      timeStamp: "24.05",
-      locked: false,
-    },
-    {
-      id: "5",
-      status: "Pending",
-      timeStamp: "24.05",
-      locked: false,
-    },
-    {
-      id: "6",
-      status: "Pending",
-      timeStamp: "24.05",
-      locked: false,
-    },
-  ];
+  const [orders, setOrders] = useState<Order_Get[]>([]);
+
+  useEffect(() => {
+    const fetchLoader = async () => {
+      try {
+        const orders = await getOrders({ sort: "today" });
+        setOrders(orders);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchLoader();
+  }, []);
+
   return (
     <section className="w-full flex justify-center items-center">
       <section className="w-full aspect-square bg-white">
@@ -50,9 +31,9 @@ const Page = () => {
             <OrderItem
               key={order.id}
               id={order.id}
-              locked={order.locked}
+              locked={order.isLocked}
               status={order.status}
-              timeStamp={order.timeStamp}
+              timeStamp={order.timestamp}
             />
           ))}
         </section>
