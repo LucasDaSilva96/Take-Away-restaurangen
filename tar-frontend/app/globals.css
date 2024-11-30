@@ -14,6 +14,13 @@
   }
 }
 
+@media (max-width: 831px) {
+  .card-full-width {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
