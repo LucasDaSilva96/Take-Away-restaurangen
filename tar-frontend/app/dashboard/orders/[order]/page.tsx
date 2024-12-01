@@ -1,43 +1,103 @@
 "use client";
 
 import { Order_Get } from "@/types/order";
-import { getOrderById } from "@/util/order";
+import { getOrderById, updateOrder } from "@/util/order";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const Page = () => {
   const params = useParams<{ order: string }>();
 
+  const route = useRouter();
+
   const [order, setOrder] = useState<Order_Get>();
+  const retriveOrder = async () => {
+    try {
+      const param = await params.order;
+      const getOrder = await getOrderById(param);
+      const data = getOrder;
+      setOrder(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const retriveOrder = async () => {
-      try {
-        const order = await getOrderById(params.order);
-        console.log(order);
-        setOrder(order);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     retriveOrder();
   }, []);
+
+  const toggleLock = async () => {
+    try {
+      if (order) {
+        const updatedOrder = { ...order, isLocked: !order.isLocked };
+
+        const dbSend = {
+          items: order.items,
+          message: order.message,
+          status: order.status,
+          isLocked: !order.isLocked,
+          total: order.total,
+        };
+        await updateOrder({ id: order.id, order: dbSend });
+        setOrder(updatedOrder);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const cancelOrder = async () => {
+    try {
+      if (order) {
+        const dbSend = {
+          items: order.items,
+          message: order.message,
+          status: "cancelled",
+          isLocked: order.isLocked,
+          total: order.total,
+        };
+        await updateOrder({ id: order.id, order: dbSend });
+        route.push("/dashboard/orders");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const completeOrder = async () => {
+    try {
+      if (order) {
+        const dbSend = {
+          items: order.items,
+          message: order.message,
+          status: "ready",
+          isLocked: order.isLocked,
+          total: order.total,
+        };
+        await updateOrder({ id: order.id, order: dbSend });
+        route.push("/dashboard/orders");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       {order && (
-        <section className="w-8/12 aspect-square flex flex-col gap-2 p-4">
-          <section className="w-full flex justify-between items-center bg-main-primary p-4 rounded-md">
-            <div>
+        <section className="w-full flex flex-col gap-2 p-4">
+          <section className="w-full md:flex-row gap-2 md:gap-0 text-center flex-col flex justify-between items-center bg-main-primary p-4 rounded-md">
+            <div className="md:w-1/3 flex justify-center items-center">
               <p className="text-main-light font-motter">Order # {order.id}</p>
             </div>
-            <div>
+            <div className="md:w-1/3 flex justify-center items-center">
               <p>Status: Order {order.status}</p>
             </div>
-            <div>
-              <button className="border-2 border-main-secondaryLight font-motter text-main-secondaryLight px-2 py-1 rounded">
-                Lock order
+            <div className="md:w-1/3 flex justify-center items-center">
+              <button
+                onClick={toggleLock}
+                disabled={order.isLocked}
+                className="border-2 border-main-secondaryLight font-motter text-main-secondaryLight px-2 py-1 rounded"
+              >
+                {order.isLocked ? "Order locked" : "Lock order"}
               </button>
             </div>
           </section>
@@ -64,7 +124,7 @@ const Page = () => {
                   >
                     <div>
                       <p className="text-main-light font-motter">
-                        {item.name} x {item.quantity}
+                        {item.title} x {item.quantity}
                       </p>
                     </div>
                     <div>
@@ -87,10 +147,16 @@ const Page = () => {
             </div>
           </section>
           <section className="w-full flex justify-center items-center gap-2 flex-col p-2 md:flex-row">
-            <button className="w-full border-2 border-main-secondaryLight text-main-secondaryLight font-motter py-2 px-2 rounded-md hover:text-main-light hover:bg-main-secondaryLight transition-all">
+            <button
+              onClick={cancelOrder}
+              className="w-full border-2 border-main-secondaryLight text-main-secondaryLight font-motter py-2 px-2 rounded-md hover:text-main-light hover:bg-main-secondaryLight transition-all"
+            >
               Cancel Order
             </button>
-            <button className="w-full border-2 transition-all border-green-500 py-2 px-2 rounded-md font-motter text-green-500  hover:text-main-light hover:bg-green-500">
+            <button
+              onClick={completeOrder}
+              className="w-full border-2 transition-all border-green-500 py-2 px-2 rounded-md font-motter text-green-500  hover:text-main-light hover:bg-green-500"
+            >
               Complete Order
             </button>
           </section>

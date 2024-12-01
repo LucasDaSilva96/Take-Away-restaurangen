@@ -1,8 +1,8 @@
-import { Menu_Post } from './menu';
+import { Menu_Get } from "./menu";
 
 // Create a new order item interface for the order object
 export interface Order_Post {
-  items: Menu_Post[];
+  items: Menu_Get[];
   message?: string;
   userId?: string;
   guestEmail?: string;
@@ -16,4 +16,15 @@ export interface Order_Get extends Order_Post {
   status: string;
   isLocked: boolean;
   timestamp: string;
+}
+
+export interface Order_Update {
+  id: string;
+  order: {
+    items: Menu_Get[];
+    message?: string;
+    status?: string;
+    isLocked?: boolean;
+    total?: number;
+  };
 }
