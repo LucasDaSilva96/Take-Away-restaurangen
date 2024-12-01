@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import User from '../models/Users.js';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import User from "../models/Users.js";
+import jwt from "jsonwebtoken";
 
 //Create new account
 export const signupUser = async (req, res) => {
@@ -8,7 +8,7 @@ export const signupUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'Please enter all fields' });
+    return res.status(400).json({ message: "Please enter all fields" });
   }
 
   //Hash password for increased security
@@ -17,7 +17,7 @@ export const signupUser = async (req, res) => {
     const userModel = new User({
       email: email,
       password: hash,
-      role: 'Customer',
+      role: "Customer",
       orders: [],
     });
 
@@ -25,10 +25,10 @@ export const signupUser = async (req, res) => {
     userModel
       .save()
       .then(() => {
-        res.status(201).json({ message: 'User created successfully' });
+        res.status(201).json({ message: "User created successfully" });
       })
       .catch((err) => {
-        res.status(500).json({ message: 'Error creating user', error: err });
+        res.status(500).json({ message: "Error creating user", error: err });
       });
   });
 };
@@ -43,7 +43,7 @@ export const signInUser = async (req, res) => {
       if (!user) {
         return res
           .status(400)
-          .json({ message: 'User does not exist. Create an account!' });
+          .json({ message: "User does not exist. Create an account!" });
       }
 
       userFound = user;
@@ -51,14 +51,17 @@ export const signInUser = async (req, res) => {
     })
     .then((result) => {
       if (!result) {
-        return res.status(400).json({ message: 'Invalid password' });
+        return res.status(400).json({ message: "Invalid password" });
       }
 
       const token = jwt.sign(
-        { email: email, userId: userFound._id },
+        {
+          data: { email: email, userId: userFound?._id },
+        },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: "1h" }
       );
+
       return res.status(200).json({
         token: token,
         userId: userFound._id,
@@ -69,22 +72,35 @@ export const signInUser = async (req, res) => {
 };
 
 export const getUserDetails = async (req, res) => {
+  const JWT = req.headers.authorization;
 
+  try {
+    let decoded = null;
 
-  const {JWT} = req.body;
+    if (!JWT) {
+      return res.status(401).json({ message: "No JTW provided" });
+    }
 
- try{
+    jwt.verify(JWT, process.env.JWT_SECRET, function (err, decodedToken) {
+      if (err) {
+        return res.status(401).json({ message: err.message });
+      } else {
+        decoded = decodedToken.data;
+      }
+    });
 
-   const data = jwt.decode(JWT).email
+    if (!decoded) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-   const user = await User.findOne({email: data})
+    const user = await User.findOne({ email: decoded.email });
 
-
-   if(user){
-     return res.status(200).json({message: "User found", data : user})
-   }
-
- }catch (err){
-   return res.status(404).json({message: "No user found"})
- }
-}
+    if (user) {
+      return res.status(200).json({ message: "User found", data: user });
+    } else {
+      return res.status(404).json({ message: "No user found" });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: "No user found" });
+  }
+};

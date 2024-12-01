@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        custon: "1063px",
+      },
       fontFamily: {
         heart: "var(--font-heart)",
         motter: "var(--font-motter)",

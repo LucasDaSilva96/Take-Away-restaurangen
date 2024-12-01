@@ -5,7 +5,7 @@ export interface Menu_Post {
   description: string;
   category: string;
   ingredients: string[];
-  image: string;
+  image: File | undefined;
   inventory: number;
   onSale?: boolean;
   quantity: number;
@@ -17,4 +17,6 @@ export interface Menu_Get extends Menu_Post {
   id: string;
   onSale: boolean;
   timestamp: string;
+  numberOfSales: number;
+  image: string;
 }
