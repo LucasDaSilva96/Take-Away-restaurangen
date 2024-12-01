@@ -1,5 +1,6 @@
 import { Menu } from '../models/menu.js';
-import { uploadImage } from '../utils/uploadImage.js';
+import { deleteImage, uploadImage } from '../utils/uploadImage.js';
+import { v4 as uuidv4 } from 'uuid';
 
 // Get all menu items
 export const getMenu = async (_req, res) => {
@@ -37,6 +38,7 @@ export const createMenu = async (req, res) => {
       ingredients,
       inventory,
       onSale,
+      imageName,
     } = req.body;
     req.body;
     // Check if any of the fields are empty
@@ -56,6 +58,7 @@ export const createMenu = async (req, res) => {
 
     // Create a new menu item
     const menu = new Menu({
+      id: uuidv4(),
       title,
       price,
       description,
@@ -64,7 +67,7 @@ export const createMenu = async (req, res) => {
       inventory,
       onSale: onSale === 'true',
       image: imageUrl ? imageUrl : 'https://placehold.co/600x400',
-      image: imageUrl ? imageUrl : 'https://placehold.co/600x400',
+      imageName,
     });
     // Save the menu item to the database
     await menu.save();
@@ -109,6 +112,9 @@ export const updateMenu = async (req, res) => {
     'image',
     'inventory',
     'onSale',
+    'quantity',
+    'numberOfSales',
+    'imageName',
   ];
 
   let imageUrl = null;
@@ -164,6 +170,8 @@ export const deleteMenu = async (req, res) => {
     if (!menu) {
       return res.status(404).json({ message: 'Menu item not found' });
     }
+
+    await deleteImage(menu.imageName);
     // Return a success message
     res.status(200).json({
       message: 'Menu item deleted successfully',

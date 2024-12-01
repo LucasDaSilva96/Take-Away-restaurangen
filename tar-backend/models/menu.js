@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 
 // Define the schema for the menu
 const menuSchema = new mongoose.Schema({
   id: {
     type: String,
-    default: uuidv4(),
+    required: true,
+    unique: true,
   },
   title: {
     type: String,
@@ -47,6 +47,9 @@ const menuSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Inventory is required'],
     min: 0,
+  },
+  imageName: {
+    type: String,
   },
 });
 
