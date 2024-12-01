@@ -169,6 +169,7 @@ export const updateOrder = async (req, res) => {
   // This is the allowed keys that the user can send
   const allowedKeys = ['items', 'total', 'status', 'isLocked', 'message'];
   const { id } = req.params;
+  const { status } = req.body;
 
   try {
     if (!id) throw new Error('No id provided');
@@ -182,7 +183,7 @@ export const updateOrder = async (req, res) => {
     const order = await Order.findOne({ id });
     if (!order) throw new Error('No order found with the provided id');
 
-    if (order.isLocked) throw new Error('This order is locked.');
+    if (order.isLocked && !status) throw new Error('This order is locked.');
 
     if (req.body.status === 'cancelled' && order.status === 'cancelled')
       throw new Error('This order is already cancelled.');

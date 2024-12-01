@@ -28,6 +28,9 @@ export const getOrderById = async (id: string) => {
     const response = await axios.get<{ data: Order_Get }>(
       BASE_API_URL + `/order/${id}`
     );
+    const response = await axios.get<{ data: Order_Get }>(
+      BASE_API_URL + `/order/${id}`
+    );
 
     return response.data.data;
   } catch (error) {
