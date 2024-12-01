@@ -106,7 +106,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
       </section>
       <section className="flex justify-center items-center">
         <Link
-          href={`/dashboard/order/${id}`}
+          href={`/dashboard/orders/${id}`}
           className="border-2 border-main-primary text-main-primary font-alumni text-nowrap rounded-full px-4 py-1 hover:text-main-light hover:bg-main-primary transition-all font-bold"
         >
           View Details

@@ -23,7 +23,7 @@ const Page = () => {
 
   return (
     <section className="w-full flex justify-center items-center">
-      <section className="w-full aspect-square bg-white">
+      <section className="w-full aspect-square bg-transparent p-4">
         <p className="text-black">Orders</p>
 
         <section className="flex flex-col justify-start items-start gap-2 p-6">
