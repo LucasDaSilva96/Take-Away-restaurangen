@@ -80,6 +80,13 @@ const page = () => {
             <SettingCards
               index={index}
               title={card.title}
+              placeHolder={
+                card.title === "Change Email"
+                  ? "xx.xxx@example.se"
+                  : card.title === "Change Username"
+                  ? "Johanna Berg"
+                  : undefined
+              }
               onClick={() => handleCardClick(card.title)}
             />
           ))}

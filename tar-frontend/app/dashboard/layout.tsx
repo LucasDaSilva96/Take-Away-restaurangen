@@ -41,7 +41,7 @@ export default function DashLayout({
       </header>
 
       <div className="w-full h-full flex flex-col lg:flex-row">
-        <aside className="min-w-[250px] bg-main-moss py-4">
+        <aside className="min-w-[250px] bg-main-moss py-4 flex">
           <Navigation />
         </aside>
         <div className="p-2 h-full w-full">{children}</div>

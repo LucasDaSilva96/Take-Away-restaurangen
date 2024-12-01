@@ -1,10 +1,12 @@
 interface SettingCardsProps {
+  placeHolder?: string;
   title: string;
   index: number;
   onClick: () => void;
 }
 
 export const SettingCards: React.FC<SettingCardsProps> = ({
+  placeHolder,
   title,
   index,
   onClick,
@@ -16,7 +18,14 @@ export const SettingCards: React.FC<SettingCardsProps> = ({
       key={index}
       onClick={onClick}
     >
-      <h2 className="font-motter text-xl text-main-primary ">{title}</h2>
+      <div>
+        {placeHolder && (
+          <h1 className="text-2xl font-motter text-main-secondary">
+            {placeHolder}
+          </h1>
+        )}
+        <h2 className="font-motter text-xl text-main-primary ">{title}</h2>
+      </div>
     </button>
   );
 };
