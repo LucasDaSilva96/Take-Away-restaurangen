@@ -13,6 +13,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   status,
   timeStamp,
 }) => {
+  const statusString = status[0].toUpperCase() + status.slice(1);
   return (
     <section className="w-full rounded-md bg-main-light p-4 flex flex-col gap-2 md:flex-row justify-between items-center">
       <section className="bg-main-secondary w-14 h-14 flex justify-center items-center rounded-md">
@@ -80,7 +81,9 @@ const OrderItem: React.FC<OrderItemProps> = ({
             <p className="text-main-primary font-alumni font-bold text-xl">
               Order #{id}
             </p>
-            <p className="text-main-secondary font-alumni text-lg">{status}</p>
+            <p className="text-main-secondary font-alumni text-lg">
+              {statusString}
+            </p>
           </div>
         </section>
         <section className="w-full flex justify-center items-center">
@@ -89,14 +92,14 @@ const OrderItem: React.FC<OrderItemProps> = ({
               Placed at
             </p>
             <p className="text-main-secondary font-alumni text-lg">
-              {timeStamp}
+              {new Date(timeStamp).toLocaleString("en-GB")}
             </p>
           </div>
         </section>
         <section className="w-full flex justify-center items-center">
           <div>
             <p className="text-main-primary font-alumni font-bold text-xl">
-              May change
+              Order Locked
             </p>
             <p className="text-main-secondary font-alumni text-lg">
               {locked ? "Yes" : "No"}
