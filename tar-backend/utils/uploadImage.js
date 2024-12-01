@@ -29,6 +29,7 @@ const storage = multer.diskStorage({
   fileFilter: fileFilter,
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    req.body.imageName = uniqueSuffix + '-' + file.originalname;
     cb(null, uniqueSuffix + '-' + file.originalname);
   },
 });
@@ -64,6 +65,9 @@ export const uploadImage = async (imageFile) => {
 
 // Function to delete image from the server
 export const deleteImage = async (imageName) => {
+  if (!imageName) {
+    return;
+  }
   try {
     fs.unlinkSync('./public/images/' + imageName);
   } catch (error) {

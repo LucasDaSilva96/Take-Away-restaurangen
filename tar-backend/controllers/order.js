@@ -1,4 +1,5 @@
 import { Order } from '../models/order.js';
+import { v4 as uuidv4 } from 'uuid';
 import User from '../models/Users.js';
 import {
   sendCancellation,
@@ -107,6 +108,7 @@ export const createOrder = async (req, res) => {
       }
 
       const newOrder = {
+        id: uuidv4(),
         items,
         total,
         message,
@@ -136,6 +138,7 @@ export const createOrder = async (req, res) => {
 
     // If userId is not provided, create an order without a user
     const newOrder = {
+      id: uuidv4(),
       items,
       total,
       message,
