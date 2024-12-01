@@ -25,12 +25,20 @@ export const createMenu = async (req, res) => {
     'category',
     'ingredients',
     'inventory',
+    'onSale',
   ];
   try {
     let imageUrl = null;
-    // Get the title, price, description, category and ingredients from the request body
-    const { title, price, description, category, ingredients, inventory } =
-      req.body;
+    const {
+      title,
+      price,
+      description,
+      category,
+      ingredients,
+      inventory,
+      onSale,
+    } = req.body;
+    req.body;
     // Check if any of the fields are empty
     for (const field of requiredFields) {
       if (!req.body[field]) {
@@ -38,8 +46,8 @@ export const createMenu = async (req, res) => {
       }
     }
 
-    if (req.image) {
-      const url = await uploadImage(req.image);
+    if (req.file) {
+      const url = await uploadImage(req.file);
       if (!url) {
         return res.status(400).json({ message: 'Image upload failed' });
       }
@@ -53,7 +61,9 @@ export const createMenu = async (req, res) => {
       description,
       category,
       ingredients,
-      inventory: parseInt(inventory),
+      inventory,
+      onSale: onSale === 'true',
+      image: imageUrl ? imageUrl : 'https://placehold.co/600x400',
       image: imageUrl ? imageUrl : 'https://placehold.co/600x400',
     });
     // Save the menu item to the database
@@ -98,6 +108,7 @@ export const updateMenu = async (req, res) => {
     'id',
     'image',
     'inventory',
+    'onSale',
   ];
 
   let imageUrl = null;
@@ -113,8 +124,8 @@ export const updateMenu = async (req, res) => {
       return res.status(404).json({ message: 'Menu item not found' });
     }
 
-    if (req.image) {
-      const url = await uploadImage(req.image);
+    if (req.file) {
+      const url = await uploadImage(req.file);
       if (!url) {
         return res.status(400).json({ message: 'Image upload failed' });
       }

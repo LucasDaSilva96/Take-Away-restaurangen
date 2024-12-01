@@ -1,37 +1,44 @@
-import React from "react";
-import { MenuCards } from "@/components/dashboard-component/menuCards";
+"use client";
+
+import OrderItem from "@/components/Dashboard/OrderItem";
+import { Order_Get } from "@/types/order";
+import { getOrders } from "@/util/order";
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
-  const menuOptions = [
-    {
-      title: "Meny",
-      description: "Unlimited protection",
-      icon: "/icons/pizza.png",
-    },
-    {
-      title: "Orders",
-      description: "Buy. Think. Grow",
-      icon: "/icons/cutlery.png",
-    },
-    {
-      title: "Inventory",
-      description: "We are your allies",
-      icon: "/icons/cloche.png",
-    },
-  ];
+  const [orders, setOrders] = useState<Order_Get[]>([]);
+
+  useEffect(() => {
+    const fetchLoader = async () => {
+      try {
+        const orders = await getOrders({ sort: "today" });
+        setOrders(orders);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchLoader();
+  }, []);
+
   return (
-    <>
-      <div className="flex gap-10 overflow-x-scroll">
-        {menuOptions.map((card, index) => (
-          <MenuCards
-            index={index}
-            title={card.title}
-            description={card.description}
-            icon={card.icon}
-          />
-        ))}
-      </div>
-    </>
+    <section className="w-full flex justify-center items-center">
+      <section className="w-full aspect-square bg-white">
+        <p className="text-black">Orders</p>
+
+        <section className="flex flex-col justify-start items-start gap-2 p-6">
+          {orders.map((order) => (
+            <OrderItem
+              key={order.id}
+              id={order.id}
+              locked={order.isLocked}
+              status={order.status}
+              timeStamp={order.timestamp}
+            />
+          ))}
+        </section>
+      </section>
+    </section>
   );
 };
 export default Page;

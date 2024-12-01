@@ -12,35 +12,29 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+function fileFilter(req, file, cb) {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Not an image! Please upload an image.', 400), false);
+  }
+}
+
 // Define storage configuration for multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './public/images/');
   },
-  filename: (req, file, cb) => {
-    // Generate unique filename for uploaded file
-    cb(null, `${Date.now()}-${file.originalname}`);
+  fileFilter: fileFilter,
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
   },
 });
 
 // Multer middleware to upload image
 export const uploadImageMiddleware = multer({
   storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5, // Limit file size to 5MB
-  },
-  fileFilter: (req, file, cb) => {
-    // Check file type to ensure it is an image
-    if (
-      file.mimetype === 'image/png' ||
-      file.mimetype === 'image/jpg' ||
-      file.mimetype === 'image/jpeg'
-    ) {
-      cb(null, true); // Accept the file
-    } else {
-      return cb(null, false); // Reject the file upload
-    }
-  },
 });
 
 // Function to upload image to cloudinary
@@ -57,6 +51,7 @@ export const uploadImage = async (imageFile) => {
     );
     // Get the secure URL of the uploaded image
     imageUrl = result.secure_url;
+    console.log('Image URL:', imageUrl);
 
     if (!imageUrl) {
       throw new Error('Image upload failed');
