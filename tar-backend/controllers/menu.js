@@ -1,5 +1,5 @@
 import { Menu } from '../models/menu.js';
-import { uploadImage } from '../utils/uploadImage.js';
+import { deleteImage, uploadImage } from '../utils/uploadImage.js';
 
 // Get all menu items
 export const getMenu = async (_req, res) => {
@@ -164,6 +164,7 @@ export const deleteMenu = async (req, res) => {
     if (!menu) {
       return res.status(404).json({ message: 'Menu item not found' });
     }
+
     // Return a success message
     res.status(200).json({
       message: 'Menu item deleted successfully',
