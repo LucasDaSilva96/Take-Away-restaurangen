@@ -1,12 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
 import { menuSchema } from './menu.js';
-import { v4 as uuidv4 } from 'uuid';
 
 // Define the schema for the order
 const orderSchema = new mongoose.Schema({
   id: {
     type: String,
-    default: uuidv4(),
+    required: true,
+    unique: true,
   },
   items: {
     type: [menuSchema],
