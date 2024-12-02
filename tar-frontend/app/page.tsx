@@ -5,7 +5,7 @@ import { hero_video } from "@/constants/constants";
 import Footer from "@/components/shared/Footer";
 
 import NavSplit from "@/components/shared/NavSplit";
-import Motivational from "@/components/Landingpage/Motivational";
+import Motivational from "@/components/landingPage/Motivational";
 
 export default function Home() {
   const description = "pizza like you never had it";
@@ -24,12 +24,10 @@ export default function Home() {
       </section>
 
       <Intro description={Introdesc} className="bg-main-dark" />
-        <Motivational />
-
+      <Motivational />
 
       <NavSplit />
       <Footer />
-
     </main>
   );
 }

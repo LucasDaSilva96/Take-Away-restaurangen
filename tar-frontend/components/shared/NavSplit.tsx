@@ -3,14 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-const Hours: React.FC = () => {
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight, // Scroll to bottom of page
-      behavior: "smooth", // Smoother scroll
-    });
-  };
-
+const NavSplit: React.FC = () => {
   return (
     <section className="w-full overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 w-full">
@@ -51,11 +44,12 @@ const Hours: React.FC = () => {
               "url('/images/splitNav-right.jpg')")
           }
           onMouseLeave={(e) => (e.currentTarget.style.backgroundImage = "none")}
-          onClick={scrollToBottom} // Scroll to bottom
         >
-          <h2 className="font-motter text-4xl md:text-6xl lg:text-7xl text-main-moss group-hover:text-white transition-all duration-300 cursor-pointer">
-            Hours
-          </h2>
+          <Link href="/hours">
+            <h2 className="font-motter text-4xl md:text-6xl lg:text-7xl text-main-moss group-hover:text-white transition-all duration-300 cursor-pointer">
+              Hours
+            </h2>
+          </Link>
           <p className="font-heart text-2xl md:text-3xl lg:text-4xl text-main-moss group-hover:text-white transition-all duration-300 mt-4">
             Saturday to Sunday: 10:00 AM - 11:00 PM
           </p>
@@ -65,4 +59,4 @@ const Hours: React.FC = () => {
   );
 };
 
-export default Hours;
+export default NavSplit;

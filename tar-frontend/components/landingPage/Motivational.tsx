@@ -1,22 +1,15 @@
-"use client"; // Enables client-side interactivity
+"use client";
 
 import React from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 const links = [
   { href: "/menu", label: "menu" },
-  { href: "#", label: "hours" }, // Placeholder href for programmatic scrolling
+  { href: "/hours", label: "hours" }, // Updated href for hours page
   { href: "/about", label: "vision" },
 ];
 
 const Motivational = () => {
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight, // Scrolls to the bottom of the page
-      behavior: "smooth", // Smooth scrolling animation
-    });
-  };
-
   return (
     <div
       className="bg-main-light py-24 bg-cover bg-center relative"
@@ -29,7 +22,7 @@ const Motivational = () => {
 
       {/* Top icon */}
       <div className="relative flex justify-center mb-32">
-        <img src="/icons/Horse.png" alt="Horse Icon" className="w-5" />
+        <Image src="/icons/Horse.png" alt="Horse Icon" width={20} height={20} />
       </div>
 
       {/* Main content */}
@@ -45,21 +38,12 @@ const Motivational = () => {
             Checkout the{" "}
             {links.map((link, index) => (
               <React.Fragment key={link.href}>
-                {link.label === "hours" ? (
-                  <span
-                    onClick={scrollToBottom} // Programmatic scroll for "hours"
-                    className="underline hover:text-main-light cursor-pointer"
-                  >
-                    {link.label}
-                  </span>
-                ) : (
-                  <Link
-                    href={link.href}
-                    className="underline hover:text-main-light"
-                  >
-                    {link.label}
-                  </Link>
-                )}
+                <Link
+                  href={link.href}
+                  className="underline hover:text-main-light"
+                >
+                  {link.label}
+                </Link>
                 {index < links.length - 1 && ", "}
                 {index === links.length - 2 && " and our "}
               </React.Fragment>
@@ -71,7 +55,7 @@ const Motivational = () => {
 
       {/* Bottom icon */}
       <div className="relative flex justify-center mt-32">
-        <img src="/icons/darts.png" alt="Darts Icon" className="w-7" />
+        <Image src="/icons/darts.png" alt="Darts Icon" width={28} height={28} />
       </div>
     </div>
   );
