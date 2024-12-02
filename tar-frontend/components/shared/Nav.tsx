@@ -5,17 +5,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import useCart from "@/store/zustandstore";
 import { useRouter } from "next/navigation";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Nav = () => {
   const router = useRouter();
-
 
   const path = usePathname();
   //Handle open menu
 
   const [small, setSmall] = useState(false);
-  const [dash, setDash] = useState<boolean>(false)
+  const [dash, setDash] = useState<boolean>(false);
   //Toggle open menu
   const toggleOpen = () => {
     toggleNav();
@@ -42,16 +41,12 @@ const Nav = () => {
     };
   }, []);
 
-
   useEffect(() => {
-
-    if(path.includes("/dashboard")){
-      setDash(true)
-    }else{
-      setDash(false)
+    if (path.includes("/dashboard")) {
+      setDash(true);
+    } else {
+      setDash(false);
     }
-
-
   }, [path]);
 
   //Menu Links
@@ -61,28 +56,30 @@ const Nav = () => {
     { name: "Hours", href: "/hours" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
+    { name: "Log in", href: "/signIn" },
   ];
 
   //Roman Numerals for looping menu
   const romans = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
-  if(dash){
-    return null
-  }else{
-     return (
-        <>
-          {/* Navbar responsive */}
-          <nav className="w-screen fixed top-0 left-0 flex justify-between items-center p-6 md:p-4 z-40">
-            <div className=" hidden w-1/3 md:block">
-              <p className="text-main-light">EAT</p>
-            </div>
-            <div className="w-20 md:w-1/3 flex justify-center items-center z-50">
-              <div className="w-20">
-                {/* Logo */}
-                {
+  if (dash) {
+    return null;
+  } else {
+    return (
+      <>
+        {/* Navbar responsive */}
+        <nav className="w-screen fixed top-0 left-0 flex justify-between items-center p-6 md:p-4 z-40">
+          <div className=" hidden w-1/3 md:block">
+            <p className="text-main-light">EAT</p>
+          </div>
+          <div className="w-20 md:w-1/3 flex justify-center items-center z-50">
+            <div className="w-20">
+              {/* Logo */}
+              {
+                <Link href={"/"}>
                   <svg
-                      className="w-full fill-main-primary"
-                      viewBox="0 0 390 194.32"
+                    className="w-full fill-main-primary"
+                    viewBox="0 0 390 194.32"
                   >
                     <g className="Logo__lucky">
                       <path d="M264.55,75.74c-1.45-6.47-2.56-21-2.78-35.25l.78-.67,12.83,35.92h40.38c-3.68-5.35-16.51-37.48-22.2-52.76l-.11-.33c6.84-5.75,12-10.1,16.66-14.24l20,44.47c-.45,7.92-1.34,15.73-3.57,23h42.28a101.91,101.91,0,0,1-3.13-22.65c1.9-4.57,16.51-39.15,24.32-50H366.46c-1,11.49-5.57,27.66-9,35.58-2.9-7.81-6.92-24.32-7-35.58H275c2.46,10.6-2.56,23.53-12.05,30.45l-1.22.89C262,22,263.22,9,264.89,3.24H224.51c1.22,7.25,2.12,21.75,2.12,34.24,0,15-1.12,31.13-2.68,38.27Z"></path>
@@ -109,10 +106,10 @@ const Nav = () => {
                         <path d="M125,178.86H118.1v15.45h7.06c4.3,0,6.68-2.74,6.68-7.71S129.25,178.86,125,178.86Zm-.39,12.28H122V182h2.57c2.42,0,3.39,1.75,3.39,4.56s-1,4.54-3.39,4.54Z"></path>
                         <path d="M157.05,187.18v-.05a3.66,3.66,0,0,0,3.13-3.78c0-2.92-2.07-4.5-5.51-4.5h-7.28v15.46h3.89v-5.38h2.42c3.3,0,1.9,4.73,2.66,5.38h4v-.21C159.51,193.84,160.92,187.85,157.05,187.18Zm-3.14-1.43h-2.63V182h2.63c1.56,0,2.38.56,2.38,1.85S155.47,185.75,153.91,185.75Z"></path>
                         <rect
-                            x="175.96"
-                            y="178.86"
-                            width="3.89"
-                            height="15.45"
+                          x="175.96"
+                          y="178.86"
+                          width="3.89"
+                          height="15.45"
                         ></rect>
                         <path d="M205.35,188.05h0l-5.4-9.19H196v15.45h3.89v-9.18h0l5.4,9.18h3.89V178.86h-3.89Z"></path>
                         <path d="M239.22,178.86h-4.54l-5.38,6.27v-6.27h-3.89v15.45h3.89v-4.08l1.56-1.77,4,5.85h4.54l-6.1-8.64Z"></path>
@@ -125,161 +122,164 @@ const Nav = () => {
                       </g>
                     </g>
                   </svg>
-                }
-              </div>
+                </Link>
+              }
             </div>
+          </div>
 
-            {/* Navbar Buttons */}
-            <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
-              <motion.section
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: navOpen ? 0 : 1 }}
-                  transition={{ duration: 0.3 }}
-              >
+          {/* Navbar Buttons */}
+          <section className="flex justify-center items-center gap-2 md:w-1/3 md:justify-end">
+            <motion.section
+              initial={{ opacity: 1 }}
+              animate={{ opacity: navOpen ? 0 : 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Link href={"/menu"}>
                 <ButtonBase
-                    text="Order now"
-                    classname=" text-main-light bg-main-secondary z-0 hover:scale-105 transition-all ease-in-out duration-300"
+                  text="Order now"
+                  classname=" text-main-light bg-main-secondary z-0 hover:scale-105 transition-all ease-in-out duration-300"
                 />
-              </motion.section>
+              </Link>
+            </motion.section>
 
-              {/* Animated menu button */}
-              <button
-                  onClick={toggleOpen}
-                  className="p-2 w-11 z-50 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1 hover:scale-105 transition-all ease-in-out duration-300"
+            {/* Animated menu button */}
+            <button
+              onClick={toggleOpen}
+              className="p-2 w-11 z-50 aspect-square bg-main-primary rounded-md flex justify-center items-center flex-col gap-1 hover:scale-105 transition-all ease-in-out duration-300"
+            >
+              <motion.span
+                animate={{
+                  rotate: navOpen ? 45 : 0,
+                  y: navOpen ? 0 : 8,
+                }}
+                transition={{ duration: 0.3 }}
+                className="absolute w-6 h-1 bg-main-light rounded"
+              />
+              <motion.span
+                animate={{
+                  opacity: navOpen ? 0 : 1,
+                }}
+                transition={{ duration: 0.3 }}
+                className="w-6 h-1 bg-main-light rounded"
+              />
+              <motion.span
+                animate={{
+                  rotate: navOpen ? -45 : 0,
+                  y: navOpen ? 0 : -8,
+                }}
+                transition={{ duration: 0.3 }}
+                className="absolute w-6 h-1 bg-main-light rounded"
+              />
+            </button>
+          </section>
+        </nav>
+        {/* Menu popout */}
+        <AnimatePresence>
+          {navOpen && (
+            <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent z-30">
+              {/* Background darkner also closes menu on click */}
+              <motion.section
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={toggleOpen}
+                className="inset-0 w-full h-full bg-black bg-opacity-45"
+                id="bg"
+              ></motion.section>
+
+              {/* Menu */}
+              <motion.section
+                initial={{ x: small ? "100%" : "200%" }}
+                animate={{ x: small ? "0%" : "100%" }}
+                exit={{ x: small ? "100%" : "200%" }}
+                transition={{ duration: 0.3, ease: "circInOut" }}
+                className=" w-screen lg:w-6/12 h-screen flex flex-col gap-20 z-20 justify-center items-center bg-main-moss absolute top-0 before:bg-top before:bg-no-repeat before:bg-[url('/images/noise2.png')] before:bg-[length:100%_auto] before:content-[''] before:block before:h-full before:left-0 before:pointer-events-none before:absolute before:top-0 before:w-full before:z-0"
+                id="menu"
               >
-                <motion.span
-                    animate={{
-                      rotate: navOpen ? 45 : 0,
-                      y: navOpen ? 0 : 8,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute w-6 h-1 bg-main-light rounded"
-                />
-                <motion.span
-                    animate={{
-                      opacity: navOpen ? 0 : 1,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="w-6 h-1 bg-main-light rounded"
-                />
-                <motion.span
-                    animate={{
-                      rotate: navOpen ? -45 : 0,
-                      y: navOpen ? 0 : -8,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute w-6 h-1 bg-main-light rounded"
-                />
-              </button>
-            </section>
-          </nav>
-          {/* Menu popout */}
-          <AnimatePresence>
-            {navOpen && (
-                <motion.section className="w-screen h-screen fixed top-0 left-0 bg-transparent z-30">
-                  {/* Background darkner also closes menu on click */}
-                  <motion.section
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      onClick={toggleOpen}
-                      className="inset-0 w-full h-full bg-black bg-opacity-45"
-                      id="bg"
-                  ></motion.section>
-
-                  {/* Menu */}
-                  <motion.section
-                      initial={{ x: small ? "100%" : "200%" }}
-                      animate={{ x: small ? "0%" : "100%" }}
-                      exit={{ x: small ? "100%" : "200%" }}
-                      transition={{ duration: 0.3, ease: "circInOut" }}
-                      className=" w-screen lg:w-6/12 h-screen flex flex-col gap-20 z-20 justify-center items-center bg-main-moss absolute top-0 before:bg-top before:bg-no-repeat before:bg-[url('/images/noise2.png')] before:bg-[length:100%_auto] before:content-[''] before:block before:h-full before:left-0 before:pointer-events-none before:absolute before:top-0 before:w-full before:z-0"
-                      id="menu"
+                {/* Admin login button */}
+                <button
+                  onClick={() => router.push("/signin-admin")}
+                  className="absolute bottom-5 right-5 w-12 h-12 border-2 border-main-primary rounded-full hover:scale-105 transition-all duration-300"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {/* Admin login button */}
-                    <button
-                        onClick={() => router.push("/signin-admin")}
-                        className="absolute bottom-5 right-5 w-12 h-12 border-2 border-main-primary rounded-full hover:scale-105 transition-all duration-300"
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                        stroke="#EBA13D"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
+                </button>
+                <section className="flex flex-col justify-center items-center gap-4  ">
+                  {/* Menu Links with romans */}
+                  {links.map((link, index) => (
+                    <section
+                      className="text-center flex flex-col"
+                      key={link + index.toString()}
                     >
-                      <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                      <motion.p
+                        initial={{ opacity: 0, x: "-200%" }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
+                        className="text-lg md:text-xl text-main-light font-serif"
                       >
-                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                        <g
-                            id="SVGRepo_tracerCarrier"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                          {" "}
-                          <path
-                              d="M4 21C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
-                              stroke="#EBA13D"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                          ></path>{" "}
-                        </g>
-                      </svg>
-                    </button>
-                    <section className="flex flex-col justify-center items-center gap-4  ">
-                      {/* Menu Links with romans */}
-                      {links.map((link, index) => (
-                          <section
-                              className="text-center flex flex-col"
-                              key={link + index.toString()}
+                        {romans[index]}
+                      </motion.p>
+                      <section className="group">
+                        <motion.p
+                          initial={{ opacity: 0, x: "100%" }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            delay: index * 0.05,
+                            ease: "backInOut",
+                          }}
+                          onClick={toggleOpen}
+                          className="text-main-primary hover:text-main-light cursor-pointer"
+                        >
+                          <Link
+                            key={index}
+                            href={link.href}
+                            className="text-4xl md:text-6xl font-motter transition-all ease-in-out duration-300"
                           >
-                            <motion.p
-                                initial={{ opacity: 0, x: "-200%" }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-                                className="text-lg md:text-xl text-main-light font-serif"
-                            >
-                              {romans[index]}
-                            </motion.p>
-                            <section className="group">
-                              <motion.p
-                                  initial={{ opacity: 0, x: "100%" }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{
-                                    duration: 0.5,
-                                    delay: index * 0.05,
-                                    ease: "backInOut",
-                                  }}
-                                  onClick={toggleOpen}
-                                  className="text-main-primary hover:text-main-light cursor-pointer"
-                              >
-                                <Link
-                                    key={index}
-                                    href={link.href}
-                                    className="text-4xl md:text-6xl font-motter transition-all ease-in-out duration-300"
-                                >
-                                  {link.name}
-                                </Link>
-                              </motion.p>
-                              <div className="w-0 group-hover:w-full h-1 bg-main-light transition-all rounded-md ease-in-out duration-300"></div>
-                            </section>
-                          </section>
-                      ))}
+                            {link.name}
+                          </Link>
+                        </motion.p>
+                        <div className="w-0 group-hover:w-full h-1 bg-main-light transition-all rounded-md ease-in-out duration-300"></div>
+                      </section>
                     </section>
-                    <motion.section
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.6, delay: 1 }}
-                    >
-                      <ButtonBase
-                          text="Order now"
-                          classname="bg-main-secondary text-main-light hover:scale-105 transition-all ease-in-out duration-300"
-                      />
-                    </motion.section>
-                  </motion.section>
+                  ))}
+                </section>
+                <motion.section
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1 }}
+                >
+                  <ButtonBase
+                    text="Order now"
+                    classname="bg-main-secondary text-main-light hover:scale-105 transition-all ease-in-out duration-300"
+                  />
                 </motion.section>
-            )}
-          </AnimatePresence>
-        </>
+              </motion.section>
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </>
     );
   }
 };
