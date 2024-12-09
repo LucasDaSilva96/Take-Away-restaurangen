@@ -1,8 +1,9 @@
+import { CartProduct } from "@/store/zustandstore";
 import { Menu_Get } from "./menu";
 
 // Create a new order item interface for the order object
 export interface Order_Post {
-  items: Menu_Get[];
+  items: CartProduct[];
   message?: string;
   userId?: string;
   guestEmail?: string;

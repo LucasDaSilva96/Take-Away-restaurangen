@@ -6,6 +6,8 @@ import Link from "next/link";
 import useCart from "@/store/zustandstore";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { getUserByJWT } from "@/util/auth";
+import { JWT_SECRET } from "@/constants/localStorageKeys";
 
 const Nav = () => {
   const router = useRouter();
@@ -20,7 +22,7 @@ const Nav = () => {
     toggleNav();
   };
 
-  const { navOpen, toggleNav } = useCart();
+  const { navOpen, toggleNav, updateUser, isSignedIn } = useCart();
 
   useEffect(() => {
     //Check if screen is small to animate menu correctly
@@ -48,6 +50,20 @@ const Nav = () => {
       setDash(false);
     }
   }, [path]);
+
+  const userGetter = async () => {
+    const token = await localStorage.getItem(JWT_SECRET);
+    if (token) {
+      getUserByJWT(token!).then((res) => {
+        updateUser(res);
+      });
+    }
+  };
+
+  useEffect(() => {
+    userGetter();
+    isSignedIn();
+  }, []);
 
   //Menu Links
   const links = [
