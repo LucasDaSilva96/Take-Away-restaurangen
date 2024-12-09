@@ -4,7 +4,7 @@ import ButtonBase from "./ButtonBase";
 
 const Footer: React.FC = () => {
   return (
-    <section className="w-full bg-main-secondary text-center py-12 px-8">
+    <section className="w-full bg-main-secondaryLight text-center py-12 px-8">
       {/* Ready to order */}
       <div className="mb-12">
         <h2 className="font-motter text-4xl md:text-6xl text-main-primary mb-4">
@@ -39,22 +39,19 @@ const Footer: React.FC = () => {
         </p>
         <form className="flex items-center justify-center">
           <div className="flex items-stretch border border-main-secondary rounded-md overflow-hidden">
-            {/*Inputfield with rounded corner on left side*/}
+            {/* Input field */}
             <input
               type="email"
               placeholder="Your email"
               className="py-2 px-4 flex-grow text-main-secondary text-base md:text-lg focus:outline-none rounded-l-md"
             />
-            {/* Button with rounded corners on right side */}
-            <button
-              type="submit"
-              className="bg-main-primary text-white px-6 text-base md:text-lg hover:bg-main-light rounded-r-md"
-            >
-              OK
-            </button>
+            {/* OK Button */}
+            <ButtonBase
+              text="OK"
+              classname="bg-main-primary text-white hover:bg-main-light px-6 text-base md:text-lg rounded-none rounded-r-md"
+            />
           </div>
         </form>
-
         <p className="text-main-light text-sm mt-4">
           By sending an email you accept our terms and conditions
         </p>
@@ -79,6 +76,7 @@ const Footer: React.FC = () => {
         {/* Contact information */}
         <p className="text-main-primary text-sm mt-4">
           +123 456 789 <br />
+          luckyfolk@pizza.sauce <br />
           Cool street 1234, Sweden <br />
           Coolville 420
         </p>
