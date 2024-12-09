@@ -1,15 +1,17 @@
 "use client";
-import { loginUser } from "@/util/auth";
+import { getUserByJWT, loginUser } from "@/util/auth";
 import { catchError } from "@/util/catchError";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useCart from "@/store/zustandstore";
 
 const SignIn = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { updateUser } = useCart();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +26,10 @@ const SignIn = () => {
       await loginUser({
         email: emailRef.current.value,
         password: passwordRef.current.value,
+      }).then((res) => {
+        getUserByJWT(res.token).then((user) => {
+          updateUser(user.data);
+        });
       });
       return router.push("/dashboard?role=customer");
     } catch (error) {

@@ -1,14 +1,15 @@
 "use client";
 
+import { JWT_SECRET } from "@/constants/localStorageKeys";
 import useCart from "@/store/zustandstore";
-import { logoutUser } from "@/util/auth";
+import { getUserByJWT, logoutUser } from "@/util/auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Navigation() {
   const pathname = usePathname();
-  const { currentRole, role } = useCart();
+  const { currentRole, role, updateUser } = useCart();
 
   const navigationObjectAdmin = [
     {
@@ -52,7 +53,7 @@ export default function Navigation() {
     {
       title: "History",
       icon: "/dashboard-menu-icons/orders.png",
-      url: "/dashboard/orders",
+      url: "/dashboard/history",
     },
     {
       title: "Settings",
@@ -66,9 +67,18 @@ export default function Navigation() {
     },
   ];
 
+  const userGetter = async () => {
+    const token = await localStorage.getItem(JWT_SECRET);
+    if (token) {
+      getUserByJWT(token!).then((res) => {
+        updateUser(res);
+      });
+    }
+  };
+
   useEffect(() => {
     currentRole();
-    console.log(role);
+    userGetter();
   }, []);
   return (
     <nav

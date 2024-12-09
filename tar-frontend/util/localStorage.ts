@@ -1,22 +1,19 @@
-import { ROLE_KEY, USER_KEY } from "@/constants/localStorageKeys";
+import { JWT_SECRET, ROLE_KEY, USER_KEY } from "@/constants/localStorageKeys";
 import { User_login_Response } from "./auth";
-
-// This is the secret key for the JWT token
-const JWT_Secret = process.env.jwtSecret!;
 
 // saveTokenToLocalStorage is a function that takes a JWT token as an argument and saves it to the local storage.
 export function saveTokenToLocalStorage(token: string) {
-  localStorage.setItem(JWT_Secret, token);
+  localStorage.setItem(JWT_SECRET, token);
 }
 
 // getTokenFromLocalStorage is a function that retrieves the JWT token from the local storage.
 export function getTokenFromLocalStorage() {
-  return localStorage.getItem(JWT_Secret);
+  return localStorage.getItem(JWT_SECRET);
 }
 
 // removeTokenFromLocalStorage is a function that removes the JWT token from the local storage.
 export function removeTokenFromLocalStorage() {
-  localStorage.removeItem(JWT_Secret);
+  localStorage.removeItem(JWT_SECRET);
 }
 
 // saveUserToLocalStorage is a function that takes a User_Get object as an argument and saves it to the local storage.

@@ -38,6 +38,7 @@ interface Actions {
   toggleNav: () => void;
   isSignedIn: () => boolean;
   currentRole: () => void;
+  updateUser: (user: User_Get) => void;
 }
 
 //const cartKey = process.env.CART_KEY!;
@@ -73,6 +74,14 @@ const useCart = create<CartState & Actions>()((set) => ({
         ...state,
         navOpen: !state.navOpen,
         menuOpen: false,
+      };
+    });
+  },
+  updateUser: (user) => {
+    set((state) => {
+      return {
+        ...state,
+        user,
       };
     });
   },

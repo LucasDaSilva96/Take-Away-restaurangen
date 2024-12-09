@@ -1,11 +1,10 @@
 import axios from "axios";
 import { catchError } from "./catchError";
-import { User_login_Post, User_Post } from "@/types/user";
+import { User_Get, User_login_Post, User_Post } from "@/types/user";
 
 import {
   saveTokenToLocalStorage,
   saveUserRoleToLocalStorage,
-  saveUserToLocalStorage,
 } from "./localStorage";
 import {
   BASE_API_URL,
@@ -34,13 +33,9 @@ export async function loginUser({ email, password }: User_login_Post) {
 
     //Edit to allow for user to be stored. Previuosly only token was stored as the user.
     // Extract token and save it seperated. Do the same for the user object aswell as the current role.
-
     const token = response.data.token;
-    console.log(token);
     saveTokenToLocalStorage(token);
     saveTokenAsCookie(token);
-    const user = await getUserByJWT(token);
-    saveUserToLocalStorage(user);
     saveUserRoleToLocalStorage(response.data.userRole);
     return response.data;
   } catch (error) {
@@ -67,7 +62,7 @@ export async function registerUser({ email, password, role }: User_Post) {
 // getUserByJWT is an async function that makes a POST request to the /auth/userfind endpoint of the backend API. It takes a JWT token as an argument and returns a User_login_Response object.
 export const getUserByJWT = async (JWT: string) => {
   try {
-    const response = await axios.post<User_login_Response>(
+    const response = await axios.post<User_Get>(
       BASE_API_URL + "/auth/userfind",
       { JWT },
       {
@@ -77,7 +72,7 @@ export const getUserByJWT = async (JWT: string) => {
       }
     );
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error(error);
     throw new Error(catchError(error));
