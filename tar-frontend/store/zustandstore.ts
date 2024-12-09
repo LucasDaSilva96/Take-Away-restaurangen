@@ -32,6 +32,8 @@ interface Actions {
   getQuantity: (productId: string) => number;
   toggleMenu: () => void;
   toggleNav: () => void;
+  isSignedIn: () => boolean;
+  currentRole: () => string;
 }
 
 //const cartKey = process.env.CART_KEY!;
@@ -139,6 +141,21 @@ const useCart = create<CartState & Actions>()((set) => ({
       .getState()
       .cart.find((item) => item.id === productId) as CartProduct | undefined;
     return item ? item.quantity : 0;
+  },
+  isSignedIn() {
+    if (localStorage.getItem("token")) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  currentRole() {
+    const role = localStorage.getItem("role");
+    if (role === "Admin") {
+      return "Admin";
+    } else {
+      return "Customer";
+    }
   },
 }));
 

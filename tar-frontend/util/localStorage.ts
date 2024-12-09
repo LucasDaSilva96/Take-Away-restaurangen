@@ -1,5 +1,5 @@
-import { USER_KEY } from '@/constants/localStorageKeys';
-import { User_login_Response } from './auth';
+import { ROLE_KEY, USER_KEY } from "@/constants/localStorageKeys";
+import { User_login_Response } from "./auth";
 
 // This is the secret key for the JWT token
 const JWT_Secret = process.env.jwtSecret!;
@@ -24,13 +24,17 @@ export const saveUserToLocalStorage = (user: User_login_Response) => {
   localStorage.setItem(USER_KEY, JSON.stringify(user.token));
 };
 
+export const saveUserRoleToLocalStorage = (role: string) => {
+  localStorage.setItem(ROLE_KEY, role);
+};
+
 // getUserFromLocalStorage is a function that retrieves the User_Get object from the local storage.
 export const getUserFromLocalStorage = () => {
   const user = localStorage.getItem(USER_KEY);
 
   if (user) {
     const token = JSON.parse(user) as string;
-    return token.replace(/"/g, '');
+    return token.replace(/"/g, "");
   }
 
   return null;
