@@ -1,3 +1,5 @@
+import { ROLE_KEY } from "@/constants/localStorageKeys";
+import { User_Get } from "@/types/user";
 import { create } from "zustand";
 
 interface menuItemResponse {
@@ -22,6 +24,8 @@ export type CartState = {
   amount: number;
   menuOpen: boolean;
   navOpen: boolean;
+  role: string;
+  user: User_Get;
 };
 
 interface Actions {
@@ -32,6 +36,9 @@ interface Actions {
   getQuantity: (productId: string) => number;
   toggleMenu: () => void;
   toggleNav: () => void;
+  isSignedIn: () => boolean;
+  currentRole: () => void;
+  updateUser: (user: User_Get) => void;
 }
 
 //const cartKey = process.env.CART_KEY!;
@@ -42,6 +49,15 @@ const useCart = create<CartState & Actions>()((set) => ({
   amount: 0,
   menuOpen: false,
   navOpen: false,
+  role: "Customer",
+  user: {
+    _id: "",
+    id: "",
+    email: "",
+    password: "",
+    role: "Customer",
+    orders: [],
+  },
 
   toggleMenu: () => {
     set((state) => {
@@ -58,6 +74,14 @@ const useCart = create<CartState & Actions>()((set) => ({
         ...state,
         navOpen: !state.navOpen,
         menuOpen: false,
+      };
+    });
+  },
+  updateUser: (user) => {
+    set((state) => {
+      return {
+        ...state,
+        user,
       };
     });
   },
@@ -139,6 +163,30 @@ const useCart = create<CartState & Actions>()((set) => ({
       .getState()
       .cart.find((item) => item.id === productId) as CartProduct | undefined;
     return item ? item.quantity : 0;
+  },
+  isSignedIn() {
+    if (localStorage.getItem("token")) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  currentRole() {
+    set((state) => {
+      let newRole = "";
+      const role = localStorage.getItem(ROLE_KEY);
+
+      console.log("Role", role);
+      if (role === "Admin") {
+        newRole = "Admin";
+      } else {
+        newRole = "Customer";
+      }
+      return {
+        ...state,
+        role: newRole,
+      };
+    });
   },
 }));
 

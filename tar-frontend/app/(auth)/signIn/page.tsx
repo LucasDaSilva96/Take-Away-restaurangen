@@ -1,15 +1,17 @@
 "use client";
-import { loginUser } from "@/util/auth";
+import { getUserByJWT, loginUser } from "@/util/auth";
 import { catchError } from "@/util/catchError";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useCart from "@/store/zustandstore";
 
 const SignIn = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { updateUser } = useCart();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +26,10 @@ const SignIn = () => {
       await loginUser({
         email: emailRef.current.value,
         password: passwordRef.current.value,
+      }).then((res) => {
+        getUserByJWT(res.token).then((user) => {
+          updateUser(user);
+        });
       });
       return router.push("/dashboard?role=customer");
     } catch (error) {
@@ -41,7 +47,9 @@ const SignIn = () => {
       <div className="h-full w-screen flex justify-center items-center">
         <div className="rounded-xl h-1/2  bg-main-transparentBlack w-full max-w-[566px] min-w-[334px] mx-8 px-8">
           <div className="flex justify-center mt-20 mb-20">
-            <h1 className="text-4xl text-main-primary font-motter">User</h1>
+            <h1 className="text-4xl text-center text-main-primary font-motter">
+              Welcome Back! <br /> Please sign in!
+            </h1>
           </div>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label htmlFor="email" className="text-main-primary">
