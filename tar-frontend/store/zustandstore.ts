@@ -1,4 +1,5 @@
 import { ROLE_KEY } from "@/constants/localStorageKeys";
+import { User_Get } from "@/types/user";
 import { create } from "zustand";
 
 interface menuItemResponse {
@@ -24,6 +25,7 @@ export type CartState = {
   menuOpen: boolean;
   navOpen: boolean;
   role: string;
+  user: User_Get;
 };
 
 interface Actions {
@@ -47,6 +49,14 @@ const useCart = create<CartState & Actions>()((set) => ({
   menuOpen: false,
   navOpen: false,
   role: "Customer",
+  user: {
+    _id: "",
+    id: "",
+    email: "",
+    password: "",
+    role: "Customer",
+    orders: [],
+  },
 
   toggleMenu: () => {
     set((state) => {
