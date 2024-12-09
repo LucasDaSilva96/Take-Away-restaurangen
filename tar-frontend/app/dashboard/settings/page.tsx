@@ -76,7 +76,7 @@ export const ProfileSettings: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
-              className="w-full p-2 border rounded-md focus:outline-none"
+              className="w-full p-2 border rounded-md focus:outline-none text-black"
             />
           </div>
 
@@ -95,7 +95,7 @@ export const ProfileSettings: React.FC = () => {
               value={formData.username}
               onChange={handleChange}
               placeholder="Enter your username"
-              className="w-full p-2 border rounded-md focus:outline-none"
+              className="w-full p-2 border rounded-md focus:outline-none text-black"
             />
           </div>
 
@@ -114,7 +114,7 @@ export const ProfileSettings: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter your password"
-              className="w-full p-2 border rounded-md focus:outline-none"
+              className="w-full p-2 border rounded-md focus:outline-none text-black"
             />
           </div>
 
@@ -132,7 +132,7 @@ export const ProfileSettings: React.FC = () => {
               id="backgroundImage"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full p-2 border rounded-mdfocus:outline-none"
+              className="w-full p-2 border rounded-mdfocus:outline-none "
             />
           </div>
 
