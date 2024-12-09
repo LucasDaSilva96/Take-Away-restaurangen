@@ -1,3 +1,4 @@
+import { ROLE_KEY } from "@/constants/localStorageKeys";
 import { create } from "zustand";
 
 interface menuItemResponse {
@@ -22,6 +23,7 @@ export type CartState = {
   amount: number;
   menuOpen: boolean;
   navOpen: boolean;
+  role: string;
 };
 
 interface Actions {
@@ -33,7 +35,7 @@ interface Actions {
   toggleMenu: () => void;
   toggleNav: () => void;
   isSignedIn: () => boolean;
-  currentRole: () => string;
+  currentRole: () => void;
 }
 
 //const cartKey = process.env.CART_KEY!;
@@ -44,6 +46,7 @@ const useCart = create<CartState & Actions>()((set) => ({
   amount: 0,
   menuOpen: false,
   navOpen: false,
+  role: "Customer",
 
   toggleMenu: () => {
     set((state) => {
@@ -150,12 +153,21 @@ const useCart = create<CartState & Actions>()((set) => ({
     }
   },
   currentRole() {
-    const role = localStorage.getItem("role");
-    if (role === "Admin") {
-      return "Admin";
-    } else {
-      return "Customer";
-    }
+    set((state) => {
+      let newRole = "";
+      const role = localStorage.getItem(ROLE_KEY);
+
+      console.log("Role", role);
+      if (role === "Admin") {
+        newRole = "Admin";
+      } else {
+        newRole = "Customer";
+      }
+      return {
+        ...state,
+        role: newRole,
+      };
+    });
   },
 }));
 

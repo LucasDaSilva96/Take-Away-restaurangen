@@ -36,6 +36,7 @@ export async function loginUser({ email, password }: User_login_Post) {
     // Extract token and save it seperated. Do the same for the user object aswell as the current role.
 
     const token = response.data.token;
+    console.log(token);
     saveTokenToLocalStorage(token);
     saveTokenAsCookie(token);
     const user = await getUserByJWT(token);

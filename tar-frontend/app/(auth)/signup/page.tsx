@@ -1,10 +1,35 @@
 "use client";
 
+import { User_Post } from "@/types/user";
+import { registerUser } from "@/util/auth";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 // TODO : Implement the Signup with auth towards DB and mw
 const Signup = () => {
+  const router = useRouter();
+  const [details, setDetails] = useState<User_Post>({
+    email: "",
+    password: "",
+    role: "Customer",
+  });
+
+  const [passMatch, setPassMatch] = useState<string>("");
+
+  const runSignup = async () => {
+    if (
+      details.email !== "" &&
+      details.password !== "" &&
+      details.role !== undefined &&
+      details.password === passMatch
+    ) {
+      registerUser(details);
+
+      return router.push("/dashboard");
+    }
+  };
+
   return (
     <section
       className="w-screen h-screen bg-cover bg-center flex justify-center items-center bg-black"
@@ -24,6 +49,9 @@ const Signup = () => {
             <input
               type="email"
               name="email"
+              onChange={(e) =>
+                setDetails({ ...details, email: e.target.value })
+              }
               className="rounded-sm h-8 outline-none px-5 font-motter"
             />
 
@@ -33,14 +61,18 @@ const Signup = () => {
             <input
               type="password"
               name="password"
+              onChange={(e) =>
+                setDetails({ ...details, password: e.target.value })
+              }
               className="rounded-sm h-8 focus: outline-none px-5 font-motter"
             />
             <label htmlFor="password" className="text-main-primary">
-              Password
+              Confirm Password
             </label>
             <input
               type="password"
               name="password"
+              onChange={(e) => setPassMatch(e.target.value)}
               className="rounded-sm h-8 focus: outline-none px-5 font-motter"
             />
             <section className="w-full flex justify-between items-center">
@@ -53,7 +85,8 @@ const Signup = () => {
             </section>
             <div className="flex justify-center">
               <button
-                type="submit"
+                onClick={runSignup}
+                type="button"
                 className="h-10 w-36 border-2 border-main-primary bg-main-moss text-main-primary font-motter rounded-sm hover:bg-green-950 transition-colors duration-300"
               >
                 Sign up
