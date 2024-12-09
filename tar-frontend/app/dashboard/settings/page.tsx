@@ -1,159 +1,158 @@
 "use client";
-import { useState } from "react";
-import { SettingCards } from "@/components/dashboard-component/settingCards";
 
-const cardObject = [
-  {
-    title: "Change Email",
-  },
-  {
-    title: "Change Username",
-  },
-  {
-    title: "Change Password",
-  },
-  {
-    title: "Change Profile Picture",
-  },
-];
+import React, { useState } from "react";
 
-interface SettingsOverlayProps {
-  isVisible: boolean;
-  title: string;
-  onClose: () => void;
-  children?: React.ReactNode; // För att stödja valfri innehållsrendering
+interface FormData {
+  email: string;
+  username: string;
+  password: string;
+  backgroundImage: File | null;
 }
 
-export const SettingsOverlay: React.FC<SettingsOverlayProps> = ({
-  isVisible,
-  title,
-  onClose,
-  children,
-}) => {
-  if (!isVisible) return null;
+export const ProfileSettings: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    username: "",
+    password: "",
+    backgroundImage: null,
+  });
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
-      <div className="w-96 p-5 bg-main-secondary rounded-lg shadow-lg relative">
-        <button
-          className="absolute top-2 right-2 text-xl font-bold"
-          onClick={onClose}
-        >
-          ✕
-        </button>
-        <h2 className="text-xl font-motter mb-4 text-main-primary">{title}</h2>
-        {children}
-      </div>
-    </div>
-  );
-};
-
-const page = () => {
-  const [isOverlayVisible, setOverlayVisible] = useState(false);
-  const [activeCard, setActiveCard] = useState<string>("");
-
-  const handleCardClick = (title: string) => {
-    setActiveCard(title);
-    setOverlayVisible(true);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const closeOverlay = () => {
-    setOverlayVisible(false);
-    setActiveCard("");
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFormData({ ...formData, backgroundImage: file });
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form Data Submitted:", formData);
+    alert("Settings updated!");
   };
 
   return (
     <>
-      <div>
-        <div className="w-full flex justify-center ">
-          <div className="w-48 h-48 overflow-hidden rounded-full">
+      <div className="flex justify-center items-center h-full flex-col gap-5">
+        <div className=" bg-main-secondary w-56 h-56 rounded-full overflow-hidden flex items-center justify-center">
+          {previewImage ? (
             <img
-              src="/dashboard-menu-icons/profile-picture.jpg"
+              src={previewImage}
+              alt="Selected"
               className="w-full h-full object-cover"
-              alt=""
+            />
+          ) : (
+            <p className="text-main-primary">No image selected</p>
+          )}
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className="bg-main-secondary p-6 rounded-lg shadow-md w-80"
+        >
+          <h2 className="text-main-primary font-motter text-2xl font-semibold mb-4">
+            Profile Settings
+          </h2>
+
+          {/* Email */}
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-sm text-main-primary font-motter"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              className="w-full p-2 border rounded-md focus:outline-none"
             />
           </div>
-        </div>
 
-        <div className=" w-full auto flex flex-wrap gap-4 p-5 justify-center items-center">
-          {cardObject.map((card, index) => (
-            <SettingCards
-              index={index}
-              title={card.title}
-              placeHolder={
-                card.title === "Change Email"
-                  ? "xx.xxx@example.se"
-                  : card.title === "Change Username"
-                  ? "Johanna Berg"
-                  : undefined
-              }
-              onClick={() => handleCardClick(card.title)}
+          {/* Username */}
+          <div className="mb-4">
+            <label
+              htmlFor="username"
+              className="block text-sm text-main-primary font-motter"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Enter your username"
+              className="w-full p-2 border rounded-md focus:outline-none"
             />
-          ))}
-        </div>
+          </div>
 
-        {/* Overlay section */}
-        <SettingsOverlay
-          isVisible={isOverlayVisible}
-          title={activeCard}
-          onClose={closeOverlay}
-        >
-          {activeCard === "Change Email" && (
-            <form>
-              <label className="block mb-2 font-motter text-main-primary">
-                New Email
-              </label>
-              <input
-                type="email"
-                className="w-full p-2 border rounded"
-                placeholder="Enter new email"
-              />
-              <button
-                type="submit"
-                className="mt-4 px-4 py-2 bg-main-moss text-main-primary rounded "
-              >
-                Save
-              </button>
-            </form>
-          )}
-          {activeCard === "Change Username" && (
-            <form>
-              <label className="block mb-2 font-motter text-main-primary">
-                New Username
-              </label>
-              <input
-                type="username"
-                className="w-full p-2 border rounded"
-                placeholder="Enter new username"
-              />
-              <button
-                type="submit"
-                className="mt-4 px-4 py-2 bg-main-moss text-main-primary rounded "
-              >
-                Save
-              </button>
-            </form>
-          )}
-          {activeCard === "Change Password" && (
-            <form>
-              <label className="block mb-2 font-motter text-main-primary">
-                New Password
-              </label>
-              <input
-                type="password"
-                className="w-full p-2 border rounded"
-                placeholder="Enter new password"
-              />
-              <button
-                type="submit"
-                className="mt-4 px-4 py-2 bg-main-moss text-main-primary rounded "
-              >
-                Save
-              </button>
-            </form>
-          )}
-        </SettingsOverlay>
+          {/* Password */}
+          <div className="mb-4">
+            <label
+              htmlFor="password"
+              className="block text-sm text-main-primary font-motter"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              className="w-full p-2 border rounded-md focus:outline-none"
+            />
+          </div>
+
+          {/* Background Image */}
+          <div className="mb-4">
+            <label
+              htmlFor="backgroundImage"
+              className="block text-sm text-main-primary font-motter"
+            >
+              Background Image
+            </label>
+            <input
+              type="file"
+              name="backgroundImage"
+              id="backgroundImage"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full p-2 border rounded-mdfocus:outline-none"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-main-moss text-main-primary font-motter p-2 rounded-md hover:bg-green-900 ease-out duration-300"
+          >
+            Save Changes
+          </button>
+        </form>
       </div>
+    </>
+  );
+};
+
+const page = () => {
+  return (
+    <>
+      <ProfileSettings />
     </>
   );
 };
