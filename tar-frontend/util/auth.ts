@@ -13,7 +13,7 @@ import {
   USER_KEY,
 } from "@/constants/localStorageKeys";
 import { permanentRedirect } from "next/navigation";
-import { saveTokenAsCookie } from "./cookies";
+import { removeTokenAsCookie, saveTokenAsCookie } from "./cookies";
 // The BASE_API_URL is defined in the .env file and is used to make requests to the backend API.
 
 export type User_login_Response = {
@@ -62,7 +62,7 @@ export async function registerUser({ email, password, role }: User_Post) {
 // getUserByJWT is an async function that makes a POST request to the /auth/userfind endpoint of the backend API. It takes a JWT token as an argument and returns a User_login_Response object.
 export const getUserByJWT = async (JWT: string) => {
   try {
-    const response = await axios.post<User_Get>(
+    const response = await axios.post<{ data: User_Get }>(
       BASE_API_URL + "/auth/userfind",
       { JWT },
       {
@@ -89,5 +89,6 @@ export const logoutUser = async () => {
     localStorage.removeItem(key);
   });
 
+  removeTokenAsCookie();
   permanentRedirect("/");
 };

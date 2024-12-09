@@ -28,7 +28,7 @@ const SignIn = () => {
         password: passwordRef.current.value,
       }).then((res) => {
         getUserByJWT(res.token).then((user) => {
-          updateUser(user.data);
+          updateUser(user);
         });
       });
       return router.push("/dashboard?role=customer");
@@ -47,7 +47,9 @@ const SignIn = () => {
       <div className="h-full w-screen flex justify-center items-center">
         <div className="rounded-xl h-1/2  bg-main-transparentBlack w-full max-w-[566px] min-w-[334px] mx-8 px-8">
           <div className="flex justify-center mt-20 mb-20">
-            <h1 className="text-4xl text-main-primary font-motter">User</h1>
+            <h1 className="text-4xl text-center text-main-primary font-motter">
+              Welcome Back! <br /> Please sign in!
+            </h1>
           </div>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label htmlFor="email" className="text-main-primary">

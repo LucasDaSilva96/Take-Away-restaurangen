@@ -1,7 +1,7 @@
 "use client";
 
 import { User_Post } from "@/types/user";
-import { registerUser } from "@/util/auth";
+import { loginUser, registerUser } from "@/util/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -24,9 +24,16 @@ const Signup = () => {
       details.role !== undefined &&
       details.password === passMatch
     ) {
-      registerUser(details);
+      registerUser(details).then((res) => {
+        const signDetails = {
+          email: details.email,
+          password: details.password,
+        };
 
-      return router.push("/dashboard");
+        loginUser(signDetails).then((res) => {
+          return router.push("/dashboard");
+        });
+      });
     }
   };
 
@@ -52,10 +59,10 @@ const Signup = () => {
               onChange={(e) =>
                 setDetails({ ...details, email: e.target.value })
               }
-              className="rounded-sm h-8 outline-none px-5 font-motter"
+              className="rounded-sm h-8 outline-none px-5 font-motter text-black"
             />
 
-            <label htmlFor="password" className="text-main-primary">
+            <label htmlFor="password" className="text-main-primary font-motter">
               Password
             </label>
             <input
@@ -64,16 +71,16 @@ const Signup = () => {
               onChange={(e) =>
                 setDetails({ ...details, password: e.target.value })
               }
-              className="rounded-sm h-8 focus: outline-none px-5 font-motter"
+              className="rounded-sm h-8 focus: outline-none px-5 font-motter text-black"
             />
-            <label htmlFor="password" className="text-main-primary">
+            <label htmlFor="password" className="text-main-primary font-motter">
               Confirm Password
             </label>
             <input
               type="password"
               name="password"
               onChange={(e) => setPassMatch(e.target.value)}
-              className="rounded-sm h-8 focus: outline-none px-5 font-motter"
+              className="rounded-sm h-8 focus: outline-none px-5 font-motter text-black"
             />
             <section className="w-full flex justify-between items-center">
               <Link
