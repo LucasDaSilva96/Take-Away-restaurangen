@@ -1,4 +1,4 @@
-import { ROLE_KEY } from "@/constants/localStorageKeys";
+import { JWT_SECRET, ROLE_KEY } from "@/constants/localStorageKeys";
 import { User_Get } from "@/types/user";
 import { create } from "zustand";
 
@@ -165,7 +165,7 @@ const useCart = create<CartState & Actions>()((set) => ({
     return item ? item.quantity : 0;
   },
   isSignedIn() {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem(JWT_SECRET)) {
       return true;
     } else {
       return false;

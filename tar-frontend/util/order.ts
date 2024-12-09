@@ -42,6 +42,8 @@ export const createOrder = async (order: Order_Post) => {
     if (!order.guestEmail && !order.userId) {
       throw new Error("User ID or Guest Email is required");
     }
+
+    console.log("Request sent", order);
     const response = await axios.post<Order_Get>(
       BASE_API_URL + "/order",
       order

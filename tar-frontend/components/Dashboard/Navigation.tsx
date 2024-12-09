@@ -75,7 +75,6 @@ export default function Navigation() {
       });
     }
   };
-
   useEffect(() => {
     currentRole();
     userGetter();
