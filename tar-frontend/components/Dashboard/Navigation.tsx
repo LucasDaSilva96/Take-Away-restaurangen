@@ -37,11 +37,6 @@ export default function Navigation() {
       icon: "/dashboard-menu-icons/settings.png",
       url: "/dashboard/settings",
     },
-    {
-      title: "Sign Out",
-      icon: "/dashboard-menu-icons/sign-out.png",
-      url: "/auth/signOut",
-    },
   ];
 
   const navigationObjectCustomer = [
@@ -59,11 +54,6 @@ export default function Navigation() {
       title: "Settings",
       icon: "/dashboard-menu-icons/settings.png",
       url: "/dashboard/settings",
-    },
-    {
-      title: "Sign Out",
-      icon: "/dashboard-menu-icons/sign-out.png",
-      url: "/auth/signOut",
     },
   ];
 
@@ -85,24 +75,6 @@ export default function Navigation() {
     >
       {role == "Admin"
         ? navigationObjectAdmin.map((item, index) => {
-            // Error 1: Incorrect syntax for conditional rendering
-            if (item.title === "Sign Out") {
-              return (
-                <button
-                  onClick={logoutUser}
-                  key={item.title}
-                  className={`w-40 flex items-center gap-2 h-9 ${
-                    pathname === item.url
-                      ? "text-slate-50"
-                      : "text-main-primary"
-                  }`}
-                >
-                  Sign Out
-                </button>
-              );
-            }
-
-            // Error 2: Unexpected else clause and nested map
             return (
               <Link
                 key={index}
@@ -117,22 +89,6 @@ export default function Navigation() {
             );
           })
         : navigationObjectCustomer.map((item, index) => {
-            if (item.title === "Sign Out") {
-              return (
-                <button
-                  onClick={logoutUser}
-                  key={item.title}
-                  className={`w-40 flex items-center gap-2 h-9 ${
-                    pathname === item.url
-                      ? "text-slate-50"
-                      : "text-main-primary"
-                  }`}
-                >
-                  Sign Out
-                </button>
-              );
-            }
-
             return (
               <Link
                 key={index}
@@ -146,6 +102,13 @@ export default function Navigation() {
               </Link>
             );
           })}
+
+      <button
+        className="bg-main-primary text-main-light px-4 py-2 rounded-md font-motter hover:scale-105 transition-all duration-300 ease-in-out"
+        onClick={logoutUser}
+      >
+        Sign out
+      </button>
     </nav>
   );
 }
