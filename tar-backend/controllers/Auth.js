@@ -2,11 +2,12 @@ import bcrypt from 'bcrypt';
 import User from '../models/Users.js';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
+import { uploadImage } from '../utils/uploadImage.js';
 
 //Create new account
 export const signupUser = async (req, res) => {
   //Get email and password from body
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ message: 'Please enter all fields' });
@@ -21,6 +22,7 @@ export const signupUser = async (req, res) => {
       password: hash,
       role: 'Customer',
       orders: [],
+      username: username,
     });
 
     //Push new user to database
@@ -104,5 +106,37 @@ export const getUserDetails = async (req, res) => {
     }
   } catch (err) {
     return res.status(404).json({ message: 'No user found' });
+  }
+};
+
+export const updateUserDetails = async (req, res) => {
+  const { email, username, newEmail } = req.body;
+  const image = req.file || null;
+  let imageUrl = null;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (user) {
+      if (image) {
+        const url = await uploadImage(image);
+        if (!url) {
+          return res.status(400).json({ message: 'Image upload failed' });
+        }
+        imageUrl = url;
+      }
+
+      user.email = newEmail || email;
+      user.username = username || user.username;
+      user.image = imageUrl || user.image;
+
+      await user.save();
+
+      return res.status(200).json({ message: 'User updated successfully' });
+    } else {
+      return res.status(404).json({ message: 'No user found' });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: 'Error updating user' });
   }
 };

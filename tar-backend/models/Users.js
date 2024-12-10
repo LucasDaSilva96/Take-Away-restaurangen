@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    username: {
+      type: String,
+      required: [true, 'Valid username is required'],
+    },
     email: {
       type: String,
       required: [true, 'Valid email is required'],
@@ -20,6 +24,10 @@ const userSchema = new mongoose.Schema(
       default: 'Customer',
     },
     orders: [],
+    image: {
+      type: String,
+      default: 'https://i.pravatar.cc/400',
+    },
   },
   { collection: 'Users' }
 );
