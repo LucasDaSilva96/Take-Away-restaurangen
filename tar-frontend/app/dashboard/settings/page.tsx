@@ -86,13 +86,13 @@ export const ProfileSettings: React.FC = () => {
         <div className=' bg-main-secondary w-56 h-56 rounded-full overflow-hidden flex items-center justify-center'>
           {previewImage ? (
             <img
-              src={previewImage || data.image}
+              src={previewImage || (data.image as string)}
               alt='Selected'
               className='w-full h-full object-cover'
             />
           ) : data.image ? (
             <img
-              src={data.image}
+              src={data.image as string}
               alt='Selected'
               className='w-full h-full object-cover'
             />
