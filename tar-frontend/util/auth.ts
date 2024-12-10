@@ -113,13 +113,17 @@ export const updateUser = async ({
   if (image && typeof image !== 'string') formData.append('image', image);
 
   try {
-    await axios.post(BASE_API_URL + '/auth/update', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const res = await axios.post<{ message: string; token: string }>(
+      BASE_API_URL + '/auth/update',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
 
-    return true;
+    return res.data.token;
   } catch (error) {
     console.error(error);
     throw new Error(catchError(error));

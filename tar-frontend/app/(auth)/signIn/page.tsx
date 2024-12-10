@@ -29,7 +29,9 @@ const SignIn = () => {
       }).then((res) => {
         getUserByJWT(res.token).then((user) => {
           updateUser(user);
-          router.push('/dashboard');
+          setTimeout(() => {
+            return router.push('/dashboard');
+          }, 100);
         });
       });
     } catch (error) {

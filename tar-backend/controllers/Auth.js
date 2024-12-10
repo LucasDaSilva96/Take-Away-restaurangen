@@ -40,39 +40,76 @@ export const signupUser = async (req, res) => {
 export const signInUser = async (req, res) => {
   const { email, password } = req.body;
 
-  let userFound;
+  // let userFound;
 
-  User.findOne({ email: email })
-    .then((user) => {
-      if (!user) {
-        return res
-          .status(400)
-          .json({ message: 'User does not exist. Create an account!' });
-      }
+  // User.findOne({ email: email })
+  //   .then((user) => {
+  //     if (!user) {
+  //       return res
+  //         .status(400)
+  //         .json({ message: 'User does not exist. Create an account!' });
+  //     }
 
-      userFound = user;
-      return bcrypt.compare(password, user.password);
-    })
-    .then((result) => {
-      if (!result) {
-        return res.status(400).json({ message: 'Invalid password' });
-      }
+  //     userFound = user;
+  //     return bcrypt.compare(password, user.password);
+  //   })
+  //   .then((result) => {
+  //     if (!result) {
+  //       return res.status(400).json({ message: 'Invalid password' });
+  //     }
 
-      const token = jwt.sign(
-        {
-          data: { email: email, userId: userFound?._id },
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
+  //     const token = jwt.sign(
+  //       {
+  //         data: { email: email, userId: userFound?._id },
+  //       },
+  //       process.env.JWT_SECRET,
+  //       { expiresIn: '1h' }
+  //     );
 
-      return res.status(200).json({
-        token: token,
-        userId: userFound._id,
-        userRole: userFound.role,
-        expiresIn: 3600,
-      });
+  //     return res.status(200).json({
+  //       token: token,
+  //       userId: userFound._id,
+  //       userRole: userFound.role,
+  //       expiresIn: 3600,
+  //     });
+  //   });
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Please enter all fields' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error('User not found. Create an account!');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new Error('Invalid password');
+    }
+
+    const token = jwt.sign(
+      {
+        data: { email: email, userId: user._id },
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    if (!token) {
+      throw new Error('Token creation failed');
+    }
+
+    return res.status(200).json({
+      token: token,
+      userId: user._id,
+      userRole: user.role,
+      expiresIn: 3600,
     });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 };
 
 export const getUserDetails = async (req, res) => {
@@ -132,7 +169,17 @@ export const updateUserDetails = async (req, res) => {
 
       await user.save();
 
-      return res.status(200).json({ message: 'User updated successfully' });
+      const token = jwt.sign(
+        {
+          data: { email: email, userId: user._id },
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+
+      return res
+        .status(200)
+        .json({ message: 'User updated successfully', token });
     } else {
       return res.status(404).json({ message: 'No user found' });
     }

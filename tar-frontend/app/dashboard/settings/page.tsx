@@ -2,7 +2,7 @@
 import { User_Get } from '@/types/user';
 import { getUserByJWT, updateUser } from '@/util/auth';
 import { catchError } from '@/util/catchError';
-import { getTokenFromLocalStorage } from '@/util/localStorage';
+import { getTokenFromLocalStorage, resetUserData } from '@/util/localStorage';
 import { redirect, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -58,20 +58,22 @@ export const ProfileSettings: React.FC = () => {
 
     if (!user) return;
     if (data.email === '' || data.username === '') return;
-
     try {
       setIsLoading(true);
-      const isValid = await updateUser({
+      const token = await updateUser({
         email: user.email,
         username: data.username,
         newEmail: data.email,
         image: data.image as File,
       });
 
-      if (isValid) {
+      if (token) {
         setPreviewImage(null);
         window.alert('Profile updated successfully');
-        router.refresh();
+        if (data.email !== user.email) {
+          resetUserData();
+          router.refresh();
+        }
       }
     } catch (error) {
       window.alert(catchError(error));
