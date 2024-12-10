@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
-import { menuSchema } from './menu.js';
+import mongoose, { Schema } from "mongoose";
+import { menuSchema } from "./menu.js";
 
 // Define the schema for the order
 const orderSchema = new mongoose.Schema({
@@ -10,15 +10,15 @@ const orderSchema = new mongoose.Schema({
   },
   items: {
     type: [menuSchema],
-    required: [true, 'Items are required'],
+    required: [true, "Items are required"],
   },
   total: {
     type: Number,
-    required: [true, 'Total is required'],
+    required: [true, "Total is required"],
   },
   status: {
     type: String,
-    default: 'pending',
+    default: "pending",
   },
   timestamp: {
     type: Date,
@@ -30,19 +30,23 @@ const orderSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    default: '',
+    default: "",
+  },
+  chefNote: {
+    type: String,
+    default: "",
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   guestEmail: {
     type: String,
-    default: '',
+    default: "",
   },
 });
 
 // Create a model for the order
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 export { Order };

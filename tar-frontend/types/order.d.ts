@@ -16,6 +16,7 @@ export interface Order_Get extends Order_Post {
   total: number;
   status: string;
   isLocked: boolean;
+  chefNote: string;
   timestamp: string;
 }
 
@@ -24,6 +25,7 @@ export interface Order_Update {
   order: {
     items: Menu_Get[];
     message?: string;
+    chefNote?: string;
     status?: string;
     isLocked?: boolean;
     total?: number;
