@@ -8,9 +8,14 @@ import { useRouter } from "next/navigation";
 interface PaymentpopupProps {
   toggle: () => void;
   email: string;
+  message: string;
 }
 
-const Paymentpopup: React.FC<PaymentpopupProps> = ({ toggle, email }) => {
+const Paymentpopup: React.FC<PaymentpopupProps> = ({
+  toggle,
+  email,
+  message,
+}) => {
   const { cart, amount, user, clearCart } = useCart();
   const [orderComp, setOrderComp] = useState<boolean>(false);
 
@@ -21,6 +26,7 @@ const Paymentpopup: React.FC<PaymentpopupProps> = ({ toggle, email }) => {
       createOrder({
         items: cart,
         userId: user.id,
+        message: message,
       }).then(() => {
         setOrderComp(true);
         setTimeout(() => {
@@ -34,6 +40,7 @@ const Paymentpopup: React.FC<PaymentpopupProps> = ({ toggle, email }) => {
       createOrder({
         items: cart,
         guestEmail: email,
+        message: message,
       }).then(() => {
         setOrderComp(true);
         setTimeout(() => {
