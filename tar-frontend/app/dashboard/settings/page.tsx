@@ -29,6 +29,7 @@ export const ProfileSettings: React.FC = () => {
         const TOKEN = getTokenFromLocalStorage();
         if (!TOKEN) return redirect('/login');
         const signedInUser = await getUserByJWT(TOKEN);
+        if (!signedInUser) return;
         setUser(signedInUser);
         setData({
           email: signedInUser.email,

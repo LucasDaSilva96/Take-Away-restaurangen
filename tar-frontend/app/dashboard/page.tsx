@@ -26,7 +26,9 @@ function Page() {
         const TOKEN = getTokenFromLocalStorage();
         if (!TOKEN) return redirect('/login');
         const signedInUser = await getUserByJWT(TOKEN);
-        setUser(signedInUser);
+        if (signedInUser) {
+          setUser(signedInUser);
+        }
         setMenuItems(menu);
         setOrderItems(orders);
       } catch (error) {

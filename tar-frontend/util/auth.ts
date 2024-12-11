@@ -3,6 +3,7 @@ import { catchError } from './catchError';
 import { User_Get, User_login_Post, User_Post } from '@/types/user';
 
 import {
+  resetUserData,
   saveTokenToLocalStorage,
   saveUserRoleToLocalStorage,
 } from './localStorage';
@@ -74,8 +75,8 @@ export const getUserByJWT = async (JWT: string) => {
 
     return response.data.data;
   } catch (error) {
-    console.error(error);
-    throw new Error(catchError(error));
+    resetUserData();
+    console.error(catchError(error));
   }
 };
 
