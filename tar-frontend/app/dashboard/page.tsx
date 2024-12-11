@@ -12,6 +12,7 @@ import { getMenu } from '@/util/menu';
 import { getOrders } from '@/util/order';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 function Page() {
   const [menuItems, setMenuItems] = useState<Menu_Get[]>([]);
@@ -32,7 +33,7 @@ function Page() {
         setMenuItems(menu);
         setOrderItems(orders);
       } catch (error) {
-        window.alert(catchError(error));
+        toast.error(catchError(error));
       }
     })();
   }, []);

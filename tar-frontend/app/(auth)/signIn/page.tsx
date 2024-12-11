@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useCart from '@/store/zustandstore';
+import toast from 'react-hot-toast';
 
 const SignIn = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -23,19 +24,23 @@ const SignIn = () => {
       if (!emailRef.current.value || !passwordRef.current.value) {
         throw new Error('Email or password is missing');
       }
-      await loginUser({
+      const login = await loginUser({
         email: emailRef.current.value,
         password: passwordRef.current.value,
-      }).then((res) => {
-        getUserByJWT(res.token).then((user) => {
-          updateUser(user);
-          setTimeout(() => {
-            return router.push('/dashboard');
-          }, 100);
-        });
       });
+
+      if (!login) throw new Error('Login failed');
+
+      const user = await getUserByJWT(login.token);
+      if (!user) throw new Error('User not found');
+
+      updateUser(user);
+
+      setTimeout(() => {
+        return router.push('/dashboard');
+      }, 100);
     } catch (error) {
-      window.alert(catchError(error));
+      toast.error(catchError(error));
     } finally {
       setIsLoading(false);
     }

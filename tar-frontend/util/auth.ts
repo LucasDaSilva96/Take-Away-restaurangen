@@ -15,6 +15,7 @@ import {
 } from '@/constants/localStorageKeys';
 import { permanentRedirect } from 'next/navigation';
 import { removeTokenAsCookie, saveTokenAsCookie } from './cookies';
+import toast from 'react-hot-toast';
 // The BASE_API_URL is defined in the .env file and is used to make requests to the backend API.
 
 export type User_login_Response = {
@@ -41,7 +42,7 @@ export async function loginUser({ email, password }: User_login_Post) {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw new Error(catchError(error));
+    toast.error(catchError(error));
   }
 }
 
@@ -56,7 +57,7 @@ export async function registerUser({ email, password, role }: User_Post) {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw new Error(catchError(error));
+    toast.error(catchError(error));
   }
 }
 
@@ -76,7 +77,7 @@ export const getUserByJWT = async (JWT: string) => {
     return response.data.data;
   } catch (error) {
     resetUserData();
-    console.error(catchError(error));
+    toast.error(catchError(error));
   }
 };
 
@@ -127,6 +128,6 @@ export const updateUser = async ({
     return res.data.token;
   } catch (error) {
     console.error(error);
-    throw new Error(catchError(error));
+    toast.error(catchError(error));
   }
 };
