@@ -34,6 +34,7 @@ const Page = () => {
         const dbSend = {
           items: order.items,
           message: order.message,
+          chefNote: order.chefNote,
           status: order.status,
           isLocked: !order.isLocked,
           total: order.total,
@@ -51,6 +52,7 @@ const Page = () => {
         const dbSend = {
           items: order.items,
           message: order.message,
+          chefNote: order.chefNote,
           status: "cancelled",
           isLocked: order.isLocked,
           total: order.total,
@@ -68,6 +70,7 @@ const Page = () => {
         const dbSend = {
           items: order.items,
           message: order.message,
+          chefNote: order.chefNote,
           status: "ready",
           isLocked: order.isLocked,
           total: order.total,
