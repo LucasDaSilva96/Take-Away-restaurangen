@@ -5,10 +5,10 @@ export async function generateMetadata({
 }: {
   params: { order: string };
 }): Promise<Metadata> {
-  console.log("Received order:", params.order); // For debugging
+  // For debugging
 
   return {
-    title: `Order #${params.order} | TAR`,
+    title: `Order #${(await params).order} | TAR`,
   };
 }
 

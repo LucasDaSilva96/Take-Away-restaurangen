@@ -11,8 +11,7 @@ const Page = () => {
 
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [orderEmail, setOrderEmail] = useState<string>("");
-  const [orderName, setOrderName] = useState<string>("");
-
+  const [message, setMessage] = useState<string>("");
   const [popup, setPopup] = useState<boolean>(false);
 
   const Toggle = () => {
@@ -101,6 +100,17 @@ const Page = () => {
                 ))}
               </section>
 
+              <section className="w-full flex flex-col justify-start items-start">
+                <p className="font-motter text-main-primary">Extra Requests?</p>
+                <textarea
+                  placeholder="Message to the kitchen..."
+                  name="reqs"
+                  value={message}
+                  onChange={(e) => setMessage(e.currentTarget.value)}
+                  className="p-2 rounded bg-main-light border-2 border-main-primary w-full text-black font-motter"
+                ></textarea>
+              </section>
+
               <section className={"w-full flex justify-between items-center"}>
                 <ButtonBase
                   text={`Confirm and pay`}
@@ -130,7 +140,11 @@ const Page = () => {
       </section>
 
       {popup && (
-        <Paymentpopup toggle={() => setPopup(!popup)} email={orderEmail} />
+        <Paymentpopup
+          toggle={() => setPopup(!popup)}
+          email={orderEmail}
+          message={message}
+        />
       )}
     </>
   );
