@@ -5,6 +5,7 @@ import useCart from '@/store/zustandstore';
 import ButtonBase from '../shared/ButtonBase';
 import { useEffect, useState } from 'react';
 import { Menu_Get } from '@/types/menu';
+import Image from 'next/image';
 
 interface menuItemResponse {
   product: Menu_Get;
@@ -32,10 +33,12 @@ const MenuItem: React.FC<menuItemResponse> = ({ product }) => {
   return (
     <article className='border-2 border-main-primary flex flex-col gap-4 p-3 md:p-6 rounded-md'>
       <section className='w-full aspect-video rounded-md overflow-hidden border-2  border-main-primary'>
-        <img
+        <Image
           src={product.image}
           alt={product.title}
           className='object-cover w-full '
+          width={200}
+          height={200}
         />
       </section>
       <section className='w-full flex flex-col'>

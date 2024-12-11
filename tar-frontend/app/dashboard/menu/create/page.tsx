@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { createMenu } from '@/util/menu';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 export default function CreateMenuItemPage() {
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
@@ -161,10 +162,11 @@ export default function CreateMenuItemPage() {
                 size={28}
                 onClick={handleImageDelete}
               />
-              <img
+              <Image
                 src={imagePreview}
                 alt='Image Preview'
                 className='w-24 h-24 rounded-md'
+                width={96}
               />
             </div>
           ) : (

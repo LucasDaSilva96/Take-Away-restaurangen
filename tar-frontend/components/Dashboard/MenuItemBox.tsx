@@ -8,6 +8,7 @@ import { deleteMenu } from '@/util/menu';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 type MenuItemBoxProps = {
   item: Menu_Get;
@@ -33,10 +34,11 @@ export default function MenuItemBox({ item }: MenuItemBoxProps) {
   return (
     <div className='flex w-full bg-main-primary rounded-md'>
       <div>
-        <img
+        <Image
           src={item.image}
           alt={item.title}
-          className='h-20 h-20 rounded-md'
+          className='h-20 w-20 rounded-md'
+          width={80}
         />
       </div>
       <div className='p-2 flex items-center gap-4 flex-wrap'>
