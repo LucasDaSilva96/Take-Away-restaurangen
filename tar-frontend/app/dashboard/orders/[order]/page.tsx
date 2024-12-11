@@ -6,26 +6,39 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 const Page = () => {
+  //Get params
   const params = useParams<{ order: string }>();
 
+  //Use Next router to navigate on correct functions
   const route = useRouter();
 
+  //Localy store active order
   const [order, setOrder] = useState<Order_Get>();
+
+  //Localy store resturant messages
+  const [resMessage, setResMessage] = useState<string>();
+
+  const [renderToggle, setRenderToggle] = useState(0);
+
+  //Get order by id
   const retriveOrder = async () => {
     try {
       const param = await params.order;
       const getOrder = await getOrderById(param);
       const data = getOrder;
       setOrder(data);
+      setResMessage(data.chefNote);
     } catch (error) {
       console.error(error);
     }
   };
 
+  //Use effect to get order on page load
   useEffect(() => {
     retriveOrder();
-  }, []);
+  }, [renderToggle]);
 
+  //Lock order
   const toggleLock = async () => {
     try {
       if (order) {
@@ -41,9 +54,55 @@ const Page = () => {
         };
         await updateOrder({ id: order.id, order: dbSend });
         setOrder(updatedOrder);
+        setRenderToggle((prev) => prev + 1);
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  //Add message from resturant
+  const updateChefNote = async (add: boolean) => {
+    try {
+      //Check if goal is to add message or clear a request
+      if (!add) {
+        if (order) {
+          const updatedOrder = { ...order, chefNote: "" };
+
+          const dbSend = {
+            items: order.items,
+            message: order.message,
+            chefNote: "",
+            status: order.status,
+            isLocked: !order.isLocked,
+            total: order.total,
+          };
+          await updateOrder({ id: order.id, order: dbSend });
+          alert("Chef note updated");
+          setOrder(updatedOrder);
+          setRenderToggle((prev) => prev + 1);
+        }
+      } else {
+        if (order) {
+          const updatedOrder = { ...order, chefNote: resMessage || "" };
+
+          const dbSend = {
+            items: order.items,
+            message: order.message,
+            chefNote: resMessage,
+            status: order.status,
+            isLocked: !order.isLocked,
+            total: order.total,
+          };
+          await updateOrder({ id: order.id, order: dbSend });
+          alert("Chef note updated");
+          setOrder(updatedOrder);
+          setRenderToggle((prev) => prev + 1);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setRenderToggle((prev) => prev + 1);
     }
   };
   const cancelOrder = async () => {
@@ -58,6 +117,7 @@ const Page = () => {
           total: order.total,
         };
         await updateOrder({ id: order.id, order: dbSend });
+        setRenderToggle((prev) => prev + 1);
         route.push("/dashboard/orders");
       }
     } catch (error) {
@@ -76,6 +136,7 @@ const Page = () => {
           total: order.total,
         };
         await updateOrder({ id: order.id, order: dbSend });
+        setRenderToggle((prev) => prev + 1);
         route.push("/dashboard/orders");
       }
     } catch (error) {
@@ -146,6 +207,33 @@ const Page = () => {
 
               <section className="w-full p-4 mt-2 bg-main-light rounded">
                 <p className="text-black">{order.message}</p>
+              </section>
+            </div>
+          </section>
+          <section className="w-full p-2 rounded-md gap-2 bg-main-light flex justify-center items-start">
+            <div className="w-full rounded-md p-2 bg-main-primary">
+              <p className="text-black font-motter">Resturant Message</p>
+
+              <textarea
+                name="resmessage"
+                id=""
+                value={resMessage || ""}
+                className="w-full h-full rounded-md p-2 bg-main-light text-main-navy font-motter"
+                onChange={(e) => setResMessage(e.currentTarget.value)}
+              ></textarea>
+              <section className="w-full flex gap-2 justify-center items-center">
+                <button
+                  onClick={() => updateChefNote(true)}
+                  className="border-2 px-2 py-1 rounded-md hover:text-main-primary hover:bg-main-light transition-all font-alumni text-2xl font-bold"
+                >
+                  Confirm chef note
+                </button>
+                <button
+                  onClick={() => updateChefNote(false)}
+                  className="border-2 px-2 py-1 rounded-md hover:text-main-primary hover:bg-main-light transition-all font-alumni text-2xl font-bold"
+                >
+                  Clear notes
+                </button>
               </section>
             </div>
           </section>

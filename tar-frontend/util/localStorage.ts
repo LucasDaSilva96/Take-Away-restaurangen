@@ -1,5 +1,6 @@
-import { JWT_SECRET, ROLE_KEY, USER_KEY } from "@/constants/localStorageKeys";
-import { User_login_Response } from "./auth";
+import { JWT_SECRET, ROLE_KEY, USER_KEY } from '@/constants/localStorageKeys';
+import { User_login_Response } from './auth';
+import { removeTokenAsCookie } from './cookies';
 
 // saveTokenToLocalStorage is a function that takes a JWT token as an argument and saves it to the local storage.
 export function saveTokenToLocalStorage(token: string) {
@@ -31,7 +32,7 @@ export const getUserFromLocalStorage = () => {
 
   if (user) {
     const token = JSON.parse(user) as string;
-    return token.replace(/"/g, "");
+    return token.replace(/"/g, '');
   }
 
   return null;
@@ -40,4 +41,14 @@ export const getUserFromLocalStorage = () => {
 // removeUserFromLocalStorage is a function that removes the User_Get object from the local storage.
 export const removeUserFromLocalStorage = () => {
   localStorage.removeItem(USER_KEY);
+};
+
+export const resetUserData = async () => {
+  const keysToDelete = [JWT_SECRET, USER_KEY, ROLE_KEY, 'user'];
+
+  keysToDelete.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  removeTokenAsCookie();
 };

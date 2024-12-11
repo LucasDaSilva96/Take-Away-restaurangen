@@ -167,7 +167,14 @@ export const createOrder = async (req, res) => {
 // Update an order
 export const updateOrder = async (req, res) => {
   // This is the allowed keys that the user can send
-  const allowedKeys = ["items", "total", "status", "isLocked", "message"];
+  const allowedKeys = [
+    "items",
+    "total",
+    "status",
+    "isLocked",
+    "message",
+    "chefNote",
+  ];
   const { id } = req.params;
   const { status } = req.body;
 
