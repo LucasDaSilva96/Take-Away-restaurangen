@@ -39,6 +39,7 @@ export default function MenuItemBox({ item }: MenuItemBoxProps) {
           alt={item.title}
           className='h-20 w-20 rounded-md'
           width={80}
+          height={80}
         />
       </div>
       <div className='p-2 flex items-center gap-4 flex-wrap'>
