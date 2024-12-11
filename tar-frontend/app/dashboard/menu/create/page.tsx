@@ -167,6 +167,7 @@ export default function CreateMenuItemPage() {
                 alt='Image Preview'
                 className='w-24 h-24 rounded-md'
                 width={96}
+                height={96}
               />
             </div>
           ) : (
