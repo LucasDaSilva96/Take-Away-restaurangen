@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { deleteMenu } from '@/util/menu';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 type MenuItemBoxProps = {
   item: Menu_Get;
@@ -20,10 +21,10 @@ export default function MenuItemBox({ item }: MenuItemBoxProps) {
       setIsDeleting(true);
       await deleteMenu(id);
       router.refresh();
-      window.alert('Menu item deleted successfully');
+      toast.success('Menu item deleted');
     } catch (error) {
       console.error(error);
-      window.alert('Failed to delete menu item');
+      toast.error('Failed to delete menu item');
     } finally {
       setIsDeleting(false);
     }

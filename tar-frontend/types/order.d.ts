@@ -1,5 +1,4 @@
 import { CartProduct } from "@/store/zustandstore";
-import { Menu_Get } from "./menu";
 
 // Create a new order item interface for the order object
 export interface Order_Post {
@@ -14,6 +13,7 @@ export interface Order_Get extends Order_Post {
   _id: string;
   id: string;
   total: number;
+  chefNote: string;
   status: string;
   isLocked: boolean;
   chefNote: string;
@@ -23,7 +23,7 @@ export interface Order_Get extends Order_Post {
 export interface Order_Update {
   id: string;
   order: {
-    items: Menu_Get[];
+    items: CartProduct[];
     message?: string;
     chefNote?: string;
     status?: string;

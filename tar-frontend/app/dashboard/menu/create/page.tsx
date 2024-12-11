@@ -3,6 +3,7 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import { useRef, useState } from 'react';
 import { createMenu } from '@/util/menu';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function CreateMenuItemPage() {
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
@@ -73,10 +74,10 @@ export default function CreateMenuItemPage() {
       }
       setImagePreview(undefined);
       setImageFile(undefined);
-      window.alert('Item created successfully');
+      toast.success('Menu item created successfully');
     } catch (error) {
       console.error(error);
-      window.alert('Failed to create menu item');
+      toast.error('Failed to create menu item');
     } finally {
       setIsCreating(false);
     }

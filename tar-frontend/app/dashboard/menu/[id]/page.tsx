@@ -3,6 +3,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { IoMdCloseCircle } from 'react-icons/io';
 import React, { useEffect, useRef, useState } from 'react';
 import { getMenuById, updateMenu } from '@/util/menu';
+import toast from 'react-hot-toast';
 
 export default function MenuItemPage() {
   const { id } = useParams<{ id: string }>();
@@ -49,11 +50,12 @@ export default function MenuItemPage() {
           }
         } else {
           console.error(data);
-          window.alert('Failed to fetch menu item');
+
+          toast.error('Failed to fetch menu item');
         }
       } catch (error) {
         console.error(error);
-        window.alert('Failed to fetch menu item');
+        toast.error('Failed to fetch menu item');
       }
     };
 
@@ -110,10 +112,10 @@ export default function MenuItemPage() {
       await updateMenu({ formData, id, hasImagedUpdated: hasImageUpdated });
       router.refresh();
 
-      window.alert('Item created successfully');
+      toast.success('Menu item updated successfully');
     } catch (error) {
       console.error(error);
-      window.alert('Failed to create menu item');
+      toast.error('Failed to update menu item');
     } finally {
       setIsCreating(false);
     }

@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { JWT_SECRET } from "@/constants/localStorageKeys";
-import useCart from "@/store/zustandstore";
-import { getUserByJWT, logoutUser } from "@/util/auth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { JWT_SECRET } from '@/constants/localStorageKeys';
+import useCart from '@/store/zustandstore';
+import { getUserByJWT, logoutUser } from '@/util/auth';
+import { catchError } from '@/util/catchError';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -13,56 +14,59 @@ export default function Navigation() {
 
   const navigationObjectAdmin = [
     {
-      title: "Dashboard",
-      icon: "/dashboard-menu-icons/dashboard.png",
-      url: "/dashboard",
+      title: 'Dashboard',
+      icon: '/dashboard-menu-icons/dashboard.png',
+      url: '/dashboard',
     },
     {
-      title: "Orders",
-      icon: "/dashboard-menu-icons/orders.png",
-      url: "/dashboard/orders",
+      title: 'Orders',
+      icon: '/dashboard-menu-icons/orders.png',
+      url: '/dashboard/orders',
     },
     {
-      title: "Inventory",
-      icon: "/icons/clock.png",
-      url: "/dashboard/inventory",
+      title: 'Inventory',
+      icon: '/icons/clock.png',
+      url: '/dashboard/inventory',
     },
     {
-      title: "Menu",
-      icon: "/dashboard-menu-icons/menu.png",
-      url: "/dashboard/menu",
+      title: 'Menu',
+      icon: '/dashboard-menu-icons/menu.png',
+      url: '/dashboard/menu',
     },
     {
-      title: "Settings",
-      icon: "/dashboard-menu-icons/settings.png",
-      url: "/dashboard/settings",
+      title: 'Settings',
+      icon: '/dashboard-menu-icons/settings.png',
+      url: '/dashboard/settings',
     },
   ];
 
   const navigationObjectCustomer = [
     {
-      title: "Dashboard",
-      icon: "/dashboard-menu-icons/dashboard.png",
-      url: "/dashboard",
+      title: 'Dashboard',
+      icon: '/dashboard-menu-icons/dashboard.png',
+      url: '/dashboard',
     },
     {
-      title: "History",
-      icon: "/dashboard-menu-icons/orders.png",
-      url: "/dashboard/history",
+      title: 'History',
+      icon: '/dashboard-menu-icons/orders.png',
+      url: '/dashboard/history',
     },
     {
-      title: "Settings",
-      icon: "/dashboard-menu-icons/settings.png",
-      url: "/dashboard/settings",
+      title: 'Settings',
+      icon: '/dashboard-menu-icons/settings.png',
+      url: '/dashboard/settings',
     },
   ];
 
   const userGetter = async () => {
-    const token = await localStorage.getItem(JWT_SECRET);
-    if (token) {
-      getUserByJWT(token!).then((res) => {
-        updateUser(res);
-      });
+    try {
+      const token = localStorage.getItem(JWT_SECRET);
+      if (token) {
+        const user = await getUserByJWT(token);
+        if (user) updateUser(user);
+      }
+    } catch (error) {
+      console.error(catchError(error));
     }
   };
   useEffect(() => {
@@ -73,17 +77,17 @@ export default function Navigation() {
     <nav
       className={`flex lg:flex-col flex-wrap gap-4 p-2 w-full items-center justify-center`}
     >
-      {role == "Admin"
+      {role == 'Admin'
         ? navigationObjectAdmin.map((item, index) => {
             return (
               <Link
                 key={index}
                 href={item.url}
                 className={`w-40 flex items-center gap-2 h-9 ${
-                  pathname === item.url ? "text-slate-50" : "text-main-primary"
+                  pathname === item.url ? 'text-slate-50' : 'text-main-primary'
                 }`}
               >
-                <img src={item.icon} alt={item.title} className="h-7 w-7" />
+                <img src={item.icon} alt={item.title} className='h-7 w-7' />
                 <p>{item.title}</p>
               </Link>
             );
@@ -94,17 +98,17 @@ export default function Navigation() {
                 key={index}
                 href={item.url}
                 className={`w-40 flex items-center gap-2 h-9 ${
-                  pathname === item.url ? "text-slate-50" : "text-main-primary"
+                  pathname === item.url ? 'text-slate-50' : 'text-main-primary'
                 }`}
               >
-                <img src={item.icon} alt={item.title} className="h-7 w-7" />
+                <img src={item.icon} alt={item.title} className='h-7 w-7' />
                 <p>{item.title}</p>
               </Link>
             );
           })}
 
       <button
-        className="bg-main-primary text-main-light px-4 py-2 rounded-md font-motter hover:scale-105 transition-all duration-300 ease-in-out"
+        className='bg-main-primary text-main-light px-4 py-2 rounded-md font-motter hover:scale-105 transition-all duration-300 ease-in-out'
         onClick={logoutUser}
       >
         Sign out

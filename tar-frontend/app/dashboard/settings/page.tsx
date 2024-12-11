@@ -5,6 +5,7 @@ import { catchError } from '@/util/catchError';
 import { getTokenFromLocalStorage, resetUserData } from '@/util/localStorage';
 import { redirect, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 type Data = {
   email: string;
@@ -29,6 +30,7 @@ export const ProfileSettings: React.FC = () => {
         const TOKEN = getTokenFromLocalStorage();
         if (!TOKEN) return redirect('/login');
         const signedInUser = await getUserByJWT(TOKEN);
+        if (!signedInUser) return;
         setUser(signedInUser);
         setData({
           email: signedInUser.email,
@@ -36,7 +38,7 @@ export const ProfileSettings: React.FC = () => {
           image: signedInUser.image,
         });
       } catch (error) {
-        window.alert(catchError(error));
+        toast.error(catchError(error));
       } finally {
         setIsLoading(false);
       }
@@ -69,14 +71,14 @@ export const ProfileSettings: React.FC = () => {
 
       if (token) {
         setPreviewImage(null);
-        window.alert('Profile updated successfully');
+        toast.success('Profile updated successfully');
         if (data.email !== user.email) {
           resetUserData();
           router.refresh();
         }
       }
     } catch (error) {
-      window.alert(catchError(error));
+      toast.error(catchError(error));
     } finally {
       setIsLoading(false);
     }

@@ -90,6 +90,8 @@ export const getSingleOrder = async (req, res) => {
 // Create a new order
 export const createOrder = async (req, res) => {
   const { items, message, userId, guestEmail } = req.body;
+
+  console.log("Message: ", message);
   try {
     // Count the total price of the items
     const total = items.reduce(
