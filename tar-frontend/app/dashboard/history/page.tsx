@@ -63,7 +63,10 @@ const Page = () => {
         <section className="w-full flex flex-col ">
           {user.orders.length > 0 ? (
             user.orders.map((order) => (
-              <section className="w-full h-64 bg-main-secondary flex  mb-10">
+              <section
+                className="w-full h-64 bg-main-secondary flex  mb-10"
+                key={order.id}
+              >
                 {/* Columns for order history details */}
                 <div className="border-2 border-main-moss text-xl flex flex-col justify-between lg:text-2xl ">
                   <div className=" h-full flex justify-center items-center ">
@@ -88,7 +91,10 @@ const Page = () => {
                   </div>
                   <div className="h-full flex justify-center items-center">
                     {order.items.map((item) => (
-                      <p className="text-center text-lg  text-main-primary">
+                      <p
+                        className="text-center text-lg  text-main-primary"
+                        key={item.id}
+                      >
                         {item.title}
                       </p>
                     ))}
