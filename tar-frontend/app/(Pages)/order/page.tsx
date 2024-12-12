@@ -118,7 +118,7 @@ const Page = () => {
                   onClick={Toggle}
                 />
                 <p className={"font-motter text-main-primary"}>
-                  {amount + "kr"}
+                  {amount + "€"}
                 </p>
               </section>
             </section>

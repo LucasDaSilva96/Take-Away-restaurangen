@@ -24,7 +24,7 @@ export type CartState = {
   amount: number;
   menuOpen: boolean;
   navOpen: boolean;
-  role: string;
+  role: 'Admin' | 'Customer';
   user: User_Get;
 };
 
@@ -175,7 +175,7 @@ const useCart = create<CartState & Actions>()((set) => ({
   },
   currentRole() {
     set((state) => {
-      let newRole = '';
+      let newRole: 'Admin' | 'Customer' = 'Customer';
       const role = localStorage.getItem(ROLE_KEY);
 
       console.log('Role', role);
