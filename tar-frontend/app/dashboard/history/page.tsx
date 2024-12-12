@@ -3,10 +3,52 @@
 import ButtonBase from "@/components/shared/ButtonBase";
 import useCart from "@/store/zustandstore";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+
+interface Order {
+  id: string;
+  items: { title: string }[]; // Anpassa efter dina data
+  total: number;
+  timestamp: string;
+}
 
 const Page = () => {
   const router = useRouter();
   const { user } = useCart();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [orderDetails, setOrderDetails] = useState<Order | null>(null);
+
+  const handleReorderButton = async (order: Order) => {
+    console.log("Knappen klickades!", order);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/order/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: order.items,
+            message: `Reorder of order ${order.id}`,
+            userId: user.id,
+            guestEmail: user.email || null,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to reorder");
+      }
+      const result = await response.json();
+      console.log("Reorder successful: ", result);
+
+      setShowConfirmation(true);
+      setOrderDetails(result.data);
+    } catch (error) {
+      console.error("Reorder failed:", error);
+      alert("Failed to place reorder. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -62,7 +104,10 @@ const Page = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col">
+                <div
+                  className="flex flex-col"
+                  onClick={() => handleReorderButton(order)}
+                >
                   <button
                     type="submit"
                     className="w-12 h-12 bg-main-moss text-main-primary font-motter flex justify-center items-center"
@@ -70,6 +115,7 @@ const Page = () => {
                     <img src="/icons/Reboot.png" className="w-10 h-10" alt="" />
                   </button>
                 </div>
+                {/* Confirmation */}
               </section>
             ))
           ) : (
@@ -84,9 +130,30 @@ const Page = () => {
           )}
         </section>
       </section>
-      <div className=" fixed top-44 left-0  w-full h-full flex justify-center items-center opacity-15 bg-white blur-sm">
-        <div className="w-32 h-32 bg-white "></div>
-      </div>
+
+      {showConfirmation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-8 rounded shadow-md text-center max-w-md">
+            <h2 className="text-xl font-bold text-green-600 mb-4">
+              Order Confirmed!
+            </h2>
+            {orderDetails && (
+              <p className="mb-4">
+                Thank you for your reorder! Your order ID is{" "}
+                <span className="font-semibold">{orderDetails.id}</span> and the
+                total price is{" "}
+                <span className="font-semibold">${orderDetails.total}</span>.
+              </p>
+            )}
+            <button
+              onClick={() => setShowConfirmation(false)}
+              className="px-4 py-2 bg-main-primary text-white rounded hover:bg-main-secondary transition-all"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
