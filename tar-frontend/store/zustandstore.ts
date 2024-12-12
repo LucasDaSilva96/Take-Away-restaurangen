@@ -1,6 +1,6 @@
-import { JWT_SECRET, ROLE_KEY } from "@/constants/localStorageKeys";
-import { User_Get } from "@/types/user";
-import { create } from "zustand";
+import { JWT_SECRET, ROLE_KEY } from '@/constants/localStorageKeys';
+import { User_Get } from '@/types/user';
+import { create } from 'zustand';
 
 interface menuItemResponse {
   id: string;
@@ -49,14 +49,16 @@ const useCart = create<CartState & Actions>()((set) => ({
   amount: 0,
   menuOpen: false,
   navOpen: false,
-  role: "Customer",
+  role: 'Customer',
   user: {
-    _id: "",
-    id: "",
-    email: "",
-    password: "",
-    role: "Customer",
+    _id: '',
+    id: '',
+    email: '',
+    password: '',
+    role: 'Customer',
     orders: [],
+    image: '',
+    username: '',
   },
 
   toggleMenu: () => {
@@ -92,7 +94,7 @@ const useCart = create<CartState & Actions>()((set) => ({
       const itemExists = [...state.cart].find((item) => item.id === product.id);
 
       if (itemExists) {
-        console.log("Item exists", itemExists);
+        console.log('Item exists', itemExists);
         itemExists.quantity += 1;
         state.amount += itemExists.price;
         state.total += 1;
@@ -103,7 +105,7 @@ const useCart = create<CartState & Actions>()((set) => ({
         state.total += 1;
       }
 
-      console.log("Added item", prevCart);
+      console.log('Added item', prevCart);
 
       return {
         ...state,
@@ -148,7 +150,7 @@ const useCart = create<CartState & Actions>()((set) => ({
 
   clearCart: () => {
     set((state) => {
-      console.log("Cleared cart", state.cart);
+      console.log('Cleared cart', state.cart);
       return {
         ...state,
         cart: [],
@@ -173,14 +175,14 @@ const useCart = create<CartState & Actions>()((set) => ({
   },
   currentRole() {
     set((state) => {
-      let newRole = "";
+      let newRole = '';
       const role = localStorage.getItem(ROLE_KEY);
 
-      console.log("Role", role);
-      if (role === "Admin") {
-        newRole = "Admin";
+      console.log('Role', role);
+      if (role === 'Admin') {
+        newRole = 'Admin';
       } else {
-        newRole = "Customer";
+        newRole = 'Customer';
       }
       return {
         ...state,
