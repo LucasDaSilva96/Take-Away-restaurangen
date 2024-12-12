@@ -4,6 +4,7 @@ import { Menu_Get } from '@/types/menu';
 import { IoPricetag } from 'react-icons/io5';
 import { FaBoxOpen } from 'react-icons/fa6';
 import Link from 'next/link';
+import Image from 'next/image';
 
 type Props = {
   item: Menu_Get;
@@ -12,7 +13,13 @@ type Props = {
 export default function InventoryCard({ item }: Props) {
   return (
     <article className='w-[200px] bg-main-primary flex flex-col h-[320px] rounded-md overflow-clip'>
-      <img src={item.image} alt={item.title} className='w-full h-[150px]' />
+      <Image
+        src={item.image}
+        alt={item.title}
+        className='w-full h-[150px]'
+        width={150}
+        height={150}
+      />
       <div className='w-full p-2 flex flex-col gap-2'>
         <h3 className='font-bold text-lg'>{item.title}</h3>
         <p className='flex items-center gap-1'>

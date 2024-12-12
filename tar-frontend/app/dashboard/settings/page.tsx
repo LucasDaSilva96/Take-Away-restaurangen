@@ -3,6 +3,7 @@ import { User_Get } from '@/types/user';
 import { getUserByJWT, updateUser } from '@/util/auth';
 import { catchError } from '@/util/catchError';
 import { getTokenFromLocalStorage, resetUserData } from '@/util/localStorage';
+import Image from 'next/image';
 import { redirect, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -89,16 +90,20 @@ export const ProfileSettings: React.FC = () => {
       <div className='flex justify-center items-center h-full flex-col gap-5'>
         <div className=' bg-main-secondary w-56 h-56 rounded-full overflow-hidden flex items-center justify-center'>
           {previewImage ? (
-            <img
+            <Image
               src={previewImage || (data.image as string)}
               alt='Selected'
               className='w-full h-full object-cover'
+              width={200}
+              height={200}
             />
           ) : data.image ? (
-            <img
+            <Image
               src={data.image as string}
               alt='Selected'
               className='w-full h-full object-cover'
+              width={200}
+              height={200}
             />
           ) : (
             <p className='text-main-primary font-motter text-xl'>Loading</p>

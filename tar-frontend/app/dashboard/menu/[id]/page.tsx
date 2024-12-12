@@ -4,6 +4,7 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import React, { useEffect, useRef, useState } from 'react';
 import { getMenuById, updateMenu } from '@/util/menu';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 export default function MenuItemPage() {
   const { id } = useParams<{ id: string }>();
@@ -199,10 +200,11 @@ export default function MenuItemPage() {
                 size={28}
                 onClick={handleImageDelete}
               />
-              <img
+              <Image
                 src={imagePreview}
                 alt='Image Preview'
                 className='w-24 h-24 rounded-md'
+                width={96}
               />
             </div>
           ) : (

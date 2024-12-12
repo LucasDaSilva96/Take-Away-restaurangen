@@ -4,6 +4,7 @@ import { JWT_SECRET } from '@/constants/localStorageKeys';
 import useCart from '@/store/zustandstore';
 import { getUserByJWT, logoutUser } from '@/util/auth';
 import { catchError } from '@/util/catchError';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
@@ -87,7 +88,13 @@ export default function Navigation() {
                   pathname === item.url ? 'text-slate-50' : 'text-main-primary'
                 }`}
               >
-                <img src={item.icon} alt={item.title} className='h-7 w-7' />
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  className='h-7 w-7'
+                  width={28}
+                  height={28}
+                />
                 <p>{item.title}</p>
               </Link>
             );
@@ -101,7 +108,13 @@ export default function Navigation() {
                   pathname === item.url ? 'text-slate-50' : 'text-main-primary'
                 }`}
               >
-                <img src={item.icon} alt={item.title} className='h-7 w-7' />
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  className='h-7 w-7'
+                  width={28}
+                  height={28}
+                />
                 <p>{item.title}</p>
               </Link>
             );
