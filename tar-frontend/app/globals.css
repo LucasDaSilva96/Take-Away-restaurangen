@@ -14,8 +14,21 @@
   }
 }
 
+@media (max-width: 831px) {
+  .card-full-width {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html::-webkit-scrollbar {
+  display: none !important;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
