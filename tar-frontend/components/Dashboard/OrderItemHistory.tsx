@@ -16,7 +16,7 @@ interface OrderItemProps {
 
 const OrderItemHistory: React.FC<OrderItemProps> = ({ order, onReorder }) => {
   const [viewDetails, setViewDetails] = useState<boolean>(false);
-  const { id, isLocked, status, items, total } = order;
+  const { id, isLocked, status, items, total, timestamp } = order;
   const statusString = status[0].toUpperCase() + status.slice(1);
 
   const locked = isLocked;
@@ -102,19 +102,16 @@ const OrderItemHistory: React.FC<OrderItemProps> = ({ order, onReorder }) => {
               <p className="text-main-primary font-alumni font-bold text-xl">
                 Order #{id}
               </p>
-              <p className="text-main-secondary font-alumni text-lg">
-                <span className="font-bold">Status:</span> {statusString}
-              </p>
             </div>
           </section>
 
           <section className="w-full flex justify-center items-center">
             <div>
               <p className="text-main-primary font-alumni font-bold text-xl">
-                Order Locked
+                Ordered date
               </p>
               <p className="text-main-secondary font-alumni text-lg">
-                {locked ? "Yes" : "No"}
+                {new Date(timestamp).toLocaleDateString()}
               </p>
             </div>
           </section>
