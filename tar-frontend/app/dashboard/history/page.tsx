@@ -65,7 +65,7 @@ const Page = () => {
     <>
       <section className="w-full flex flex-col justify-start items-start p-4 gap-2">
         <section className="flex justify-center items-center w-full text-black font-motter text-2xl text-center">
-          <h2>
+          <h2 className="text-black text-base md:text-lg lg:text-xl">
             Previous orders for <br /> {user.email}{" "}
           </h2>
         </section>

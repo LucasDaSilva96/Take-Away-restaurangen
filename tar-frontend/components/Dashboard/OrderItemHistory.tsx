@@ -4,9 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import ButtonBase from "../shared/ButtonBase";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { CartProduct } from "@/store/zustandstore";
+
 import { Order_Get } from "@/types/order";
 
 interface OrderItemProps {
@@ -16,24 +14,9 @@ interface OrderItemProps {
 
 const OrderItemHistory: React.FC<OrderItemProps> = ({ order, onReorder }) => {
   const [viewDetails, setViewDetails] = useState<boolean>(false);
-  const { id, isLocked, status, items, total, timestamp } = order;
-  const statusString = status[0].toUpperCase() + status.slice(1);
-
+  const { id, isLocked, items, total, timestamp } = order;
   const locked = isLocked;
 
-  const router = useRouter();
-
-  const sendToEdit = (id: string) => {
-    try {
-      navigator.clipboard.writeText(id);
-      toast.success("Order id copied to clipboard");
-
-      router.push("/orderhandle");
-    } catch (error) {
-      toast.error("Error copying order id to clipboard");
-      console.error(error);
-    }
-  };
   return (
     <>
       <section className="w-full rounded-md bg-main-light p-4 flex flex-col gap-2 md:flex-row justify-between items-center">
@@ -117,23 +100,25 @@ const OrderItemHistory: React.FC<OrderItemProps> = ({ order, onReorder }) => {
           </section>
         </section>
 
-        {!locked && (
+        <section className="flex justify-center items-center gap-2">
+          {!locked && (
+            <section className="flex justify-center items-center">
+              <button
+                onClick={() => onReorder(order)}
+                className="border-2 border-main-primary text-main-primary font-alumni text-nowrap rounded-full px-4 py-1 hover:text-main-light hover:bg-main-primary transition-all font-bold"
+              >
+                Order Again
+              </button>
+            </section>
+          )}
           <section className="flex justify-center items-center">
             <button
-              onClick={() => onReorder(order)}
+              onClick={() => setViewDetails(!viewDetails)}
               className="border-2 border-main-primary text-main-primary font-alumni text-nowrap rounded-full px-4 py-1 hover:text-main-light hover:bg-main-primary transition-all font-bold"
             >
-              Order Again
+              View Details
             </button>
           </section>
-        )}
-        <section className="flex justify-center items-center">
-          <button
-            onClick={() => setViewDetails(!viewDetails)}
-            className="border-2 border-main-primary text-main-primary font-alumni text-nowrap rounded-full px-4 py-1 hover:text-main-light hover:bg-main-primary transition-all font-bold"
-          >
-            View Details
-          </button>
         </section>
       </section>
       <AnimatePresence>
