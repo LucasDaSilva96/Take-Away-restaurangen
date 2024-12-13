@@ -1,17 +1,3 @@
-import { Metadata } from "next";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { order: string };
-}): Promise<Metadata> {
-  // For debugging
-
-  return {
-    title: `Order #${(await params).order} | TAR`,
-  };
-}
-
 type Props = {
   children: React.ReactNode;
 };

@@ -4,7 +4,6 @@ import OrderItemCustomer from "@/components/Dashboard/OrderItemCustomer";
 import OrdersChart from "@/components/Dashboard/OrdersChart";
 import Chart from "@/components/Dashboard/SalesChart";
 import ButtonBase from "@/components/shared/ButtonBase";
-import useCart from "@/store/zustandstore";
 import { Menu_Get } from "@/types/menu";
 import { Order_Get } from "@/types/order";
 import { User_Get } from "@/types/user";

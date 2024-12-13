@@ -13,6 +13,8 @@ const Signup = () => {
     email: "",
     password: "",
     role: "Customer",
+    username: "",
+    image: "",
   });
 
   const [passMatch, setPassMatch] = useState<string>("");
@@ -24,13 +26,13 @@ const Signup = () => {
       details.role !== undefined &&
       details.password === passMatch
     ) {
-      registerUser(details).then((res) => {
+      registerUser(details).then(() => {
         const signDetails = {
           email: details.email,
           password: details.password,
         };
 
-        loginUser(signDetails).then((res) => {
+        loginUser(signDetails).then(() => {
           return router.push("/dashboard");
         });
       });

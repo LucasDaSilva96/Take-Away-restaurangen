@@ -1,12 +1,12 @@
-'use client';
-import { User_Get } from '@/types/user';
-import { getUserByJWT, updateUser } from '@/util/auth';
-import { catchError } from '@/util/catchError';
-import { getTokenFromLocalStorage, resetUserData } from '@/util/localStorage';
-import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+"use client";
+import { User_Get } from "@/types/user";
+import { getUserByJWT, updateUser } from "@/util/auth";
+import { catchError } from "@/util/catchError";
+import { getTokenFromLocalStorage, resetUserData } from "@/util/localStorage";
+import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 type Data = {
   email: string;
@@ -14,14 +14,14 @@ type Data = {
   image: string | File;
 };
 
-export const ProfileSettings: React.FC = () => {
+const ProfileSettings: React.FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User_Get | null>(null);
   const [data, setData] = useState<Data>({
-    email: '',
-    username: '',
-    image: '',
+    email: "",
+    username: "",
+    image: "",
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const ProfileSettings: React.FC = () => {
       try {
         setIsLoading(true);
         const TOKEN = getTokenFromLocalStorage();
-        if (!TOKEN) return redirect('/login');
+        if (!TOKEN) return redirect("/login");
         const signedInUser = await getUserByJWT(TOKEN);
         if (!signedInUser) return;
         setUser(signedInUser);
@@ -60,7 +60,7 @@ export const ProfileSettings: React.FC = () => {
     e.preventDefault();
 
     if (!user) return;
-    if (data.email === '' || data.username === '') return;
+    if (data.email === "" || data.username === "") return;
     try {
       setIsLoading(true);
       const token = await updateUser({
@@ -72,7 +72,7 @@ export const ProfileSettings: React.FC = () => {
 
       if (token) {
         setPreviewImage(null);
-        toast.success('Profile updated successfully');
+        toast.success("Profile updated successfully");
         if (data.email !== user.email) {
           resetUserData();
           router.refresh();
@@ -87,71 +87,71 @@ export const ProfileSettings: React.FC = () => {
 
   return (
     <>
-      <div className='flex justify-center items-center h-full flex-col gap-5'>
-        <div className=' bg-main-secondary w-56 h-56 rounded-full overflow-hidden flex items-center justify-center'>
+      <div className="flex justify-center items-center h-full flex-col gap-5">
+        <div className=" bg-main-secondary w-56 h-56 rounded-full overflow-hidden flex items-center justify-center">
           {previewImage ? (
             <Image
               src={previewImage || (data.image as string)}
-              alt='Selected'
-              className='w-full h-full object-cover'
+              alt="Selected"
+              className="w-full h-full object-cover"
               width={200}
               height={200}
             />
           ) : data.image ? (
             <Image
               src={data.image as string}
-              alt='Selected'
-              className='w-full h-full object-cover'
+              alt="Selected"
+              className="w-full h-full object-cover"
               width={200}
               height={200}
             />
           ) : (
-            <p className='text-main-primary font-motter text-xl'>Loading</p>
+            <p className="text-main-primary font-motter text-xl">Loading</p>
           )}
         </div>
         <form
           onSubmit={handleSubmit}
-          className='bg-main-secondary p-6 rounded-lg shadow-md w-80'
+          className="bg-main-secondary p-6 rounded-lg shadow-md w-80"
         >
-          <h2 className='text-main-primary font-motter text-2xl font-semibold mb-4'>
+          <h2 className="text-main-primary font-motter text-2xl font-semibold mb-4">
             Profile Settings
           </h2>
 
           {/* Email */}
-          <div className='mb-4'>
+          <div className="mb-4">
             <label
-              htmlFor='email'
-              className='block text-sm text-main-primary font-motter'
+              htmlFor="email"
+              className="block text-sm text-main-primary font-motter"
             >
               Email
             </label>
             <input
-              type='email'
-              name='email'
-              id='email'
+              type="email"
+              name="email"
+              id="email"
               value={data.email}
               onChange={(e) => setData({ ...data, email: e.target.value })}
-              placeholder='Enter your email'
-              className='w-full p-2 border rounded-md focus:outline-none text-black'
+              placeholder="Enter your email"
+              className="w-full p-2 border rounded-md focus:outline-none text-black"
             />
           </div>
 
           {/* Username */}
-          <div className='mb-4'>
+          <div className="mb-4">
             <label
-              htmlFor='username'
-              className='block text-sm text-main-primary font-motter'
+              htmlFor="username"
+              className="block text-sm text-main-primary font-motter"
             >
               Username
             </label>
             <input
-              type='text'
-              name='username'
-              id='username'
+              type="text"
+              name="username"
+              id="username"
               value={data.username}
               onChange={(e) => setData({ ...data, username: e.target.value })}
-              placeholder='Enter your username'
-              className='w-full p-2 border rounded-md focus:outline-none text-black'
+              placeholder="Enter your username"
+              className="w-full p-2 border rounded-md focus:outline-none text-black"
             />
           </div>
 
@@ -175,30 +175,30 @@ export const ProfileSettings: React.FC = () => {
           </div> */}
 
           {/* Background Image */}
-          <div className='mb-4'>
+          <div className="mb-4">
             <label
-              htmlFor='backgroundImage'
-              className='block text-sm text-main-primary font-motter'
+              htmlFor="backgroundImage"
+              className="block text-sm text-main-primary font-motter"
             >
               Background Image
             </label>
             <input
-              type='file'
-              name='backgroundImage'
-              id='backgroundImage'
-              accept='image/*'
+              type="file"
+              name="backgroundImage"
+              id="backgroundImage"
+              accept="image/*"
               onChange={handleFileChange}
-              className='w-full p-2 border rounded-mdfocus:outline-none '
+              className="w-full p-2 border rounded-mdfocus:outline-none "
             />
           </div>
 
           {/* Submit Button */}
           <button
             disabled={isLoading}
-            type='submit'
-            className='w-full bg-main-moss text-main-primary font-motter p-2 rounded-md hover:bg-green-900 ease-out duration-300'
+            type="submit"
+            className="w-full bg-main-moss text-main-primary font-motter p-2 rounded-md hover:bg-green-900 ease-out duration-300"
           >
-            {isLoading ? 'Loading...' : 'Update'}
+            {isLoading ? "Loading..." : "Update"}
           </button>
         </form>
       </div>
@@ -206,12 +206,4 @@ export const ProfileSettings: React.FC = () => {
   );
 };
 
-const page = () => {
-  return (
-    <>
-      <ProfileSettings />
-    </>
-  );
-};
-
-export default page;
+export default ProfileSettings;
