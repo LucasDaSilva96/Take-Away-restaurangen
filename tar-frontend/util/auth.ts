@@ -53,11 +53,16 @@ export async function loginUser({ email, password }: User_login_Post) {
 }
 
 // registerUser is an async function that makes a POST request to the /auth/sign-up endpoint of the backend API. It takes an email and password as arguments and returns a message object.
-export async function registerUser({ email, password, role }: User_Post) {
+export async function registerUser({
+  email,
+  password,
+  role,
+  username,
+}: User_Post) {
   try {
     const response = await axios.post<{ message: string }>(
       BASE_API_URL + "/auth/sign-up",
-      { email, password, role }
+      { email, password, role, username }
     );
 
     return response.data;

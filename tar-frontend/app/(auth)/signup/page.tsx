@@ -58,8 +58,21 @@ const Signup = () => {
             <input
               type="email"
               name="email"
+              required
               onChange={(e) =>
                 setDetails({ ...details, email: e.target.value })
+              }
+              className="rounded-sm h-8 outline-none px-5 font-motter text-black"
+            />
+            <label htmlFor="email" className="text-main-primary">
+              Username
+            </label>
+            <input
+              type="text"
+              name="text"
+              required
+              onChange={(e) =>
+                setDetails({ ...details, username: e.target.value })
               }
               className="rounded-sm h-8 outline-none px-5 font-motter text-black"
             />
@@ -80,6 +93,7 @@ const Signup = () => {
             </label>
             <input
               type="password"
+              required
               name="password"
               onChange={(e) => setPassMatch(e.target.value)}
               className="rounded-sm h-8 focus: outline-none px-5 font-motter text-black"
