@@ -1,32 +1,32 @@
-import axios from "axios";
-import { catchError } from "./catchError";
-import { User_Get, User_login_Post, User_Post } from "@/types/user";
+import axios from 'axios';
+import { catchError } from './catchError';
+import { User_Get, User_login_Post, User_Post } from '@/types/user';
 
 import {
   resetUserData,
   saveTokenToLocalStorage,
   saveUserRoleToLocalStorage,
-} from "./localStorage";
+} from './localStorage';
 import {
   BASE_API_URL,
   JWT_SECRET,
   ROLE_KEY,
   USER_KEY,
-} from "@/constants/localStorageKeys";
-import { permanentRedirect } from "next/navigation";
+} from '@/constants/localStorageKeys';
+import { permanentRedirect } from 'next/navigation';
 import {
   removeRoleAsCookie,
   removeTokenAsCookie,
   saveRoleAsCookie,
   saveTokenAsCookie,
-} from "./cookies";
-import toast from "react-hot-toast";
+} from './cookies';
+import toast from 'react-hot-toast';
 // The BASE_API_URL is defined in the .env file and is used to make requests to the backend API.
 
 export type User_login_Response = {
   token: string;
   userId: string;
-  userRole: "Admin" | "Customer";
+  userRole: 'Admin' | 'Customer';
   expiresIn: number;
 };
 
@@ -34,7 +34,7 @@ export type User_login_Response = {
 export async function loginUser({ email, password }: User_login_Post) {
   try {
     const response = await axios.post<User_login_Response>(
-      BASE_API_URL + "/auth/sign-in",
+      BASE_API_URL + '/auth/sign-in',
       { email, password }
     );
 
@@ -53,11 +53,16 @@ export async function loginUser({ email, password }: User_login_Post) {
 }
 
 // registerUser is an async function that makes a POST request to the /auth/sign-up endpoint of the backend API. It takes an email and password as arguments and returns a message object.
-export async function registerUser({ email, password, role }: User_Post) {
+export async function registerUser({
+  email,
+  password,
+  role,
+  username,
+}: User_Post) {
   try {
     const response = await axios.post<{ message: string }>(
-      BASE_API_URL + "/auth/sign-up",
-      { email, password, role }
+      BASE_API_URL + '/auth/sign-up',
+      { email, password, role, username }
     );
 
     return response.data;
@@ -71,7 +76,7 @@ export async function registerUser({ email, password, role }: User_Post) {
 export const getUserByJWT = async (JWT: string) => {
   try {
     const response = await axios.post<{ data: User_Get }>(
-      BASE_API_URL + "/auth/userfind",
+      BASE_API_URL + '/auth/userfind',
       { JWT },
       {
         headers: {
@@ -89,7 +94,7 @@ export const getUserByJWT = async (JWT: string) => {
 
 //A simple function to sign out users, clear all sensitive data and redirect to the home page.
 export const logoutUser = async () => {
-  const keysToDelete = [JWT_SECRET, USER_KEY, ROLE_KEY, "user"];
+  const keysToDelete = [JWT_SECRET, USER_KEY, ROLE_KEY, 'user'];
 
   keysToDelete.forEach((key) => {
     localStorage.removeItem(key);
@@ -97,7 +102,7 @@ export const logoutUser = async () => {
 
   removeTokenAsCookie();
   removeRoleAsCookie();
-  permanentRedirect("/");
+  permanentRedirect('/');
 };
 
 type UpdateProps = {
@@ -116,18 +121,18 @@ export const updateUser = async ({
   if (!email || !username) return;
 
   const formData = new FormData();
-  formData.append("email", email);
-  formData.append("username", username);
-  if (newEmail) formData.append("newEmail", newEmail);
-  if (image && typeof image !== "string") formData.append("image", image);
+  formData.append('email', email);
+  formData.append('username', username);
+  if (newEmail) formData.append('newEmail', newEmail);
+  if (image && typeof image !== 'string') formData.append('image', image);
 
   try {
     const res = await axios.post<{ message: string; token: string }>(
-      BASE_API_URL + "/auth/update",
+      BASE_API_URL + '/auth/update',
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       }
     );
