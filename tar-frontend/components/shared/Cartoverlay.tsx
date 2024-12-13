@@ -156,7 +156,7 @@ const Cartoverlay = () => {
                         </Link>
 
                         <p className="font-motter text-main-primary md:text-xl">
-                          Total: {amount}€
+                          Total: {amount.toFixed(2)}€
                         </p>
                       </section>
                     </>

@@ -78,7 +78,7 @@ const Paymentpopup: React.FC<PaymentpopupProps> = ({
               ))}
             </section>
             <section>
-              <p className="text-black">Total: {amount} kr</p>
+              <p className="text-black">Total: {amount.toFixed(2)} €</p>
             </section>
             <section>
               <p className="text-black text-center">
