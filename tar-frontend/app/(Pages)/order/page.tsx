@@ -1,10 +1,10 @@
 "use client";
 import useCart from "@/store/zustandstore";
-import ItemInCart from "@/components/shared/ItemInCart";
+import ItemInCart from "@/components/Orderlogic/ItemInCart";
 import ButtonBase from "@/components/shared/ButtonBase";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Paymentpopup from "@/components/shared/Paymentpopup";
+import Paymentpopup from "@/components/Orderlogic/Paymentpopup";
 
 const Page = () => {
   const { cart, amount, user, isSignedIn } = useCart();

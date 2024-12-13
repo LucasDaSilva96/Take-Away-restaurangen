@@ -103,7 +103,7 @@ const Filter: React.FC<FilterProps> = ({
           className={`px-2 py-1 border rounded ${
             order === "Ascending"
               ? "bg-main-primary text-white border-main-primary"
-              : ""
+              : "text-white"
           }`}
         >
           Sort Ascending
@@ -113,7 +113,7 @@ const Filter: React.FC<FilterProps> = ({
           className={`px-2 py-1 border rounded ${
             order === "Descending"
               ? "bg-main-primary text-white border-main-primary"
-              : ""
+              : "text-white"
           }`}
         >
           Sort Descending

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import ButtonBase from "./ButtonBase";
 import Link from "next/link";
-import ItemInCart from "@/components/shared/ItemInCart";
+import ItemInCart from "@/components/Orderlogic/ItemInCart";
 import { usePathname } from "next/navigation";
 
 const Cartoverlay = () => {

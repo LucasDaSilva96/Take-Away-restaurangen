@@ -2,6 +2,7 @@
 
 import Filter from "@/components/Menu/Filter";
 import Menuloop from "@/components/Menu/Menuloop";
+import Footer from "@/components/shared/Footer";
 import Hero from "@/components/shared/Hero";
 import { Menu_Get } from "@/types/menu";
 import { getMenu } from "@/util/menu";
@@ -83,6 +84,7 @@ const Page = () => {
           {menuItems && <Menuloop menu={menuItems} />}
         </section>
       </section>
+      <Footer />
     </>
   );
 };

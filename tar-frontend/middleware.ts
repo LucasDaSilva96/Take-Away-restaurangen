@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { JWT_SECRET } from "./constants/localStorageKeys";
+import { JWT_SECRET, ROLE_KEY } from "./constants/localStorageKeys";
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -24,6 +24,7 @@ export function middleware(request: NextRequest) {
 
   // Retrieve token from cookies
   const tokenCookie = request.cookies.get(JWT_SECRET);
+  const roleCookie = request.cookies.get(ROLE_KEY);
 
   // Protected routes require authentication
   const protectedRoutes = [
@@ -31,6 +32,12 @@ export function middleware(request: NextRequest) {
     "/profile",
     "/settings",
     // Add other routes that require authentication
+  ];
+
+  const customerRestrictedRoutes = [
+    "/dashboard/inventory",
+    "/dashboard/menu",
+    "/dashboard/orders",
   ];
 
   // Check if the current path is a protected route
@@ -44,6 +51,26 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/signIn", request.url));
   }
 
+  // Check for role-based access to dashboard paths
+  if (path.startsWith("/dashboard")) {
+    // If no role is set, redirect to login
+    if (!roleCookie) {
+      return NextResponse.redirect(new URL("/signIn", request.url));
+    }
+
+    const userRole = roleCookie.value;
+
+    // Block customer from accessing restricted dashboard paths
+    if (
+      userRole !== "Admin" &&
+      customerRestrictedRoutes.some((restrictedPath) =>
+        path.startsWith(restrictedPath)
+      )
+    ) {
+      console.log(`Unauthorized access attempt: Customer blocked from ${path}`);
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+  }
   // Continue with the request for authenticated routes or public paths
   return NextResponse.next();
 }
