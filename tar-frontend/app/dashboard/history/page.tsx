@@ -2,8 +2,10 @@
 
 import ButtonBase from "@/components/shared/ButtonBase";
 import useCart from "@/store/zustandstore";
+import { Order_Get } from "@/types/order";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface Order {
   id: string;
@@ -16,10 +18,11 @@ const Page = () => {
   const router = useRouter();
   const { user } = useCart();
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [orderDetails, setOrderDetails] = useState<Order | null>(null);
+  const [orderDetails, setOrderDetails] = useState<Order_Get | null>(null);
+
+  const [filteredOrders, setFilteredOrders] = useState<Order_Get[]>([]);
 
   const handleReorderButton = async (order: Order) => {
-    console.log("Knappen klickades!", order);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/order/`,
@@ -50,6 +53,14 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      setFilteredOrders(
+        user.orders.filter((order) => order.status !== "pending")
+      );
+    }
+  }, [user]);
+
   return (
     <>
       <section className="w-full flex flex-col justify-start items-start p-4 gap-2">
@@ -61,8 +72,8 @@ const Page = () => {
         {/*  border-main-moss flex justify-between */}
 
         <section className="w-full flex flex-col ">
-          {user.orders.length > 0 ? (
-            user.orders.map((order) => (
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => (
               <section
                 className="w-full h-64 bg-main-secondary flex  mb-10"
                 key={order.id}

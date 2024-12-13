@@ -174,7 +174,9 @@ const OrderItemCustomer: React.FC<OrderItemProps> = ({
               </section>
 
               <section>
-                <p className="font-motter text-black">Price: {total}€</p>
+                <p className="font-motter text-black">
+                  Price: {Math.floor(total)}€
+                </p>
               </section>
               <ButtonBase
                 text="Close view"

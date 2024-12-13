@@ -3,6 +3,7 @@
 import OrderItemCustomer from "@/components/Dashboard/OrderItemCustomer";
 import OrdersChart from "@/components/Dashboard/OrdersChart";
 import Chart from "@/components/Dashboard/SalesChart";
+import ButtonBase from "@/components/shared/ButtonBase";
 import useCart from "@/store/zustandstore";
 import { Menu_Get } from "@/types/menu";
 import { Order_Get } from "@/types/order";
@@ -41,18 +42,39 @@ function Page() {
     })();
   }, []);
 
+  const refreshOrders = async () => {
+    try {
+      const orders = await userData!.orders;
+
+      const activeOrders = orders.filter(
+        (order) => order.status !== "cancelled" && order.status !== "ready"
+      );
+
+      setActiveOrders(activeOrders);
+      toast.success("Orders refreshed");
+    } catch (error) {
+      console.error(catchError(error));
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const orders = await userData!.orders;
+    if (userData) {
+      const timeOut = setInterval(async () => {
+        try {
+          const orders = await userData!.orders;
 
-        const activeOrders = orders.filter(
-          (order) => order.status !== "cancelled" && order.status !== "ready"
-        );
+          const activeOrders = orders.filter(
+            (order) => order.status !== "cancelled" && order.status !== "ready"
+          );
 
-        setActiveOrders(activeOrders);
-      } catch (error) {}
-    })();
+          setActiveOrders(activeOrders);
+          toast.success("Orders refreshed");
+        } catch (error) {
+          console.error(error);
+        }
+      }, 30000);
+      return () => clearInterval(timeOut);
+    }
   }, [userData]);
 
   if (!menuItems || !orderItems || !userData) {
@@ -91,7 +113,16 @@ function Page() {
           </p>
 
           <section className="w-full">
-            <p>Active orders</p>
+            <section className="flex justify-center items-center gap-2">
+              <p className="font-motter text-2xl text-main-primary">
+                Active orders
+              </p>
+              <ButtonBase
+                text="Refresh Orders"
+                onClick={refreshOrders}
+                classname="border-2 border-black hover:bg-black hover:text-white transition-all duration-300 ease-in-out"
+              ></ButtonBase>
+            </section>
             <section className="w-full flex flex-col">
               {activeOrders.map((order) => (
                 <OrderItemCustomer
