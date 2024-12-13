@@ -5,8 +5,6 @@ import helmet from "helmet";
 // This is the entry point of the application
 const PORT = process.env.PORT || 8000;
 
-const helmet = require("helmet");
-
 const cspConfig = helmet.contentSecurityPolicy({
   directives: {
     // Default policy that falls back for missing specific directives
