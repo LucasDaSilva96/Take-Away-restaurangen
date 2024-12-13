@@ -155,7 +155,7 @@ const Page = () => {
               Order Confirmed!
             </h2>
             {orderDetails && (
-              <p className="mb-4">
+              <p className="mb-4 text-black">
                 Thank you for your reorder! Your order ID is{" "}
                 <span className="font-semibold">{orderDetails.id}</span> and the
                 total price is{" "}
