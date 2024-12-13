@@ -17,6 +17,8 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const fromOrder = localStorage.getItem("Order");
+
     if (!emailRef.current || !passwordRef.current) return;
 
     try {
@@ -37,6 +39,10 @@ const SignIn = () => {
       updateUser(user);
 
       setTimeout(() => {
+        if (fromOrder) {
+          localStorage.removeItem("Order");
+          return router.push("/order");
+        }
         return router.push("/dashboard");
       }, 100);
     } catch (error) {

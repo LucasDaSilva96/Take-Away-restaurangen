@@ -34,7 +34,9 @@ const Page = () => {
         {orders.length > 0 && (
           <section className="flex flex-col justify-start items-start gap-2 p-6">
             {orders
-              .filter((item) => item.status !== "ready")
+              .filter(
+                (item) => item.status !== "ready" && item.status !== "cancelled"
+              )
               .map((order) => (
                 <OrderItem
                   key={order.id}

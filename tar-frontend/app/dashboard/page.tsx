@@ -4,6 +4,7 @@ import OrderItemCustomer from "@/components/Dashboard/OrderItemCustomer";
 import OrdersChart from "@/components/Dashboard/OrdersChart";
 import Chart from "@/components/Dashboard/SalesChart";
 import ButtonBase from "@/components/shared/ButtonBase";
+import useCart from "@/store/zustandstore";
 import { Menu_Get } from "@/types/menu";
 import { Order_Get } from "@/types/order";
 import { User_Get } from "@/types/user";
@@ -57,6 +58,22 @@ function Page() {
   };
 
   useEffect(() => {
+    console.log("triggered");
+
+    if (userData) {
+      try {
+        const orders = userData!.orders;
+
+        const activeOrders = orders.filter(
+          (order) => order.status !== "cancelled" && order.status !== "ready"
+        );
+
+        setActiveOrders(activeOrders);
+        toast.success("Orders refreshed");
+      } catch (error) {
+        console.error(error);
+      }
+    }
     if (userData) {
       const timeOut = setInterval(async () => {
         try {
@@ -119,7 +136,7 @@ function Page() {
               <ButtonBase
                 text="Refresh Orders"
                 onClick={refreshOrders}
-                classname="border-2 border-black hover:bg-black hover:text-white transition-all duration-300 ease-in-out"
+                classname="border-2 border-black hover:bg-black hover:text-white transition-all du"
               ></ButtonBase>
             </section>
             <section className="w-full flex flex-col">

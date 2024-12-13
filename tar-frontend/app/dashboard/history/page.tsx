@@ -60,7 +60,6 @@ const Page = () => {
       );
     }
   }, [user]);
-
   return (
     <>
       <section className="w-full flex flex-col justify-start items-start p-4 gap-2">

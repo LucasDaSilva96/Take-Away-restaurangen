@@ -5,9 +5,12 @@ import ButtonBase from "@/components/shared/ButtonBase";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Paymentpopup from "@/components/Orderlogic/Paymentpopup";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const { cart, amount, user, isSignedIn } = useCart();
+
+  const router = useRouter();
 
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [orderEmail, setOrderEmail] = useState<string>("");
@@ -26,6 +29,12 @@ const Page = () => {
       setOrderEmail(user.email);
     }
   }, []);
+
+  const signIn = () => {
+    localStorage.setItem("Order", "orangeboll");
+
+    router.push("/signIn");
+  };
 
   return (
     <>
@@ -54,12 +63,12 @@ const Page = () => {
                   "w-full flex flex-col justify-center items-center gap-2 "
                 }
               >
-                <Link href={"/signIn"}>
-                  <ButtonBase
-                    text={"Sign in to track and modify order"}
-                    classname={"bg-main-primary"}
-                  />
-                </Link>
+                <ButtonBase
+                  onClick={signIn}
+                  text={"Sign in to track and modify order"}
+                  classname={"bg-main-primary"}
+                />
+
                 <p className={"font-alumni text-xl text-main-primary"}>
                   Or continue as guest
                 </p>
@@ -118,7 +127,7 @@ const Page = () => {
                   onClick={Toggle}
                 />
                 <p className={"font-motter text-main-primary"}>
-                  {amount + "€"}
+                  {amount.toFixed(2) + "€"}
                 </p>
               </section>
             </section>
